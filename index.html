@@ -67,7 +67,35 @@ body.en .bn{display:none}body:not(.en) .en{display:none}
 
 <section id="notifications" class="page"><div class="pagehead noticehead"><div class="wrap"><h1 class="bn">নোটিফিকেশন</h1><h1 class="en">Notifications</h1><p class="bn">গুরুত্বপূর্ণ আপডেট এক জায়গায়</p><p class="en">Important updates in one place</p></div></div><div class="content"><div class="wrap panel"><div class="empty"><b class="bn">নতুন নোটিফিকেশন নেই</b><b class="en">No new notifications</b></div></div></div></section>
 
-<section id="profile" class="page"><div class="pagehead profilehead"><div class="wrap"><h1 class="bn">প্রোফাইল</h1><h1 class="en">Profile</h1><p class="bn">আপনার সদস্য অ্যাকাউন্টের তথ্য</p><p class="en">Your member account details</p></div></div><div class="content"><div class="wrap two"><div class="panel"><h3 class="bn">ব্যক্তিগত তথ্য</h3><h3 class="en">Personal information</h3><p class="muted">Name: —</p><p class="muted">Member ID: —</p><p class="muted">Email: —</p></div><div class="panel"><h3 class="bn">অ্যাকাউন্ট সেটিংস</h3><h3 class="en">Account settings</h3><p class="muted bn">নিরাপদ লগইন যুক্ত হলে প্রোফাইল সম্পাদনা করা যাবে।</p><p class="muted en">Profile editing will be enabled with secure login.</p><a class="more" href="#security">Security settings →</a></div></div></div></section>
+<section id="profile" class="page"><div class="pagehead profilehead"><div class="wrap"><h1 class="bn">প্রোফাইল</h1><h1 class="en">Profile</h1><p class="bn">আপনার সদস্য অ্যাকাউন্টের তথ্য</p><p class="en">Your member account details</p></div></div><div class="content"><div class="wrap two"><div class="panel">
+<h3 class="bn">সদস্য অ্যাকাউন্ট</h3><h3 class="en">Member account</h3>
+<div id="auth-status" class="note" style="margin:12px 0">লগইন করুন অথবা নতুন অ্যাকাউন্ট তৈরি করুন।</div>
+<div id="auth-forms">
+<label class="muted" for="mh-name">নাম / Display name</label>
+<input id="mh-name" type="text" autocomplete="name" placeholder="আপনার নাম" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;margin:5px 0 12px">
+<label class="muted" for="mh-email">ইমেইল / Email</label>
+<input id="mh-email" type="email" autocomplete="email" placeholder="name@example.com" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;margin:5px 0 12px">
+<label class="muted" for="mh-password">পাসওয়ার্ড / Password</label>
+<input id="mh-password" type="password" autocomplete="current-password" placeholder="কমপক্ষে ৬ অক্ষর" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;margin:5px 0 12px">
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<button class="btn gold" type="button" id="mh-register">নতুন অ্যাকাউন্ট / Register</button>
+<button class="btn" style="background:#edf1f8;color:#263d70" type="button" id="mh-login">লগইন / Login</button>
+</div>
+<button type="button" id="mh-reset" style="border:0;background:none;color:#425f9b;padding:12px 0;font-weight:800">পাসওয়ার্ড ভুলে গেছেন? / Reset password</button>
+</div>
+<div id="mh-member" hidden>
+<p class="muted">Name: <strong id="mh-profile-name">—</strong></p>
+<p class="muted">Email: <strong id="mh-profile-email">—</strong></p>
+<p class="muted">Member ID: <strong id="mh-profile-id">—</strong></p>
+<p class="muted">Email verified: <strong id="mh-verified">—</strong></p>
+<button class="btn" style="background:#edf1f8;color:#263d70" type="button" id="mh-verify">ভেরিফিকেশন ইমেইল পাঠান / Verify email</button>
+<button class="btn" style="background:#edf1f8;color:#263d70" type="button" id="mh-refresh">ভেরিফিকেশন চেক করুন / Refresh status</button>
+<button class="btn" style="background:#edf1f8;color:#263d70" type="button" id="mh-logout">লগআউট / Logout</button>
+</div>
+<p class="muted bn">আপনার পাসওয়ার্ড কাউকে দেবেন না। ব্যালেন্স বা Reward এই ফর্ম থেকে পরিবর্তন করা যায় না।</p>
+<p class="muted en">Never share your password. Balance and rewards cannot be changed from this form.</p>
+</div>
+<div class="panel"><h3 class="bn">অ্যাকাউন্ট নিরাপত্তা</h3><h3 class="en">Account security</h3><p class="muted bn">লগইন Firebase Authentication দিয়ে পরিচালিত হবে। সদস্যের প্রোফাইল Firestore-এ সংরক্ষিত হবে।</p><p class="muted en">Sign-in is handled by Firebase Authentication. Member profile data is stored in Firestore.</p><a class="more" href="#security">Security settings →</a></div></div></div></section>
 
 <section id="security" class="page"><div class="pagehead securityhead"><div class="wrap"><h1 class="bn">নিরাপত্তা</h1><h1 class="en">Security</h1><p class="bn">অ্যাকাউন্ট সুরক্ষা ও গোপনীয়তা</p><p class="en">Account protection and privacy</p></div></div><div class="content"><div class="wrap grid"><div class="panel"><h3>Password protection</h3><p class="muted bn">নিরাপদ পাসওয়ার্ড ও Reset ব্যবস্থা যুক্ত হবে।</p><p class="muted en">Secure password and reset controls.</p></div><div class="panel"><h3>Login sessions</h3><p class="muted bn">সক্রিয় সেশন দেখা ও বন্ধ করার সুবিধা।</p><p class="muted en">View and end active sessions.</p></div><div class="panel"><h3>Account verification</h3><p class="muted bn">প্রয়োজনীয় যাচাই ব্যবস্থা যুক্ত হবে।</p><p class="muted en">Account verification controls.</p></div></div></div></section>
 
@@ -81,4 +109,148 @@ body.en .bn{display:none}body:not(.en) .en{display:none}
 </main>
 <footer><div class="wrap"><b>MH — Modern Earning Platform</b><p class="bn">কাজ, Reward ও লেনদেনের স্বচ্ছ প্ল্যাটফর্ম।</p><p class="en">A transparent platform for tasks, rewards and transactions.</p><div class="links"><a href="#terms">Terms</a><a href="#privacy">Privacy</a><a href="#help">Support</a></div><p>© 2026 MH · <span class="bn">সর্বস্বত্ব সংরক্ষিত</span><span class="en">All rights reserved</span></p></div></footer>
 <nav class="mobile"><a href="#home"><b>⌂</b><span class="bn">হোম</span><span class="en">Home</span></a><a href="#tasks"><b>▦</b><span class="bn">কাজ</span><span class="en">Tasks</span></a><a href="#balance"><b>◉</b><span class="bn">ব্যালেন্স</span><span class="en">Balance</span></a><a href="#withdraw"><b>⇧</b><span class="bn">উত্তোলন</span><span class="en">Withdraw</span></a><a href="#profile"><b>◎</b><span class="bn">প্রোফাইল</span><span class="en">Profile</span></a></nav>
+
+<!-- Firebase Authentication + member profile -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+(() => {
+  const firebaseConfig = {
+    apiKey: "AIzaSyBEeIVyP44rJE8QkmumNWj8CeKlAjr9hg",
+    authDomain: "mh-modern-earning-platform.firebaseapp.com",
+    projectId: "mh-modern-earning-platform",
+    storageBucket: "mh-modern-earning-platform.firebasestorage.app",
+    messagingSenderId: "743565295091",
+    appId: "1:743565295091:web:fdaf5dc868a38e24a6a686",
+    measurementId: "G-WZMYQ9M3W4"
+  };
+
+  const statusBox = document.getElementById("auth-status");
+  const forms = document.getElementById("auth-forms");
+  const memberBox = document.getElementById("mh-member");
+  const $ = id => document.getElementById(id);
+  const say = message => { if (statusBox) statusBox.textContent = message; };
+  const showMember = (user, data) => {
+    $("mh-profile-name").textContent = data.displayName || user.displayName || "—";
+    $("mh-profile-email").textContent = user.email || "—";
+    $("mh-profile-id").textContent = user.uid;
+    $("mh-verified").textContent = user.emailVerified ? "Verified" : "Not verified";
+    forms.hidden = true;
+    memberBox.hidden = false;
+    say("আপনি লগইন অবস্থায় আছেন।");
+  };
+  const friendlyError = error => {
+    const messages = {
+      "auth/email-already-in-use": "এই ইমেইলে অ্যাকাউন্ট আছে। Login করুন।",
+      "auth/invalid-email": "সঠিক ইমেইল ঠিকানা দিন।",
+      "auth/weak-password": "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের দিন।",
+      "auth/operation-not-allowed": "Firebase Authentication-এ Email/Password চালু করুন।",
+      "auth/network-request-failed": "ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
+      "auth/requires-recent-login": "নিরাপত্তার জন্য আবার লগইন করে চেষ্টা করুন।",
+      "auth/user-not-found": "এই ইমেইলে অ্যাকাউন্ট পাওয়া যায়নি।",
+      "auth/wrong-password": "ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।",
+      "auth/invalid-credential": "ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।",
+      "auth/too-many-requests": "অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।",
+      "permission-denied": "Firestore Rules প্রকাশ করা হয়নি বা অনুমতি মেলেনি।"
+    };
+    return messages[error.code] || ("সমস্যা হয়েছে: " + (error.message || error.code));
+  };
+
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    $("mh-register").addEventListener("click", async () => {
+      const name = $("mh-name").value.trim();
+      const email = $("mh-email").value.trim();
+      const password = $("mh-password").value;
+      if (!name) return say("আগে আপনার নাম লিখুন।");
+      if (!email || !password) return say("ইমেইল ও পাসওয়ার্ড দিন।");
+      try {
+        say("অ্যাকাউন্ট তৈরি হচ্ছে...");
+        const credential = await auth.createUserWithEmailAndPassword(email, password);
+        await credential.user.updateProfile({ displayName: name });
+        await credential.user.sendEmailVerification();
+        await db.collection("users").doc(credential.user.uid).set({
+          uid: credential.user.uid,
+          email: credential.user.email,
+          displayName: name,
+          role: "member",
+          status: "active",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showMember(credential.user, { displayName: name });
+        say("অ্যাকাউন্ট তৈরি হয়েছে। ইমেইলে ভেরিফিকেশন লিংক পাঠানো হয়েছে। Inbox/Spam দেখুন।");
+      } catch (error) { say(friendlyError(error)); }
+    });
+
+    $("mh-login").addEventListener("click", async () => {
+      const email = $("mh-email").value.trim();
+      const password = $("mh-password").value;
+      if (!email || !password) return say("ইমেইল ও পাসওয়ার্ড দিন।");
+      try {
+        say("লগইন হচ্ছে...");
+        await auth.signInWithEmailAndPassword(email, password);
+        say("সফলভাবে লগইন হয়েছে।");
+      } catch (error) { say(friendlyError(error)); }
+    });
+
+    $("mh-reset").addEventListener("click", async () => {
+      const email = $("mh-email").value.trim();
+      if (!email) return say("আগে ইমেইল ঘরে আপনার ইমেইল লিখুন।");
+      try {
+        await auth.sendPasswordResetEmail(email);
+        say("পাসওয়ার্ড রিসেটের ইমেইল পাঠানো হয়েছে। Inbox/Spam দেখুন।");
+      } catch (error) { say(friendlyError(error)); }
+    });
+
+    $("mh-verify").addEventListener("click", async () => {
+      const user = auth.currentUser;
+      if (!user) return say("আগে লগইন করুন।");
+      try { await user.sendEmailVerification(); say("ভেরিফিকেশন ইমেইল পাঠানো হয়েছে। Inbox/Spam দেখুন।"); }
+      catch (error) { say(friendlyError(error)); }
+    });
+
+    $("mh-refresh").addEventListener("click", async () => {
+      const user = auth.currentUser;
+      if (!user) return say("আগে লগইন করুন।");
+      try { await user.reload(); showMember(auth.currentUser, (await db.collection("users").doc(user.uid).get()).data() || {}); say(user.emailVerified ? "আপনার ইমেইল Verified হয়েছে।" : "এখনো Verified হয়নি। ইমেইলের লিংকে চাপ দিন।"); }
+      catch (error) { say(friendlyError(error)); }
+    });
+
+    $("mh-logout").addEventListener("click", async () => {
+      try { await auth.signOut(); say("লগআউট হয়েছে।"); }
+      catch (error) { say(friendlyError(error)); }
+    });
+
+    auth.onAuthStateChanged(async user => {
+      if (!user) {
+        forms.hidden = false;
+        memberBox.hidden = true;
+        return;
+      }
+      try {
+        const ref = db.collection("users").doc(user.uid);
+        const snap = await ref.get();
+        if (!snap.exists) {
+          forms.hidden = false;
+          memberBox.hidden = true;
+          say("সদস্য প্রোফাইল পাওয়া যায়নি। Support-এর সঙ্গে যোগাযোগ করুন।");
+          return;
+        }
+        showMember(user, snap.data() || {});
+      } catch (error) {
+        forms.hidden = false;
+        memberBox.hidden = true;
+        say(friendlyError(error));
+      }
+    });
+  } catch (error) {
+    say("Firebase চালু করা যায়নি। Config ও ইন্টারনেট সংযোগ পরীক্ষা করুন।");
+  }
+})();
+</script>
+
 </body></html>
