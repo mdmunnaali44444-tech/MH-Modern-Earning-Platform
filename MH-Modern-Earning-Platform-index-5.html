@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10182f">
+<meta name="description" content="MH — Modern Earning Platform">
+<title>MH | Modern Earning Platform</title>
+<style>
+:root{--navy:#10182f;--navy2:#182541;--ink:#1c2942;--muted:#71809a;--line:#e7ebf2;--bg:#f4f6fb;--white:#fff;--gold:#e9b95e;--teal:#0e9f8a;--red:#d95362;--blue:#4778e8;--shadow:0 12px 35px rgba(22,35,65,.08);--radius:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}.muted{color:var(--muted)}.small{font-size:12px}.wrap{max-width:1240px;margin:auto;padding:0 18px}
+.topbar{height:68px;background:var(--navy);color:#fff;display:flex;align-items:center;position:sticky;top:0;z-index:20;box-shadow:0 5px 18px #0b142733}.top-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%}.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:850;letter-spacing:.2px}.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#f6d58b,#d99b35);display:grid;place-items:center;color:#17223a;font-weight:950;font-size:18px;box-shadow:inset 0 1px 0 #fff8}.brand small{display:block;color:#c1cbe0;font-weight:500;font-size:10px;letter-spacing:1.3px}.top-actions{display:flex;gap:8px;align-items:center}.lang,.menu-btn{border:1px solid #ffffff35;background:#ffffff12;color:#fff;border-radius:10px;padding:8px 11px}.menu-btn{display:none}
+.layout{display:grid;grid-template-columns:245px minmax(0,1fr);gap:22px;padding-top:22px;padding-bottom:40px}.sidebar{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:14px;height:max-content;position:sticky;top:88px;box-shadow:var(--shadow)}.side-label{font-size:10px;font-weight:800;letter-spacing:1.4px;color:#9aa5b7;padding:12px 10px 7px;text-transform:uppercase}.nav{display:grid;gap:4px}.nav button{border:0;background:transparent;text-align:left;color:#52617b;padding:10px 12px;border-radius:11px;display:flex;gap:11px;align-items:center;font-weight:650}.nav button:hover,.nav button.active{background:#eef2fb;color:#263d70}.nav .ico{width:22px;text-align:center}.side-foot{margin-top:16px;padding:13px;border-radius:13px;background:#f6f8fc;color:#66748c;font-size:12px}
+main{min-width:0}.page{display:none}.page.active{display:block}.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin:3px 0 18px}.page-head h1{margin:0;font-size:25px;letter-spacing:-.5px;color:#17233b}.page-head p{margin:5px 0 0;color:var(--muted)}.eyebrow{font-size:11px;color:#a17a36;font-weight:850;letter-spacing:1.5px;text-transform:uppercase}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:19px;box-shadow:var(--shadow)}.grid{display:grid;gap:15px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.stat{padding:18px;position:relative;overflow:hidden}.stat:after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;right:-28px;top:-32px;background:#edf2ff}.stat .label{font-size:12px;color:var(--muted);font-weight:650}.stat strong{display:block;font-size:25px;margin-top:7px;color:#1c2a45}.stat .hint{font-size:11px;color:#8b97aa;margin-top:3px}.stat .symbol{position:absolute;right:15px;top:16px;font-size:20px;z-index:1}
+.hero{background:linear-gradient(120deg,#111b35,#253b67);color:#fff;border-radius:22px;padding:27px;display:flex;justify-content:space-between;gap:20px;align-items:center;box-shadow:var(--shadow);margin-bottom:16px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:260px;height:260px;border:1px solid #ffffff18;border-radius:50%;right:4%;top:-130px;box-shadow:0 0 0 35px #ffffff08,0 0 0 70px #ffffff05}.hero h2{font-size:26px;line-height:1.2;margin:7px 0}.hero p{color:#d0d9eb;margin:0;max-width:560px}.hero .gold{color:#f2ca7a}.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}.hero-art{font-size:65px;z-index:1;opacity:.9}
+.btn{border:0;border-radius:11px;padding:10px 15px;font-weight:750;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn-primary{background:var(--navy);color:#fff}.btn-gold{background:var(--gold);color:#1d2940}.btn-soft{background:#edf2fb;color:#2e477a}.btn-danger{background:#fff0f1;color:#b83f4e}.btn-line{background:#fff;border:1px solid var(--line);color:#52617b}.btn:disabled{opacity:.5;cursor:not-allowed}
+.two{grid-template-columns:1.25fr .75fr}.section-title{font-size:16px;font-weight:850;margin:0 0 13px}.activity{display:grid;gap:12px}.activity-row{display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid #f0f2f6}.activity-row:last-child{border:0;padding:0}.dot{width:35px;height:35px;border-radius:11px;background:#edf5f4;display:grid;place-items:center}.activity-row strong{font-size:13px;display:block}.activity-row small{color:var(--muted)}
+.notice{border:1px solid #f0dfb8;background:#fff9eb;color:#765d2d;border-radius:13px;padding:13px 15px;font-size:13px;margin:0 0 16px}.info{border:1px solid #dbe6fb;background:#f3f7ff;color:#45608c;border-radius:13px;padding:13px 15px;font-size:13px}
+.task-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.task-card{display:flex;flex-direction:column;gap:10px}.task-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.task-icon{width:42px;height:42px;border-radius:13px;background:#eef3fc;display:grid;place-items:center;font-size:20px}.pill{font-size:10px;font-weight:800;padding:5px 9px;border-radius:30px;background:#f1f3f7;color:#78849a}.pill.live{background:#e8f7f2;color:#13846f}.task-card h3{font-size:15px;margin:0}.task-card p{font-size:12px;color:var(--muted);margin:0}.task-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:9px;border-top:1px solid #f0f2f6}.reward{font-size:13px;font-weight:850;color:#a4772b}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:750;color:#56647c}.field input,.field select,.field textarea{width:100%;border:1px solid #dfe5ef;border-radius:11px;padding:11px 12px;background:#fff;color:var(--ink);outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:#829bd0;box-shadow:0 0 0 3px #4778e81a}.field textarea{min-height:90px;resize:vertical}.form-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:13px}table{border-collapse:collapse;width:100%;min-width:580px;background:#fff}th,td{text-align:left;padding:12px 13px;border-bottom:1px solid #edf0f5;font-size:12px}th{background:#f7f8fb;color:#6b7890;font-weight:800}tr:last-child td{border:0}
+.profile-head{display:flex;gap:15px;align-items:center}.avatar{width:58px;height:58px;border-radius:18px;background:#e9effb;color:#304d83;display:grid;place-items:center;font-size:22px;font-weight:900}.profile-head h2{margin:0;font-size:19px}.profile-head p{margin:3px 0;color:var(--muted);font-size:12px}
+.footer{color:#98a2b2;text-align:center;font-size:11px;padding:25px 10px}.empty{padding:30px;text-align:center;color:var(--muted);font-size:13px}.empty .big{font-size:32px;margin-bottom:8px}
+.auth-box{max-width:510px;margin:35px auto}.auth-tabs{display:flex;gap:6px;background:#f2f4f8;border-radius:12px;padding:5px;margin-bottom:17px}.auth-tabs button{flex:1;border:0;border-radius:9px;padding:9px;background:transparent;color:#68758b;font-weight:800}.auth-tabs button.active{background:#fff;color:#23395f;box-shadow:0 2px 7px #15223b12}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#17233b;color:#fff;padding:12px 17px;border-radius:12px;box-shadow:var(--shadow);z-index:50;max-width:90%;font-size:13px}
+.mobile-overlay{display:none}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:fixed;z-index:40;left:12px;top:78px;bottom:12px;width:260px;overflow:auto;transform:translateX(-120%);transition:.22s}.sidebar.open{transform:translateX(0)}.menu-btn{display:inline-block}.mobile-overlay.show{display:block;position:fixed;inset:68px 0 0;background:#0c142b66;z-index:30}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.wrap{padding:0 12px}.layout{padding-top:13px;gap:13px}.hero{padding:20px}.hero h2{font-size:22px}.hero-art{font-size:45px}.page-head h1{font-size:22px}.task-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card{padding:15px}.stats{gap:10px}.stat{padding:14px}.stat strong{font-size:22px}.brand small{font-size:9px}.topbar{height:62px}.mobile-overlay{inset:62px 0 0}.sidebar{top:72px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap top-inner">
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    <a class="brand" href="#home" aria-label="MH home"><span class="logo">MH</span><span>MODERN EARNING<small>PLATFORM</small></span></a>
+    <div class="top-actions">
+      <span id="headerUser" class="small" style="color:#d4dced"></span>
+      <button class="lang" id="langBtn">বাংলা / EN</button>
+      <button class="btn btn-gold" id="accountBtn">Account</button>
+    </div>
+  </div>
+</header>
+<div class="mobile-overlay" id="overlay"></div>
+<div class="wrap layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-label" data-bn="প্রধান মেনু" data-en="MAIN MENU">প্রধান মেনু</div>
+    <nav class="nav" id="mainNav">
+      <button class="active" data-page="home"><span class="ico">⌂</span><span data-bn="হোম" data-en="Home">হোম</span></button>
+      <button data-page="dashboard"><span class="ico">▦</span><span data-bn="ড্যাশবোর্ড" data-en="Dashboard">ড্যাশবোর্ড</span></button>
+      <button data-page="tasks"><span class="ico">✦</span><span data-bn="কাজসমূহ" data-en="Tasks">কাজসমূহ</span></button>
+      <button data-page="mytasks"><span class="ico">✓</span><span data-bn="আমার কাজ" data-en="My Tasks">আমার কাজ</span></button>
+      <button data-page="balance"><span class="ico">৳</span><span data-bn="ব্যালেন্স" data-en="Balance">ব্যালেন্স</span></button>
+      <button data-page="withdraw"><span class="ico">⇧</span><span data-bn="উইথড্র" data-en="Withdraw">উইথড্র</span></button>
+      <button data-page="transactions"><span class="ico">⇄</span><span data-bn="লেনদেন" data-en="Transactions">লেনদেন</span></button>
+      <button data-page="referral"><span class="ico">♧</span><span data-bn="রেফারেল" data-en="Referral">রেফারেল</span></button>
+      <button data-page="notifications"><span class="ico">♢</span><span data-bn="নোটিফিকেশন" data-en="Notifications">নোটিফিকেশন</span></button>
+    </nav>
+    <div class="side-label" data-bn="অ্যাকাউন্ট" data-en="ACCOUNT">অ্যাকাউন্ট</div>
+    <nav class="nav">
+      <button data-page="profile"><span class="ico">◎</span><span data-bn="প্রোফাইল" data-en="Profile">প্রোফাইল</span></button>
+      <button data-page="security"><span class="ico">◇</span><span data-bn="নিরাপত্তা" data-en="Security">নিরাপত্তা</span></button>
+      <button data-page="support"><span class="ico">☏</span><span data-bn="সহায়তা" data-en="Help & Support">সহায়তা</span></button>
+      <button data-page="terms"><span class="ico">≡</span><span data-bn="শর্তাবলি" data-en="Terms">শর্তাবলি</span></button>
+      <button data-page="privacy"><span class="ico">▤</span><span data-bn="গোপনীয়তা" data-en="Privacy">গোপনীয়তা</span></button>
+      <button data-page="admin" id="adminNav" class="hidden"><span class="ico">⚙</span><span data-bn="অ্যাডমিন প্যানেল" data-en="Admin Panel">অ্যাডমিন প্যানেল</span></button>
+    </nav>
+    <div class="side-foot" data-bn="বাস্তব অফার ও পেমেন্ট চালু হবে যাচাইকৃত পার্টনার এবং নিরাপদ সার্ভার সংযোগের পর।" data-en="Real offers and payments will be enabled only after verified partners and secure server integration.">বাস্তব অফার ও পেমেন্ট চালু হবে যাচাইকৃত পার্টনার এবং নিরাপদ সার্ভার সংযোগের পর।</div>
+  </aside>
+
+  <main>
+    <section class="page active" id="page-home">
+      <div class="hero">
+        <div>
+          <div class="eyebrow gold" data-bn="স্বাগতম MH-তে" data-en="WELCOME TO MH">স্বাগতম MH-তে</div>
+          <h2 data-bn="আপনার সময়, আপনার দক্ষতা — <span class='gold'>নতুন সম্ভাবনা</span>" data-en="Your time, your skills — <span class='gold'>new possibilities</span>">আপনার সময়, আপনার দক্ষতা — <span class="gold">নতুন সম্ভাবনা</span></h2>
+          <p data-bn="যাচাইকৃত অনলাইন কাজ ও অফার খুঁজুন। কাজের শর্ত বুঝে অংশ নিন, অগ্রগতি দেখুন এবং স্বচ্ছ রেকর্ড রাখুন।" data-en="Discover verified online tasks and offers. Review the terms, participate, track progress and keep transparent records.">যাচাইকৃত অনলাইন কাজ ও অফার খুঁজুন। কাজের শর্ত বুঝে অংশ নিন, অগ্রগতি দেখুন এবং স্বচ্ছ রেকর্ড রাখুন।</p>
+          <div class="hero-actions"><button class="btn btn-gold" data-go="tasks" data-bn="কাজ দেখুন" data-en="Explore tasks">কাজ দেখুন</button><button class="btn btn-line" data-go="dashboard" data-bn="ড্যাশবোর্ড" data-en="Dashboard">ড্যাশবোর্ড</button></div>
+        </div><div class="hero-art">✧</div>
+      </div>
+      <div class="notice" data-bn="স্বচ্ছতার নোট: এই মুহূর্তে কোনো বাস্তব অফার-প্রোভাইডার বা পেমেন্ট প্রসেসর সংযুক্ত না থাকলে এখানে আয় বা পেমেন্টের নিশ্চয়তা নেই। চালু অফার শুধু যাচাইকৃত Provider ডেটা থেকে দেখানো হবে।" data-en="Transparency note: no earnings or payout are promised until real offer providers and payment processing are connected. Active offers will come only from verified provider data.">স্বচ্ছতার নোট: এই মুহূর্তে কোনো বাস্তব অফার-প্রোভাইডার বা পেমেন্ট প্রসেসর সংযুক্ত না থাকলে এখানে আয় বা পেমেন্টের নিশ্চয়তা নেই। চালু অফার শুধু যাচাইকৃত Provider ডেটা থেকে দেখানো হবে।</div>
+      <div class="grid stats">
+        <div class="card stat"><span class="symbol">♙</span><div class="label" data-bn="মোট সদস্য" data-en="Total members">মোট সদস্য</div><strong id="homeMembers">—</strong><div class="hint" data-bn="লাইভ ডেটা সংযুক্ত হলে দেখাবে" data-en="Shown when live data is connected">লাইভ ডেটা সংযুক্ত হলে দেখাবে</div></div>
+        <div class="card stat"><span class="symbol">◉</span><div class="label" data-bn="সক্রিয় সদস্য" data-en="Active members">সক্রিয় সদস্য</div><strong id="homeActive">—</strong><div class="hint" data-bn="লাইভ ডেটা সংযুক্ত হলে দেখাবে" data-en="Shown when live data is connected">লাইভ ডেটা সংযুক্ত হলে দেখাবে</div></div>
+        <div class="card stat"><span class="symbol">✦</span><div class="label" data-bn="টাস্ক স্লট" data-en="Task slots">টাস্ক স্লট</div><strong>28</strong><div class="hint" data-bn="অ্যাডমিন পরিচালিত" data-en="Admin managed">অ্যাডমিন পরিচালিত</div></div>
+        <div class="card stat"><span class="symbol">✓</span><div class="label" data-bn="সম্পন্ন কাজ" data-en="Completed tasks">সম্পন্ন কাজ</div><strong id="homeCompleted">—</strong><div class="hint" data-bn="লাইভ ডেটা সংযুক্ত হলে দেখাবে" data-en="Shown when live data is connected">লাইভ ডেটা সংযুক্ত হলে দেখাবে</div></div>
+      </div>
+      <div class="grid two" style="margin-top:16px">
+        <div class="card"><h3 class="section-title" data-bn="কীভাবে শুরু করবেন" data-en="How to get started">কীভাবে শুরু করবেন</h3><div class="activity">
+          <div class="activity-row"><div class="dot">01</div><div><strong data-bn="অ্যাকাউন্ট তৈরি করুন" data-en="Create an account">অ্যাকাউন্ট তৈরি করুন</strong><small data-bn="কাজে অংশ নিতে সদস্য হিসেবে প্রবেশ করুন" data-en="Sign in as a member to participate">কাজে অংশ নিতে সদস্য হিসেবে প্রবেশ করুন</small></div></div>
+          <div class="activity-row"><div class="dot">02</div><div><strong data-bn="অফারের শর্ত পড়ুন" data-en="Review offer terms">অফারের শর্ত পড়ুন</strong><small data-bn="যোগ্যতা, সময় ও পুরস্কার যাচাই করুন" data-en="Check eligibility, time and reward">যোগ্যতা, সময় ও পুরস্কার যাচাই করুন</small></div></div>
+          <div class="activity-row"><div class="dot">03</div><div><strong data-bn="অগ্রগতি ও রেকর্ড দেখুন" data-en="Track progress and records">অগ্রগতি ও রেকর্ড দেখুন</strong><small data-bn="যাচাইকৃত কাজের আপডেট এখানে দেখাবে" data-en="Verified task updates will appear here">যাচাইকৃত কাজের আপডেট এখানে দেখাবে</small></div></div>
+        </div></div>
+        <div class="card"><h3 class="section-title" data-bn="আপনার অ্যাকাউন্ট" data-en="Your account">আপনার অ্যাকাউন্ট</h3><p class="muted" id="homeAccountText" data-bn="সাইট ঘুরে দেখতে লগইন বাধ্যতামূলক নয়। কাজ, ব্যক্তিগত ব্যালেন্স ও অ্যাকাউন্ট ফিচারের জন্য লগইন করুন।" data-en="You can browse without signing in. Sign in to access tasks, personal balance and account features.">সাইট ঘুরে দেখতে লগইন বাধ্যতামূলক নয়। কাজ, ব্যক্তিগত ব্যালেন্স ও অ্যাকাউন্ট ফিচারের জন্য লগইন করুন।</p><button class="btn btn-primary" data-go="profile" data-bn="লগইন / রেজিস্ট্রেশন" data-en="Login / Register">লগইন / রেজিস্ট্রেশন</button></div>
+      </div>
+    </section>
+
+    <section class="page" id="page-dashboard">
+      <div class="page-head"><div><div class="eyebrow">MH / OVERVIEW</div><h1 data-bn="ড্যাশবোর্ড" data-en="Dashboard">ড্যাশবোর্ড</h1><p data-bn="আপনার অ্যাকাউন্টের সারসংক্ষেপ" data-en="Your account overview">আপনার অ্যাকাউন্টের সারসংক্ষেপ</p></div></div>
+      <div id="dashboardGate" class="info">ড্যাশবোর্ডের ব্যক্তিগত তথ্য দেখতে লগইন করুন।</div>
+      <div class="grid stats" style="margin-top:15px">
+        <div class="card stat"><span class="symbol">৳</span><div class="label" data-bn="মোট ব্যালেন্স" data-en="Total balance">মোট ব্যালেন্স</div><strong id="dashBalance">—</strong></div>
+        <div class="card stat"><span class="symbol">✓</span><div class="label" data-bn="সম্পন্ন কাজ" data-en="Completed tasks">সম্পন্ন কাজ</div><strong id="dashCompleted">—</strong></div>
+        <div class="card stat"><span class="symbol">⇧</span><div class="label" data-bn="পেন্ডিং উইথড্র" data-en="Pending withdrawals">পেন্ডিং উইথড্র</div><strong id="dashPending">—</strong></div>
+        <div class="card stat"><span class="symbol">♧</span><div class="label" data-bn="রেফারেল" data-en="Referrals">রেফারেল</div><strong id="dashReferrals">—</strong></div>
+      </div>
+      <div class="card" style="margin-top:16px"><h3 class="section-title" data-bn="সাম্প্রতিক কার্যক্রম" data-en="Recent activity">সাম্প্রতিক কার্যক্রম</h3><div id="dashActivity" class="empty">লগইন করলে আপনার কার্যক্রম এখানে দেখাবে।</div></div>
+    </section>
+
+    <section class="page" id="page-tasks">
+      <div class="page-head"><div><div class="eyebrow">MH / OPPORTUNITIES</div><h1 data-bn="কাজসমূহ" data-en="Available tasks">কাজসমূহ</h1><p data-bn="Provider থেকে যাচাইকৃত অফার" data-en="Provider-verified offers">Provider থেকে যাচাইকৃত অফার</p></div><span class="pill">28 SLOTS</span></div>
+      <div class="notice" data-bn="২৮টি স্লট প্রস্তুত রাখা হয়েছে। বাস্তব Provider অফার সংযুক্ত না হওয়া পর্যন্ত কোনো স্লটকে সক্রিয় কাজ বা নিশ্চিত আয় হিসেবে দেখানো হবে না।" data-en="28 slots are reserved. Until real provider offers are connected, no slot is presented as an active task or guaranteed earning.">২৮টি স্লট প্রস্তুত রাখা হয়েছে। বাস্তব Provider অফার সংযুক্ত না হওয়া পর্যন্ত কোনো স্লটকে সক্রিয় কাজ বা নিশ্চিত আয় হিসেবে দেখানো হবে না।</div>
+      <div class="grid task-grid" id="taskGrid"></div>
+    </section>
+
+    <section class="page" id="page-mytasks"><div class="page-head"><div><div class="eyebrow">MH / MY WORK</div><h1 data-bn="আমার কাজ" data-en="My tasks">আমার কাজ</h1><p data-bn="আপনার কাজের অবস্থা" data-en="Your task status">আপনার কাজের অবস্থা</p></div></div><div class="card" id="myTasksBox"><div class="empty">লগইন করলে আপনার কাজের রেকর্ড এখানে দেখাবে।</div></div></section>
+
+    <section class="page" id="page-balance"><div class="page-head"><div><div class="eyebrow">MH / WALLET</div><h1 data-bn="ব্যালেন্স" data-en="Balance">ব্যালেন্স</h1><p data-bn="আপনার যাচাইকৃত হিসাব" data-en="Your verified account balance">আপনার যাচাইকৃত হিসাব</p></div></div><div class="notice">ব্যালেন্স কেবল বিশ্বস্ত সার্ভার থেকে আপডেট হবে। ওয়েবসাইট থেকে সদস্য নিজে ব্যালেন্স পরিবর্তন করতে পারবে না।</div><div class="grid stats"><div class="card stat"><div class="label">Available</div><strong id="availableBalance">—</strong></div><div class="card stat"><div class="label">Pending</div><strong id="pendingBalance">—</strong></div><div class="card stat"><div class="label">Total earned</div><strong id="totalEarned">—</strong></div><div class="card stat"><div class="label">Currency</div><strong>BDT</strong></div></div></section>
+
+    <section class="page" id="page-withdraw"><div class="page-head"><div><div class="eyebrow">MH / PAYOUT</div><h1 data-bn="উইথড্র" data-en="Withdraw">উইথড্র</h1><p data-bn="পেমেন্ট অনুরোধ" data-en="Payout request">পেমেন্ট অনুরোধ</p></div></div><div class="info">নিরাপদ payout backend ও payment verification এখনো সংযুক্ত করা হয়নি। তাই এখানে এখনো কোনো টাকা পাঠানো বা withdrawal request জমা হবে না।</div><div class="card" style="margin-top:15px"><div class="form-grid"><div class="field"><label>Payment method</label><select disabled><option>bKash</option><option>Nagad</option><option>USDT BEP-20</option></select></div><div class="field"><label>Amount</label><input disabled placeholder="Backend integration required"></div><div class="field full"><label>Account / Wallet address</label><input disabled placeholder="Not enabled yet"></div></div><div class="form-actions"><button class="btn btn-primary" disabled>Withdrawal unavailable</button></div></div></section>
+
+    <section class="page" id="page-transactions"><div class="page-head"><div><div class="eyebrow">MH / LEDGER</div><h1 data-bn="লেনদেন" data-en="Transactions">লেনদেন</h1><p data-bn="আয়ের ও পেমেন্টের রেকর্ড" data-en="Earning and payout records">আয়ের ও পেমেন্টের রেকর্ড</p></div></div><div class="card"><div id="transactionsBox" class="empty">লগইন করলে আপনার লেনদেন দেখাবে।</div></div></section>
+
+    <section class="page" id="page-referral"><div class="page-head"><div><div class="eyebrow">MH / COMMUNITY</div><h1 data-bn="রেফারেল" data-en="Referral">রেফারেল</h1><p data-bn="বন্ধুদের আমন্ত্রণ জানান" data-en="Invite your friends">বন্ধুদের আমন্ত্রণ জানান</p></div></div><div class="card"><div id="referralBox" class="empty">রেফারেল কোড দেখতে লগইন করুন। রেফারেল বোনাস কেবল যাচাইকৃত নিয়ম ও সার্ভার যাচাইয়ের পর যোগ হবে।</div></div></section>
+
+    <section class="page" id="page-notifications"><div class="page-head"><div><div class="eyebrow">MH / UPDATES</div><h1 data-bn="নোটিফিকেশন" data-en="Notifications">নোটিফিকেশন</h1><p data-bn="গুরুত্বপূর্ণ আপডেট" data-en="Important updates">গুরুত্বপূর্ণ আপডেট</p></div></div><div class="card"><div id="notificationsBox" class="empty">লগইন করলে আপনার নোটিফিকেশন দেখাবে।</div></div></section>
+
+    <section class="page" id="page-profile"><div class="page-head"><div><div class="eyebrow">MH / ACCOUNT</div><h1 data-bn="প্রোফাইল" data-en="Profile">প্রোফাইল</h1><p data-bn="লগইন, রেজিস্ট্রেশন ও ব্যক্তিগত তথ্য" data-en="Login, registration and personal information">লগইন, রেজিস্ট্রেশন ও ব্যক্তিগত তথ্য</p></div></div>
+      <div class="card auth-box" id="authBox">
+        <div class="auth-tabs"><button class="active" id="loginTab" type="button">Login</button><button id="registerTab" type="button">Create account</button></div>
+        <form id="authForm">
+          <div class="field" id="nameField"><label data-bn="আপনার নাম" data-en="Your name">আপনার নাম</label><input id="authName" autocomplete="name" placeholder="Full name"></div>
+          <div class="field" style="margin-top:12px"><label>Email</label><input id="authEmail" type="email" required autocomplete="email" placeholder="name@example.com"></div>
+          <div class="field" style="margin-top:12px"><label data-bn="পাসওয়ার্ড" data-en="Password">পাসওয়ার্ড</label><input id="authPassword" type="password" required minlength="8" autocomplete="current-password" placeholder="At least 8 characters"></div>
+          <p class="small muted">Password policy: 8+ characters, uppercase, lowercase, number and special character.</p>
+          <button class="btn btn-primary" id="authSubmit" type="submit" style="width:100%">Login</button>
+          <button class="btn btn-line" id="forgotBtn" type="button" style="width:100%;margin-top:8px">Forgot password?</button>
+        </form>
+      </div>
+      <div class="card hidden" id="profileBox"><div class="profile-head"><div class="avatar" id="avatar">MH</div><div><h2 id="profileName">Member</h2><p id="profileEmail">—</p><p id="profileStatus">—</p></div></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><form id="profileForm" class="form-grid"><div class="field"><label>Display name</label><input id="editName" maxlength="60"></div><div class="field"><label>Phone</label><input id="editPhone" maxlength="25"></div><div class="field full"><label>Photo URL (optional)</label><input id="editPhoto" type="url" placeholder="https://..."></div><div class="field full"><button class="btn btn-primary" type="submit">Save profile</button></div></form><div class="form-actions"><button class="btn btn-line" id="verifyBtn" type="button">Send verification email</button><button class="btn btn-danger" id="logoutBtn" type="button">Logout</button></div></div>
+    </section>
+
+    <section class="page" id="page-security"><div class="page-head"><div><div class="eyebrow">MH / PROTECTION</div><h1 data-bn="নিরাপত্তা" data-en="Security">নিরাপত্তা</h1><p data-bn="অ্যাকাউন্ট সুরক্ষা" data-en="Account protection">অ্যাকাউন্ট সুরক্ষা</p></div></div><div class="card"><h3 class="section-title">Account security</h3><p class="muted">Use a unique password. Never share your password, email verification link, or wallet recovery phrase. Email verification status is shown in your profile.</p><button class="btn btn-line" id="securityReset">Send password reset email</button></div></section>
+
+    <section class="page" id="page-support"><div class="page-head"><div><div class="eyebrow">MH / SUPPORT</div><h1 data-bn="সহায়তা" data-en="Help & Support">সহায়তা</h1><p data-bn="আপনার প্রশ্ন পাঠান" data-en="Send us your question">আপনার প্রশ্ন পাঠান</p></div></div><div class="card"><div class="info">Support ticket জমা দিতে লগইন লাগবে। Ticket শুধু আপনার অ্যাকাউন্ট ও অনুমোদিত Admin দেখতে পারবে।</div><form id="supportForm" style="margin-top:15px"><div class="form-grid"><div class="field"><label>Subject</label><input id="supportSubject" required maxlength="100"></div><div class="field"><label>Category</label><select id="supportCategory"><option>Account</option><option>Task issue</option><option>Payment</option><option>Other</option></select></div><div class="field full"><label>Message</label><textarea id="supportMessage" required maxlength="2000"></textarea></div></div><div class="form-actions"><button class="btn btn-primary">Submit ticket</button></div></form><div id="supportHistory" class="small muted" style="margin-top:12px"></div></div></section>
+
+    <section class="page" id="page-terms"><div class="page-head"><div><div class="eyebrow">MH / LEGAL</div><h1 data-bn="শর্তাবলি" data-en="Terms of service">শর্তাবলি</h1></div></div><div class="card"><h3>Fair use</h3><p class="muted">Members must provide accurate account information, follow each provider's eligibility and completion rules, and must not use bots, duplicate accounts, fake traffic, or manipulated activity. Provider decisions and reward verification may take time.</p><h3>Rewards and withdrawals</h3><p class="muted">Rewards are credited only after trusted provider verification. No earning amount, task availability, or payout time is guaranteed. Withdrawal methods, minimums and processing times will be published only after payment partners and operational rules are confirmed.</p><h3>Account actions</h3><p class="muted">MH may investigate suspicious activity and restrict accounts under published rules. Members may contact support to ask about an account decision.</p></div></section>
+
+    <section class="page" id="page-privacy"><div class="page-head"><div><div class="eyebrow">MH / LEGAL</div><h1 data-bn="গোপনীয়তা নীতি" data-en="Privacy policy">গোপনীয়তা নীতি</h1></div></div><div class="card"><h3>Information</h3><p class="muted">MH uses account information needed to provide sign-in, profile, task and support features. Do not submit passwords, payment PINs, private keys or wallet recovery phrases in support messages.</p><h3>Use and security</h3><p class="muted">Account records are stored using Firebase services configured for this project. Access should be limited by Firestore Security Rules and trusted server workflows. This page must be reviewed and updated before public launch to reflect actual providers, analytics, retention and contact details.</p><h3>Contact</h3><p class="muted">A verified support contact will be published before launch.</p></div></section>
+
+    <section class="page" id="page-admin"><div class="page-head"><div><div class="eyebrow">MH / CONTROL CENTER</div><h1 data-bn="অ্যাডমিন প্যানেল" data-en="Admin panel">অ্যাডমিন প্যানেল</h1><p data-bn="২৮টি Task Slot পরিচালনা" data-en="Manage 28 task slots">২৮টি Task Slot পরিচালনা</p></div></div><div class="notice">শুধু বিশ্বস্তভাবে admin role পাওয়া অ্যাকাউন্ট এই অংশ ব্যবহার করতে পারবে। নিজের role নিজে পরিবর্তন করা যাবে না। Provider-এর server-side verification ছাড়া কোনো offer সদস্যদের কাছে সক্রিয় হবে না।</div><div class="card"><h3 class="section-title">Task slot manager</h3><p class="small muted">Admin can prepare a slot, but a task stays unavailable until the trusted provider integration writes <code>providerVerified: true</code> from the server. Do not set this field from the website.</p><form id="taskAdminForm"><div class="form-grid"><div class="field"><label>Slot</label><select id="taskSlot"></select></div><div class="field"><label>Task name</label><input id="taskName" maxlength="100" required></div><div class="field"><label>Category</label><input id="taskCategory" maxlength="50"></div><div class="field"><label>Reward label</label><input id="taskReward" maxlength="50" placeholder="Provider-defined"></div><div class="field full"><label>Description</label><textarea id="taskDescription" maxlength="500"></textarea></div><div class="field full"><label>Offer URL</label><input id="taskUrl" type="url" placeholder="https://..."></div><div class="field"><label><input id="taskEnabled" type="checkbox" style="width:auto"> Enabled (verified offer only)</label></div></div><div class="form-actions"><button class="btn btn-primary">Save slot</button><button class="btn btn-line" type="button" id="clearTask">Clear form</button></div></form><div class="table-wrap" style="margin-top:18px"><table><thead><tr><th>Slot</th><th>Name</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminTaskRows"><tr><td colspan="4">Admin access required.</td></tr></tbody></table></div></div></section>
+
+    <div class="footer">© <span id="year"></span> MH — Modern Earning Platform · Built for transparent opportunities</div>
+  </main>
+</div>
+<div id="toast" class="toast hidden" role="status"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+"use strict";
+
+/* MH Firebase project configuration */
+const firebaseConfig = {
+  apiKey: "AIzaSyBEeIVyP44rJE8QkmumNWj8CeKlAjr9hg",
+  authDomain: "mh-modern-earning-platform.firebaseapp.com",
+  projectId: "mh-modern-earning-platform",
+  storageBucket: "mh-modern-earning-platform.firebasestorage.app",
+  messagingSenderId: "743565295091",
+  appId: "1:743565295091:web:fdaf5dc868a38e24a6a686",
+  measurementId: "G-WZMYQ9M3W4"
+};
+
+let auth = null, db = null, currentUser = null, currentProfile = null, authReady = false;
+let language = localStorage.getItem("mh_language") || "bn";
+let authMode = "login";
+let toastTimer;
+
+const $ = (id) => document.getElementById(id);
+const safeText = (value) => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+function toast(message) {
+  $("toast").textContent = message;
+  $("toast").classList.remove("hidden");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 3200);
+}
+function tr(bn,en){ return language === "bn" ? bn : en; }
+function setLanguage(next) {
+  language = next;
+  localStorage.setItem("mh_language", next);
+  document.documentElement.lang = next;
+  document.querySelectorAll("[data-bn][data-en]").forEach(el => {
+    const value = el.getAttribute("data-" + next);
+    if (value !== null) el.innerHTML = value;
+  });
+  $("langBtn").textContent = next === "bn" ? "বাংলা / EN" : "EN / বাংলা";
+}
+function go(page) {
+  let target = $("page-" + page) ? page : "home";
+  const memberPages = ["dashboard", "balance", "mytasks", "withdraw", "transactions", "referral", "notifications", "security"];
+  if (authReady && memberPages.includes(target) && !currentUser) {
+    toast(tr("এই পেজ দেখতে আগে লগইন করুন।", "Please sign in to access this page."));
+    target = "profile";
+  }
+  document.querySelectorAll(".page").forEach(p => p.classList.toggle("active", p.id === "page-" + target));
+  document.querySelectorAll("[data-page]").forEach(b => b.classList.toggle("active", b.dataset.page === target));
+  location.hash = target;
+  $("sidebar").classList.remove("open");
+  $("overlay").classList.remove("show");
+  if (target === "admin" && !isAdmin()) {
+    toast("Admin access required.");
+    go("home");
+    return;
+  }
+  if (target === "dashboard" || target === "balance" || target === "mytasks" || target === "transactions" || target === "notifications" || target === "referral") loadMemberData();
+  if (target === "tasks") loadTasks();
+  if (target === "admin") loadAdminTasks();
+}
+function isAdmin(){ return !!(currentUser && currentProfile && currentProfile.role === "admin" && currentProfile.status === "active"); }
+function requireLogin(){ if(!currentUser){ toast(tr("এই ফিচার ব্যবহার করতে লগইন করুন।","Please sign in to use this feature.")); go("profile"); return false; } return true; }
+
+function renderTaskSlots(tasks) {
+  const byId = new Map((tasks || []).map(t => [t.id,t.data]));
+  let out = "";
+  for(let i=1;i<=28;i++){
+    const id = "slot-" + String(i).padStart(2,"0");
+    const t = byId.get(id);
+    const enabled = !!(t && t.enabled === true && t.providerVerified === true && t.url);
+    const title = enabled ? (t.name || "Verified offer") : tr("স্লট " + String(i).padStart(2,"0"),"Slot " + String(i).padStart(2,"0"));
+    const desc = enabled ? (t.description || tr("অফারের বিস্তারিত দেখুন।","Review offer details.")) : tr("Provider-এর server verification এখনো সম্পন্ন হয়নি।","Provider server verification is not complete yet.");
+    out += `<article class="card task-card"><div class="task-top"><div class="task-icon">${enabled ? "✦" : "◌"}</div><span class="pill ${enabled ? "live" : ""}">${enabled ? "PROVIDER VERIFIED" : "NOT AVAILABLE"}</span></div><h3>${safeText(title)}</h3><p>${safeText(desc)}</p><div class="task-bottom"><span class="reward">${safeText(enabled ? (t.reward || "Provider reward") : tr("আয় চালু নয়","Not earning"))}</span>${enabled ? `<button class="btn btn-soft" data-open-task="${safeText(id)}">${tr("অফার খুলুন","Open offer")}</button>` : `<button class="btn btn-line" disabled>${tr("শিগগির আসছে","Coming soon")}</button>`}</div></article>`;
+  }
+  $("taskGrid").innerHTML = out;
+  $("taskGrid").querySelectorAll("[data-open-task]").forEach(btn => btn.addEventListener("click", () => {
+    if(!requireLogin()) return;
+    const item = byId.get(btn.dataset.openTask);
+    if(!item || !item.url || !/^https:\/\//i.test(item.url)){toast("Offer link is not valid.");return;}
+    window.open(item.url, "_blank", "noopener,noreferrer");
+  }));
+}
+async function loadTasks(){
+  if(!db){renderTaskSlots([]);return;}
+  try{
+    const snap = await db.collection("tasks").get();
+    renderTaskSlots(snap.docs.map(d=>({id:d.id,data:d.data()})));
+  }catch(err){
+    console.warn("Task read:",err);
+    renderTaskSlots([]);
+  }
+}
+async function ensureMemberProfile(user){
+  const ref = db.collection("users").doc(user.uid);
+  const snap = await ref.get();
+  if(!snap.exists){
+    await ref.set({
+      uid:user.uid,
+      email:user.email || "",
+      displayName:user.displayName || (user.email ? user.email.split("@")[0] : "Member"),
+      role:"member",
+      status:"active",
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    return (await ref.get()).data();
+  }
+  return snap.data();
+}
+function showAuthState(user, profile){
+  currentUser = user || null;
+  currentProfile = profile || null;
+  const signed = !!user;
+  $("authBox").classList.toggle("hidden", signed);
+  $("profileBox").classList.toggle("hidden", !signed);
+  $("headerUser").textContent = signed ? (profile?.displayName || user.email || "Member") : "";
+  $("accountBtn").textContent = signed ? tr("প্রোফাইল","Profile") : tr("অ্যাকাউন্ট","Account");
+  $("adminNav").classList.toggle("hidden", !isAdmin());
+  if(signed){
+    const name = profile?.displayName || user.displayName || "Member";
+    $("profileName").textContent = name;
+    $("profileEmail").textContent = user.email || "";
+    $("profileStatus").textContent = `${profile?.status || "active"} · ${user.emailVerified ? "Email verified" : "Email not verified"}`;
+    $("avatar").textContent = name.slice(0,1).toUpperCase();
+    $("editName").value = profile?.displayName || name;
+    $("editPhone").value = profile?.phone || "";
+    $("editPhoto").value = profile?.photoURL || "";
+  }
+  if(!signed){
+    $("dashboardGate").textContent = tr("ব্যক্তিগত তথ্য দেখতে লগইন করুন।","Sign in to view your personal information.");
+    $("dashActivity").textContent = tr("লগইন করলে আপনার কার্যক্রম এখানে দেখাবে।","Your activity will appear here after sign-in.");
+  }
+}
+async function loadMemberData(){
+  if(!currentUser || !db){
+    if(authReady && !currentUser) requireLogin();
+    return;
+  }
+  const uid = currentUser.uid;
+  try{
+    const walletSnap = await db.collection("wallets").doc(uid).get();
+    if(!currentUser || currentUser.uid !== uid) return;
+    const wallet = walletSnap.exists ? walletSnap.data() : {};
+    const available = Number(wallet.availableBalance || 0);
+    const pending = Number(wallet.pendingBalance || 0);
+    const total = Number(wallet.totalEarned || 0);
+    $("dashBalance").textContent = available.toFixed(2) + " BDT";
+    $("dashPending").textContent = pending.toFixed(2) + " BDT";
+    $("availableBalance").textContent = available.toFixed(2);
+    $("pendingBalance").textContent = pending.toFixed(2);
+    $("totalEarned").textContent = total.toFixed(2);
+    $("dashboardGate").textContent = tr("আপনার সার্ভার-যাচাইকৃত হিসাব।","Your server-verified account summary.");
+  }catch(e){console.warn(e);$("dashboardGate").textContent = "Wallet data is not available yet.";}
+  const jobs = [
+    ["userTasks","myTasksBox","uid"],
+    ["transactions","transactionsBox","uid"],
+    ["notifications","notificationsBox","uid"]
+  ];
+  for(const [collection,element,field] of jobs){
+    try{
+      const snap = await db.collection(collection).where(field,"==",uid).limit(30).get();
+      if(collection==="userTasks"){
+        $("dashCompleted").textContent = snap.docs.filter(d=>d.data().status==="completed").length;
+        $(element).innerHTML = snap.empty ? `<div class="empty">${tr("এখনো কোনো কাজের রেকর্ড নেই।","No task records yet.")}</div>` : `<div class="table-wrap"><table><thead><tr><th>Task</th><th>Status</th><th>Date</th></tr></thead><tbody>${snap.docs.map(d=>{const x=d.data();return `<tr><td>${safeText(x.taskName||x.taskId||"Task")}</td><td>${safeText(x.status||"pending")}</td><td>${x.createdAt?.toDate ? x.createdAt.toDate().toLocaleDateString() : "—"}</td></tr>`}).join("")}</tbody></table></div>`;
+      } else if(collection==="transactions"){
+        $(element).innerHTML = snap.empty ? `<div class="empty">No transaction records yet.</div>` : `<div class="table-wrap"><table><thead><tr><th>Type</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead><tbody>${snap.docs.map(d=>{const x=d.data();return `<tr><td>${safeText(x.type||"—")}</td><td>${safeText(x.amount??"—")}</td><td>${safeText(x.status||"—")}</td><td>${x.createdAt?.toDate ? x.createdAt.toDate().toLocaleDateString() : "—"}</td></tr>`}).join("")}</tbody></table></div>`;
+      } else {
+        $(element).innerHTML = snap.empty ? `<div class="empty">No notifications yet.</div>` : snap.docs.map(d=>`<div class="activity-row"><div class="dot">♢</div><div><strong>${safeText(d.data().title||"Update")}</strong><small>${safeText(d.data().message||"")}</small></div></div>`).join("");
+      }
+    }catch(e){console.warn(collection,e);}
+  }
+  try{
+    const refs = await db.collection("referrals").where("referrerUid","==",uid).limit(100).get();
+    $("dashReferrals").textContent = refs.size;
+    $("referralBox").innerHTML = `<p>Your referral code is not configured yet.</p><p class="small muted">Referral rewards will be enabled after server-side fraud checks.</p>`;
+  }catch(e){$("dashReferrals").textContent="—";}
+}
+function setAuthMode(mode){
+  authMode=mode;
+  $("loginTab").classList.toggle("active",mode==="login");
+  $("registerTab").classList.toggle("active",mode==="register");
+  $("nameField").classList.toggle("hidden",mode!=="register");
+  $("authSubmit").textContent=mode==="login"?"Login":"Create account";
+  $("authPassword").autocomplete=mode==="login"?"current-password":"new-password";
+  $("forgotBtn").classList.toggle("hidden",mode!=="login");
+}
+function validPassword(p){return p.length>=8 && /[A-Z]/.test(p) && /[a-z]/.test(p) && /\d/.test(p) && /[^A-Za-z0-9]/.test(p);}
+async function authSubmit(e){
+  e.preventDefault();
+  if(!auth){toast("Firebase is not configured.");return;}
+  const email=$("authEmail").value.trim();
+  const password=$("authPassword").value;
+  const name=$("authName").value.trim();
+  if(authMode==="register" && !validPassword(password)){toast("Use 8+ chars with uppercase, lowercase, number and special character.");return;}
+  const btn=$("authSubmit");btn.disabled=true;
+  try{
+    if(authMode==="register"){
+      if(!name){toast("Enter your name.");return;}
+      const credential=await auth.createUserWithEmailAndPassword(email,password);
+      await credential.user.updateProfile({displayName:name});
+      await ensureMemberProfile(credential.user);
+      try{await credential.user.sendEmailVerification();}catch(e){console.warn("Verification email:",e);}
+      toast("Account created. Check your email for verification.");
+    }else{
+      const credential=await auth.signInWithEmailAndPassword(email,password);
+      await ensureMemberProfile(credential.user);
+      toast("Login successful.");
+    }
+    go("dashboard");
+  }catch(err){console.error(err);toast(firebaseError(err));}
+  finally{btn.disabled=false;}
+}
+function firebaseError(err){
+  const code=err?.code||"";
+  const map={
+    "auth/email-already-in-use":"This email is already registered.",
+    "auth/invalid-email":"Enter a valid email address.",
+    "auth/weak-password":"Password does not meet the security policy.",
+    "auth/user-not-found":"No account found for this email.",
+    "auth/wrong-password":"Incorrect email or password.",
+    "auth/invalid-credential":"Incorrect email or password.",
+    "auth/too-many-requests":"Too many attempts. Please try later.",
+    "auth/network-request-failed":"Network error. Check your connection.",
+    "permission-denied":"Permission denied by Firestore Security Rules."
+  };
+  return map[code]||"Something went wrong. Please try again.";
+}
+async function loadAdminTasks(){
+  if(!isAdmin()||!db)return;
+  const rows=[];
+  try{
+    const snap=await db.collection("tasks").get();
+    snap.forEach(d=>rows.push({id:d.id,data:d.data()}));
+    const map=new Map(rows.map(x=>[x.id,x.data]));
+    $("adminTaskRows").innerHTML=Array.from({length:28},(_,i)=>{
+      const id="slot-"+String(i+1).padStart(2,"0"),t=map.get(id);
+      return `<tr><td>${id}</td><td>${safeText(t?.name||"—")}</td><td>${t?.providerVerified===true&&t?.enabled?"Provider verified":t?.enabled?"Awaiting verification":"Disabled"}</td><td><button class="btn btn-soft" data-edit-slot="${id}">Edit</button></td></tr>`;
+    }).join("");
+    $("adminTaskRows").querySelectorAll("[data-edit-slot]").forEach(b=>b.addEventListener("click",()=>{
+      const t=map.get(b.dataset.editSlot)||{};
+      $("taskSlot").value=b.dataset.editSlot;$("taskName").value=t.name||"";
+      $("taskCategory").value=t.category||"";$("taskReward").value=t.reward||"";
+      $("taskDescription").value=t.description||"";$("taskUrl").value=t.url||"";
+      $("taskEnabled").checked=!!t.enabled;
+      window.scrollTo({top:0,behavior:"smooth"});
+    }));
+  }catch(e){$("adminTaskRows").innerHTML="<tr><td colspan='4'>Unable to load task slots.</td></tr>";}
+}
+async function saveAdminTask(e){
+  e.preventDefault();
+  if(!isAdmin()||!db){toast("Admin access required.");return;}
+  const id=$("taskSlot").value;
+  const name=$("taskName").value.trim();
+  const url=$("taskUrl").value.trim();
+  if($("taskEnabled").checked && (!/^https:\/\//i.test(url)||!name)){toast("Enabled offers need a name and HTTPS offer URL.");return;}
+  try{
+    await db.collection("tasks").doc(id).set({
+      slot:Number(id.slice(5)),name,
+      category:$("taskCategory").value.trim(),
+      reward:$("taskReward").value.trim(),
+      description:$("taskDescription").value.trim(),
+      url,enabled:$("taskEnabled").checked,
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    },{merge:true});
+    toast("Task slot saved.");loadAdminTasks();loadTasks();
+  }catch(e){console.error(e);toast(firebaseError(e));}
+}
+async function supportSubmit(e){
+  e.preventDefault();
+  if(!requireLogin())return;
+  if(!db){toast("Database connection is unavailable.");return;}
+  const subject=$("supportSubject").value.trim(),message=$("supportMessage").value.trim();
+  if(!subject||!message)return;
+  try{
+    await db.collection("supportTickets").add({
+      uid:currentUser.uid,subject,category:$("supportCategory").value,
+      message,status:"open",createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    $("supportForm").reset();toast("Support ticket submitted.");
+  }catch(e){console.error(e);toast(firebaseError(e));}
+}
+async function bootFirebase(){
+  try{
+    if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+    auth=firebase.auth();db=firebase.firestore();
+    auth.onAuthStateChanged(async user=>{
+      authReady = true;
+      if(!user){
+        showAuthState(null,null);
+        const requested = (location.hash || "#home").slice(1);
+        if(["dashboard","balance","mytasks","withdraw","transactions","referral","notifications","security"].includes(requested)) go("profile");
+        return;
+      }
+      try{
+        const profile=await ensureMemberProfile(user);
+        showAuthState(user,profile);
+        if(location.hash==="#dashboard")loadMemberData();
+        if(location.hash==="#admin"&&profile.role==="admin")loadAdminTasks();
+      }catch(e){
+        console.error("Profile load failed:",e);
+        showAuthState(user,null);
+        toast("Account profile could not be loaded. Check Firestore Rules.");
+      }
+    });
+  }catch(e){console.error("Firebase initialization failed:",e);toast("Firebase connection unavailable. Check configuration.");}
+}
+function init(){
+  $("year").textContent=new Date().getFullYear();
+  setLanguage(language);
+  $("taskSlot").innerHTML=Array.from({length:28},(_,i)=>`<option value="slot-${String(i+1).padStart(2,"0")}">slot-${String(i+1).padStart(2,"0")}</option>`).join("");
+  renderTaskSlots([]);
+  document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+  document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
+  $("langBtn").addEventListener("click",()=>setLanguage(language==="bn"?"en":"bn"));
+  $("accountBtn").addEventListener("click",()=>go("profile"));
+  $("menuBtn").addEventListener("click",()=>{$("sidebar").classList.toggle("open");$("overlay").classList.toggle("show");});
+  $("overlay").addEventListener("click",()=>{$("sidebar").classList.remove("open");$("overlay").classList.remove("show");});
+  $("loginTab").addEventListener("click",()=>setAuthMode("login"));
+  $("registerTab").addEventListener("click",()=>setAuthMode("register"));
+  $("authForm").addEventListener("submit",authSubmit);
+  $("forgotBtn").addEventListener("click",async()=>{
+    const email=$("authEmail").value.trim();if(!email){toast("Enter your email first.");return;}
+    try{await auth.sendPasswordResetEmail(email);toast("Password reset email sent.");}catch(e){toast(firebaseError(e));}
+  });
+  $("logoutBtn").addEventListener("click",()=>auth.signOut());
+  $("verifyBtn").addEventListener("click",async()=>{try{await currentUser.sendEmailVerification();toast("Verification email sent.");}catch(e){toast(firebaseError(e));}});
+  $("profileForm").addEventListener("submit",async e=>{
+    e.preventDefault();if(!requireLogin())return;
+    const displayName=$("editName").value.trim(),phone=$("editPhone").value.trim(),photoURL=$("editPhoto").value.trim();
+    if(!displayName){toast("Display name is required.");return;}
+    try{
+      await db.collection("users").doc(currentUser.uid).update({
+        displayName,phone,photoURL,
+        updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+      });
+      await currentUser.updateProfile({displayName,photoURL:photoURL||null});
+      currentProfile={...currentProfile,displayName,phone,photoURL};
+      showAuthState(currentUser,currentProfile);toast("Profile updated.");
+    }catch(e){console.error(e);toast(firebaseError(e));}
+  });
+  $("securityReset").addEventListener("click",async()=>{
+    if(!currentUser){go("profile");toast("Sign in first.");return;}
+    try{await auth.sendPasswordResetEmail(currentUser.email);toast("Password reset email sent.");}catch(e){toast(firebaseError(e));}
+  });
+  $("taskAdminForm").addEventListener("submit",saveAdminTask);
+  $("clearTask").addEventListener("click",()=>{$("taskAdminForm").reset();});
+  $("supportForm").addEventListener("submit",supportSubmit);
+  const initial=(location.hash||"#home").slice(1);
+  go($("page-"+initial)?initial:"home");
+  bootFirebase();
+}
+document.addEventListener("DOMContentLoaded",init);
+</script>
+</body>
+</html>
