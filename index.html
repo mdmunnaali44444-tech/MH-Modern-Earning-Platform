@@ -369,19 +369,9 @@ async function authSubmit(e){
   finally{btn.disabled=false;}
 }
 function firebaseError(err){
-  const code=err?.code||"";
-  const map={
-    "auth/email-already-in-use":"This email is already registered.",
-    "auth/invalid-email":"Enter a valid email address.",
-    "auth/weak-password":"Password does not meet the security policy.",
-    "auth/user-not-found":"No account found for this email.",
-    "auth/wrong-password":"Incorrect email or password.",
-    "auth/invalid-credential":"Incorrect email or password.",
-    "auth/too-many-requests":"Too many attempts. Please try later.",
-    "auth/network-request-failed":"Network error. Check your connection.",
-    "permission-denied":"Permission denied by Firestore Security Rules."
-  };
-  return map[code]||"Something went wrong. Please try again.";
+  console.error("MH Firebase Error:", err);
+  return "Error: " + (err?.code || "unknown")
+    + " | " + (err?.message || "No details");
 }
 async function loadAdminTasks(){
   if(!isAdmin()||!db)return;
