@@ -35,7 +35,8 @@ main{min-width:0}.page{display:none}.page.active{display:block}.page-head{displa
     <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
     <a class="brand" href="#home" aria-label="MH home"><span class="logo">MH</span><span>MODERN EARNING<small>PLATFORM</small></span></a>
     <div class="top-actions">
-      <span id="headerUser" class="small" style="color:#d4dced"></span>
+     <span id="headerUser" class="small" style="color:#d4dced"></span>
+<span id="headerBalance" class="small" style="color:#f2ca7a; font-weight:800; background:#ffffff1a; padding:5px 10px; border-radius:20px; display:none;">৳ 0.00</span>
       <button class="lang" id="langBtn">বাংলা / EN</button>
       <button class="btn btn-gold" id="accountBtn">Account</button>
     </div>
@@ -296,6 +297,8 @@ async function loadMemberData(){
     const pending = Number(wallet.pendingBalance || 0);
     const total = Number(wallet.totalEarned || 0);
     $("dashBalance").textContent = available.toFixed(2) + " BDT";
+    $("headerBalance").textContent = "৳ " + available.toFixed(2);
+    $("headerBalance").style.display = "inline-block";
     $("dashPending").textContent = pending.toFixed(2) + " BDT";
     $("availableBalance").textContent = available.toFixed(2);
     $("pendingBalance").textContent = pending.toFixed(2);
@@ -492,5 +495,30 @@ function init(){
 }
 document.addEventListener("DOMContentLoaded",init);
 </script>
+  <!-- Bottom Nav -->
+<style>
+.bottom-nav{
+  position:fixed; bottom:0; left:0; right:0;
+  display:flex; justify-content:space-around;
+  background:#111827; padding:10px 0 12px;
+  border-top:1px solid #2d3748; z-index:9999;
+}
+.bottom-nav button{
+  background:none; border:none; color:#a0aec0;
+  font-size:11px; display:flex; flex-direction:column;
+  align-items:center; gap:2px; cursor:pointer;
+}
+.bottom-nav button span{ font-size:20px; }
+body{ padding-bottom:70px !important; }
+</style>
+
+<div class="bottom-nav">
+  <button onclick="document.querySelector('button[data-page=home]').click()"><span>🏠</span>Home</button>
+  <button onclick="document.querySelector('button[data-page=tasks]').click()"><span>📋</span>Task</button>
+  <button onclick="document.querySelector('button[data-page=balance]').click()"><span>💰</span>Wallet</button>
+  <button onclick="document.querySelector('button[data-page=withdraw]').click()"><span>💸</span>Withdraw</button>
+  <button onclick="document.querySelector('button[data-page=profile]').click()"><span>👤</span>Profile</button>
+  <button onclick="document.querySelector('button[data-page=referral]').click()"><span>👥</span>Refer</button>
+  </div>
 </body>
 </html>
