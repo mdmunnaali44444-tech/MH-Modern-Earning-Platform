@@ -1,94 +1,123 @@
-<!doctype html>
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MH - Modern Earning Platform</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MH - Modern Platform</title>
 <style>
-:root{--navy:#10182f;--gold:#e9b95e;--bg:#f4f6fb;--line:#e7ebf2;--muted:#71809a;--ink:#1c2942;--white:#fff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,"Hind Siliguri",Arial,sans-serif}
-button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}.muted{color:var(--muted)}.small{font-size:12px}
-.topbar{height:68px;background:var(--navy);color:#fff;display:flex;align-items:center;position:sticky;top:0;z-index:20}
-.top-inner{max-width:1240px;margin:auto;width:100%;padding:0 18px;display:flex;justify-content:space-between;align-items:center;gap:14px}
-.brand{display:flex;gap:10px;align-items:center;font-weight:850;color:#fff;text-decoration:none}.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#f6d58b,#d99b35);display:grid;place-items:center;color:#17223a;font-weight:950}.brand small{display:block;color:#c1cbe0;font-size:10px;letter-spacing:1.3px}
-.lang,.menu-btn{border:1px solid #ffffff35;background:#ffffff12;color:#fff;border-radius:10px;padding:8px 11px}.menu-btn{display:none;font-size:18px}
-.layout{max-width:1240px;margin:auto;display:grid;grid-template-columns:245px 1fr;gap:22px;padding:22px 18px 40px}
-.sidebar{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:14px;height:max-content;position:sticky;top:88px}
-.side-label{font-size:10px;font-weight:800;letter-spacing:1.4px;color:#9aa5b7;padding:12px 10px 7px}
-.nav{display:grid;gap:4px}.nav button{border:0;background:transparent;text-align:left;color:#52617b;padding:10px 12px;border-radius:11px;display:flex;gap:11px;align-items:center;font-weight:650;width:100%}.nav button.active,.nav button:hover{background:#eef2fb;color:#263d70}
-.side-foot{margin-top:16px;padding:13px;border-radius:13px;background:#f6f8fc;color:#66748c;font-size:12px}
-.page{display:none}.page.active{display:block}.page-head h1{margin:0;font-size:25px}.page-head p{margin:5px 0 0;color:var(--muted)}
-.hero{background:linear-gradient(120deg,#111b35,#253b67);color:#fff;border-radius:22px;padding:27px;display:flex;justify-content:space-between;gap:20px;align-items:center;position:relative;overflow:hidden}.hero h2{font-size:26px;margin:7px 0}.hero p{color:#d0d9eb}.gold{color:#f2ca7a}.hero-art{font-size:65px}
-.hero-img{width:100%;height:180px;object-fit:cover;border-radius:16px;margin-bottom:14px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:0 12px 35px rgba(22,35,65,.08)}
-.grid{display:grid;gap:15px}.stats{grid-template-columns:repeat(4,1fr);margin-top:16px}.stat strong{display:block;font-size:25px;margin-top:7px}
-.btn{border:0;border-radius:11px;padding:10px 15px;font-weight:750}.btn-primary{background:var(--navy);color:#fff}.btn-gold{background:var(--gold);color:#1d2940}.btn-soft{background:#edf2fb;color:#2e477a}.btn-line{background:#fff;border:1px solid var(--line);color:#52617b}.btn-danger{background:#fff0f1;color:#b83f4e}
-.two{grid-template-columns:1.25fr .75fr;margin-top:16px}.notice{border:1px solid #f0dfb8;background:#fff9eb;color:#765d2d;border-radius:13px;padding:13px 15px;font-size:13px;margin-bottom:16px}.info{border:1px solid #dbe6fb;background:#f3f7ff;color:#45608c;border-radius:13px;padding:13px 15px;font-size:13px}
-.task-grid{grid-template-columns:repeat(2,1fr)}.task-card img{width:100%;height:130px;object-fit:cover;border-radius:12px}
-.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:750;color:#56647c}.field input,.field select,.field textarea{width:100%;border:1px solid #dfe5ef;border-radius:11px;padding:11px 12px;outline:none}
-.profile-pic{width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);display:block;margin:0 auto}.cover{width:100%;height:110px;object-fit:cover;border-radius:14px}.center{text-align:center}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#17233b;color:#fff;padding:12px 17px;border-radius:12px;z-index:99}.mobile-overlay{display:none}
-@media(max-width:900px){.layout{grid-template-columns:1fr;padding:13px 12px}.sidebar{position:fixed;z-index:40;left:12px;top:78px;bottom:12px;width:260px;overflow:auto;transform:translateX(-120%);transition:.22s}.sidebar.open{transform:translateX(0)}.menu-btn{display:inline-block}.mobile-overlay.show{display:block;position:fixed;inset:68px 0 0;background:#0c142b66;z-index:30}.stats{grid-template-columns:repeat(2,1fr)}.two,.task-grid,.form-grid{grid-template-columns:1fr}.hero{padding:20px}.hero h2{font-size:22px}.hero-art{font-size:45px}}
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+body{background:#0a1230;color:#fff}
+.topbar{background:#101a4a;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:900;font-size:20px}.logo span{color:#00e5ff}
+.wrap{display:flex}
+.sidebar{width:165px;background:#0d1650;min-height:100vh;padding:12px 8px;flex-shrink:0}
+.sidebar a{display:block;padding:9px 10px;border-radius:8px;color:#dbe4ff;text-decoration:none;font-size:13px;margin-bottom:4px}
+.sidebar a.active,.sidebar a:hover{background:#1e2a6b;color:#fff}
+.main{flex:1;padding:12px;min-width:0}
+.hero{background:linear-gradient(90deg,#0b2a6b,#1a3aa0);border-radius:14px;padding:18px 14px;margin-bottom:12px;position:relative;overflow:hidden}
+.hero h1{font-size:24px}.hero h2{font-size:18px;margin:4px 0}.hero p{opacity:.85;font-size:13px}
+.hero-btn{margin-top:12px;display:flex;gap:8px}
+.b1{background:#2196f3;border:0;color:#fff;padding:9px 14px;border-radius:20px;font-weight:700}
+.b2{background:#222;border:1px solid #555;color:#fff;padding:9px 14px;border-radius:20px;font-weight:700}
+.card{background:#16205e;border-radius:14px;padding:14px;margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.box{border-radius:12px;padding:12px;text-align:center}
+.blue{background:#2196f3}.green{background:#00b894}.purple{background:#8e44ad}.orange{background:#f39c12}
+.box b{font-size:19px;display:block}.box small{opacity:.9}
+.task{background:#1e2a6b;border-radius:12px;padding:12px;text-align:center}
+.task button{background:#00c853;border:0;color:#fff;padding:7px;border-radius:20px;margin-top:8px;width:100%;font-weight:700}
+.refer{background:linear-gradient(135deg,#7b2ff7,#00c6ff);border-radius:14px;padding:16px;margin-bottom:12px}
+.linkbox{background:rgba(0,0,0,.3);padding:9px;border-radius:8px;display:flex;justify-content:space-between;font-size:12px;margin-top:10px}
+@media(max-width:650px){.sidebar{display:none}.grid4{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-<header class="topbar"><div class="top-inner"><button class="menu-btn" id="menuBtn">☰</button><a class="brand"><span class="logo">MH</span><span id="siteName">MODERN EARNING<small>PLATFORM</small></span></a><div style="display:flex;gap:8px;align-items:center"><span id="headerUser" class="small" style="color:#d4dced"></span><button class="lang" id="langBtn">বাংলা / EN</button><button class="btn btn-gold" onclick="go('profile')">Account</button></div></div></header>
-<div class="mobile-overlay" id="overlay"></div>
-<div class="layout">
-<aside class="sidebar" id="sidebar">
-<div class="side-label">প্রধান মেনু / MAIN MENU</div><nav class="nav">
-<button class="active" data-page="home">⌂ <span data-bn="হোম" data-en="Home">হোম</span></button>
-<button data-page="dashboard">▦ <span data-bn="ড্যাশবোর্ড" data-en="Dashboard">ড্যাশবোর্ড</span></button>
-<button data-page="tasks">✦ <span data-bn="কাজসমূহ" data-en="Tasks">কাজসমূহ</span></button>
-<button data-page="mytasks">✓ <span data-bn="আমার কাজ" data-en="My Tasks">আমার কাজ</span></button>
-<button data-page="balance">৳ <span data-bn="ব্যালেন্স" data-en="Balance">ব্যালেন্স</span></button>
-<button data-page="withdraw">⇧ <span data-bn="উইথড্র" data-en="Withdraw">উইথড্র</span></button>
-<button data-page="transactions">⇄ <span data-bn="লেনদেন" data-en="Transactions">লেনদেন</span></button>
-<button data-page="referral">♧ <span data-bn="রেফারেল" data-en="Referral">রেফারেল</span></button>
-<button data-page="notifications">♢ <span data-bn="নোটিফিকেশন" data-en="Notifications">নোটিফিকেশন</span></button></nav>
-<div class="side-label">ACCOUNT</div><nav class="nav">
-<button data-page="profile">◎ <span data-bn="প্রোফাইল" data-en="Profile">প্রোফাইল</span></button>
-<button data-page="security">◇ <span data-bn="নিরাপত্তা" data-en="Security">নিরাপত্তা</span></button>
-<button data-page="support">☏ <span data-bn="সহায়তা" data-en="Help & Support">সহায়তা</span></button>
-<button data-page="terms">≡ <span data-bn="শর্তাবলি" data-en="Terms">শর্তাবলি</span></button>
-<button data-page="privacy">▤ <span data-bn="গোপনীয়তা" data-en="Privacy">গোপনীয়তা</span></button>
-<button data-page="admin" id="adminNav" class="hidden">⚙ <span>অ্যাডমিন প্যানেল</span></button></nav>
-<div class="side-foot" id="sideFootText">বাস্তব অফার ও পেমেন্ট চালু হবে যাচাইকৃত পার্টনার এবং নিরাপদ সার্ভার সংযোগের পর।</div>
-</aside>
-<main>
-<section class="page active" id="page-home">
-<img class="hero-img" id="homeImg" src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=900&q=80">
-<div class="hero"><div><div class="gold" style="font-size:11px;letter-spacing:1.5px;font-weight:850">স্বাগতম MH-তে</div><h2 id="heroTitle">আপনার সময়, আপনার দক্ষতা — <span class="gold">নতুন সম্ভাবনা</span></h2><p id="heroDesc">যাচাইকৃত অনলাইন কাজ ও অফার খুঁজুন। কাজের শর্ত বুঝে অংশ নিন, অগ্রগতি দেখুন এবং স্বচ্ছ রেকর্ড রাখুন।</p><div style="display:flex;gap:9px;margin-top:17px;flex-wrap:wrap"><button class="btn btn-gold" onclick="go('tasks')">কাজ দেখুন</button><button class="btn btn-line" onclick="go('dashboard')">ড্যাশবোর্ড</button></div></div><div class="hero-art">✧</div></div>
-<div class="notice" style="margin-top:16px">স্বচ্ছতার নোট: এই মুহূর্তে কোনো বাস্তব অফার-প্রোভাইডার বা পেমেন্ট প্রসেসর সংযুক্ত না থাকলে এখানে আয় বা পেমেন্টের নিশ্চয়তা নেই।</div>
-<div class="grid stats"><div class="card"><div class="small">মোট সদস্য</div><strong>—</strong></div><div class="card"><div class="small">সক্রিয় সদস্য</div><strong>—</strong></div><div class="card"><div class="small">টাস্ক স্লট</div><strong>28</strong></div><div class="card"><div class="small">সম্পন্ন কাজ</div><strong>—</strong></div></div>
-<div class="grid two"><div class="card"><h3>কীভাবে শুরু করবেন</h3><p class="small">01 অ্যাকাউন্ট তৈরি করুন<br>02 অফারের শর্ত পড়ুন<br>03 অগ্রগতি ও রেকর্ড দেখুন</p></div><div class="card"><h3>আপনার অ্যাকাউন্ট</h3><p class="muted small">সাইট ঘুরে দেখতে লগইন বাধ্যতামূলক নয়।</p><button class="btn btn-primary" style="width:100%;margin-top:10px" onclick="go('profile')">লগইন / রেজিস্ট্রেশন</button></div></div>
-</section>
-<section class="page" id="page-dashboard"><div class="page-head"><h1>ড্যাশবোর্ড</h1><p>আপনার অ্যাকাউন্টের সারসংক্ষেপ</p></div><div class="info" id="dashboardGate">ড্যাশবোর্ডের ব্যক্তিগত তথ্য দেখতে লগইন করুন।</div><div class="grid stats" style="margin-top:15px"><div class="card"><div class="small">মোট টাস্ক</div><strong id="dashTotal">—</strong></div><div class="card"><div class="small">সম্পন্ন কাজ</div><strong id="dashCompleted">—</strong></div><div class="card"><div class="small">পেন্ডিং কাজ</div><strong>—</strong></div><div class="card"><div class="small">রেফারেল</div><strong id="dashReferrals">—</strong></div></div><div class="card" style="margin-top:16px"><h3>সাম্প্রতিক কার্যক্রম</h3><div id="dashActivity" class="small">লগইন করলে আপনার কার্যক্রম এখানে দেখাবে।</div></div></section>
-<section class="page" id="page-tasks"><div class="page-head"><h1>কাজসমূহ</h1><p>Provider থেকে যাচাইকৃত অফার</p></div><div class="notice">২৮টি স্লট প্রস্তুত। বাস্তব Provider অফার সংযুক্ত না হওয়া পর্যন্ত কোনো স্লটকে সক্রিয় কাজ হিসেবে দেখানো হবে না।</div><div class="grid task-grid" id="taskGrid"></div></section>
-<section class="page" id="page-mytasks"><h1>আমার কাজ</h1><div class="card" id="myTasksBox" style="margin-top:14px"><div class="small">লগইন করলে আপনার কাজের রেকর্ড এখানে দেখাবে।</div></div></section>
-<section class="page" id="page-balance"><h1>ব্যালেন্স</h1><div class="notice" style="margin-top:14px">ব্যালেন্স কেবল বিশ্বস্ত সার্ভার থেকে আপডেট হবে। ওয়েবসাইট থেকে সদস্য নিজে ব্যালেন্স দেখতে / পরিবর্তন করতে পারবে না।</div><div class="card"><p>আপনার হিসাব সার্ভারে নিরাপদে সংরক্ষিত।</p></div></section>
-<section class="page" id="page-withdraw"><h1>উইথড্র</h1><div class="info" style="margin-top:14px">নিরাপদ payout backend ও payment verification এখনো সংযুক্ত করা হয়নি। তাই এখানে এখনো কোনো টাকা পাঠানো বা withdrawal request জমা হবে না।</div><div class="card" style="margin-top:15px"><div style="display:flex;gap:10px;flex-wrap:wrap"><span style="background:#fff;border:1px solid #eee;padding:8px 14px;border-radius:10px;font-weight:900;color:#E2136E">bKash</span><span style="background:#fff;border:1px solid #eee;padding:8px 14px;border-radius:10px;font-weight:900;color:#F6921E">Nagad</span><span style="background:#fff;border:1px solid #eee;padding:8px 14px;border-radius:10px;font-weight:900">Rocket</span></div><div class="form-grid" style="margin-top:14px"><div class="field"><label>Payment Method</label><select><option>bKash</option><option>Nagad</option><option>Rocket</option></select></div><div class="field"><label>নাম্বার</label><input placeholder="01XXXXXXXXX"></div><div class="field full"><label>ছবি / স্ক্রিনশট</label><input type="file" accept="image/*"></div></div><button class="btn btn-primary" style="margin-top:14px">Withdraw Request</button></div></section>
-<section class="page" id="page-transactions"><h1>লেনদেন</h1><div class="card" style="margin-top:14px"><div id="transactionsBox" class="small">লগইন করলে আপনার লেনদেন দেখাবে।</div></div></section>
-<section class="page" id="page-referral"><h1>রেফারেল</h1><img class="hero-img" src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&q=80" style="margin-top:14px"><div class="card"><div id="referralBox" class="small">রেফারেল কোড দেখতে লগইন করুন।</div><b id="refLink">https://mh-modern.com/?ref=MH123</b><br><button class="btn btn-gold" style="margin-top:10px" onclick="navigator.clipboard.writeText(document.getElementById('refLink').innerText);alert('Copied!')">Copy Link</button></div></section>
-<section class="page" id="page-notifications"><h1>নোটিফিকেশন</h1><div class="card" style="margin-top:14px"><div id="notificationsBox" class="small">লগইন করলে আপনার নোটিফিকেশন দেখাবে।</div></div></section>
-<section class="page" id="page-profile"><h1>প্রোফাইল</h1><div class="card" id="authBox" style="max-width:510px;margin:16px auto"><div style="display:flex;gap:6px;background:#f2f4f8;border-radius:12px;padding:5px;margin-bottom:17px"><button class="btn" style="flex:1" id="loginTab">Login</button><button class="btn" style="flex:1" id="registerTab">Create account</button></div><form id="authForm"><div class="field" id="nameField"><label>আপনার নাম</label><input id="authName" placeholder="Full name"></div><div class="field" style="margin-top:12px"><label>Email</label><input id="authEmail" type="email" required placeholder="name@example.com"></div><div class="field" style="margin-top:12px"><label>পাসওয়ার্ড</label><input id="authPassword" type="password" required minlength="8" placeholder="At least 8 characters"></div><div class="field" style="margin-top:12px"><label>প্রোফাইল ছবি (বাধ্যতামূলক)</label><input type="file" accept="image/*" onchange="document.getElementById('regPrev').src=URL.createObjectURL(this.files[0])"><img id="regPrev" class="profile-pic" style="margin-top:10px" src="https://via.placeholder.com/90"></div><button class="btn btn-primary" style="width:100%;margin-top:14px" id="authSubmit">Login</button><button class="btn btn-line" type="button" style="width:100%;margin-top:8px" id="forgotBtn">Forgot password?</button></form></div><div class="card hidden" id="profileBox"><img class="cover" src="https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=900&q=80"><img class="profile-pic" style="margin-top:-45px" src="https://via.placeholder.com/90"><h2 class="center" id="profileName">Member</h2><p class="center small" id="profileEmail">—</p><p class="center small" id="profileStatus">—</p><div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap"><button class="btn btn-line" style="flex:1" onclick="go('security')">Security</button><button class="btn btn-line" style="flex:1" onclick="go('support')">Help</button><button class="btn btn-danger" style="flex:1" id="logoutBtn">Logout</button></div></div></section>
-<section class="page" id="page-security"><h1>নিরাপত্তা</h1><div class="card" style="margin-top:14px"><h3>Account Security</h3><p class="muted small">Use a unique password. Never share password.</p><button class="btn btn-line" style="margin-top:10px" id="securityReset">Send password reset email</button><p class="small" style="margin-top:10px">লগইন করা ডিভাইস: Android - Dhaka • Active Now<br>2FA বন্ধ আছে - তোমার নির্দেশ অনুযায়ী</p></div></section>
-<section class="page" id="page-support"><h1>সহায়তা</h1><div class="card" style="margin-top:14px"><p>Telegram Group</p><button class="btn btn-gold" style="margin-top:8px">Join Telegram</button><p style="margin-top:14px">WhatsApp Support</p><button class="btn btn-primary" style="margin-top:8px">Chat on WhatsApp</button><form id="supportForm" style="margin-top:16px"><div class="form-grid"><div class="field"><label>Subject</label><input id="supportSubject" required></div><div class="field"><label>Category</label><select><option>Account</option><option>Task issue</option><option>Payment</option><option>Other</option></select></div><div class="field full"><label>Message</label><textarea id="supportMessage" required></textarea></div></div><button class="btn btn-primary" style="margin-top:12px">Submit Ticket</button></form></div></section>
-<section class="page" id="page-terms"><h1>শর্তাবলি</h1><div class="card" style="margin-top:14px"><h3>Fair use</h3><p class="muted small">Members must provide accurate information, follow provider rules, no bots / duplicate accounts.</p><h3>Rewards and withdrawals</h3><p class="muted small">Rewards are credited only after trusted provider verification.</p></div></section>
-<section class="page" id="page-privacy"><h1>গোপনীয়তা নীতি</h1><div class="card" style="margin-top:14px"><p class="muted small">MH uses account information needed to provide sign-in, profile, task and support features. Do not submit passwords / PINs.</p></div></section>
-<section class="page" id="page-admin"><h1>অ্যাডমিন প্যানেল</h1><p class="small">এখান থেকে রং, লেখা, ছবি - সব এডিট হবে।</p><div class="notice" style="margin-top:14px">শুধু admin role পাওয়া অ্যাকাউন্ট এই অংশ ব্যবহার করতে পারবে।</div><div class="card"><h3>🎨 সাইট সেটিংস</h3><div class="form-grid" style="margin-top:12px"><div class="field"><label>সাইট নাম</label><input id="adminSiteName" placeholder="MODERN EARNING"></div><div class="field"><label>Hero Title</label><input id="adminHeroTitle"></div><div class="field full"><label>Hero Description</label><textarea id="adminHeroDesc"></textarea></div><div class="field"><label>প্রধান রং (Navy)</label><input type="color" id="adminNavy" value="#10182f"></div><div class="field"><label>গোল্ডেন রং</label><input type="color" id="adminGold" value="#e9b95e"></div><div class="field"><label>ব্যাকগ্রাউন্ড রং</label><input type="color" id="adminBg" value="#f4f6fb"></div><div class="field"><label>Home ছবি URL</label><input id="adminHomeImg" placeholder="https://..."></div><div class="field full"><label>নোটিশ / Footer লেখা</label><input id="adminFooter"></div></div><button class="btn btn-primary" style="margin-top:14px" onclick="saveSiteSettings()">💾 Save Settings</button><button class="btn btn-line" style="margin-top:8px" onclick="resetSiteSettings()">Reset Default</button></div><div class="card" style="margin-top:16px"><h3>Task Slot Manager - ২৮ টি</h3><div class="form-grid" style="margin-top:12px"><div class="field"><label>Slot</label><select id="taskSlot"></select></div><div class="field"><label>Task Name</label><input id="taskName"></div><div class="field full"><label>Description</label><textarea id="taskDescription"></textarea></div><div class="field full"><label>Offer URL</label><input id="taskUrl" placeholder="https://..."></div></div><button class="btn btn-primary" style="margin-top:12px" onclick="saveTaskSlot()">Save Slot</button><div id="adminTaskRows" style="margin-top:14px" class="small">Admin access required.</div></div></section>
-<div style="text-align:center;color:#98a2b2;font-size:11px;padding:25px 10px">© <span id="year"></span> MH — Modern Earning Platform</div>
-</main></div><div id="toast" class="toast hidden"></div>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-<script>
-const firebaseConfig={apiKey:"AIzaSyBEeIVyP44rJE8QkmumNWj8CeKlAjr9hg",authDomain:"mh-modern-earning-platform.firebaseapp.com",projectId:"mh-modern-earning-platform",storageBucket:"mh-modern-earning-platform.firebasestorage.app",messagingSenderId:"743565295091",appId:"1:743565295091:web:fdaf5dc868a38e24a6a686",measurementId:"G-WZMYQ9M3W4"};
-let auth=null,db=null,currentUser=null,currentProfile=null,language='bn',authMode='login';const $=id=>document.getElementById(id);
-function toast(m){$('toast').textContent=m;$('toast').classList.remove('hidden');setTimeout(()=>$('toast').classList.add('hidden'),3000)}
-function go(p){let t=$('page-'+p)?p:'home';document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+t));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===t));location.hash=t;$('sidebar').classList.remove('open');$('overlay').classList.remove('show')}
-function setLang(l){language=l;document.querySelectorAll('[data-bn]').forEach(el=>{el.innerHTML=el.getAttribute('data-'+l)});$('langBtn').textContent=l==='bn'?'বাংলা / EN':'EN / বাংলা'}
-function renderTasks(){let h='';const imgs=['photo-1611162617213-7d7a39e9b1d7','photo-1611162616305-c69b3fa7fbe0','photo-1611926653458-09294b3142bf','photo-1611162618758-2a29a995354b'];for(let i=1;i<=28;i++){let img=imgs[i%4];h+=`<article class="card"><img src="https://images.unsplash.com/${img}?w=400&q=80"><h3 style="margin:10px 0 4px">Slot ${String(i).padStart(2,'0')}</h3><p class="small">Provider verification এর পর সক্রিয় হবে। টাকার পরিমাণ দেখানো হবে না।</p><button class="btn btn-line" disabled style="margin-top:10px">শিগগির আসছে</button></article>`}$('taskGrid').innerHTML=h}
-function applySiteSettings(){let s=JSON.parse(localStorage.getItem('mh_site_settings')||'{}');if(s.navy)document.documentElement.style.setProperty('--navy',s.navy);if(s.gold)document.documentElement.style.setProperty('--gold',s.gold);if(s.bg)document.documentElement.style.setProperty('--bg',s.bg);if(s.heroTitle)$('heroTitle').innerHTML=s.heroTitle;if(s.heroDesc)$('heroDesc').innerText=s.heroDesc;if(s.homeImg)$('homeImg').src=s.homeImg;if(s.footer)$('sideFootText').innerText=s.footer;if(s.siteName)$('siteName').innerHTML=s.siteName+'<small>PLATFORM</small>'}
-function saveSiteSettings(){let s={siteName:$('adminSiteName').value,heroTitle:$('adminHeroTitle').value,heroDesc:$('adminHeroDesc').value,navy:$('adminNavy').value,gold:$('adminGold').value,bg:$('adminBg').value,homeImg:$('adminHomeImg').value,footer:$('adminFooter').value};localStorage.setItem('mh_site_settings',JSON.stringify(s));applySiteSettings();toast('✅ সেভ হয়ে গেছে!')}
-function resetSiteSettings(){localStorage.removeItem('mh_site_settings');location.reload()}
-function saveTaskSlot(){toast('Task Slot Saved')}
-document.addEventListener('DOMContentLoaded',()=>{$('year').textContent=new Date().getFullYear();applySiteSettings();renderTasks();$('taskSlot').innerHTML=Array.from({length:28},(_,i)=>`<option>slot-${String(i+1).padStart(2,'0')}</option>`).join('');document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));$('menuBtn').addEventListener('click',()=>{$('sidebar').classList.toggle('open');$('overlay').classList.toggle('show')});$('overlay').addEventListener('click',()=>{$('sidebar').classList.remove('open');$('overlay').classList.remove('show')});$('langBtn').addEventListener('click',()=>setLang(language==='bn'?'en':'bn'));$('loginTab').addEventListener('click',()=>{authMode='login';$('nameField').style.display='none';$('authSubmit').textContent='Login'});$('registerTab').addEventListener('click',()=>{authMode='register';$('nameField').style.display='grid';$('authSubmit').textContent='Create account'});$('nameField').style.display='none';try{firebase.initializeApp(firebaseConfig);auth=firebase.auth();db=firebase.firestore();auth.onAuthStateChanged(async user=>{if(!user){$('authBox').classList.remove('hidden');$('profileBox').classList.add('hidden');$('headerUser').textContent='';$('adminNav').classList.add('hidden');return}currentUser=user;$('authBox').classList.add('hidden');$('profileBox').classList.remove('hidden');$('profileName').textContent=user.displayName||'Member';$('profileEmail').textContent=user.email||'';$('headerUser').textContent=user.email||'';try{let snap=await db.collection('users').doc(user.uid).get();currentProfile=snap.exists?snap.data():null;if(currentProfile&&currentProfile.role==='admin')$('adminNav').classList.remove('hidden')}catch(e){}})}catch(e){console.log(e)};$('authForm').addEventListener('submit',async e=>{e.preventDefault();let email=$('authEmail').value,pass=$('authPassword').value,name=$('authName').value;try{if(authMode==='register'){let c=await auth.createUserWithEmailAndPassword(email,pass);await c.user.updateProfile({displayName:name});await db.collection('users').doc(c.user.uid).set({email,displayName:name,role:'member',status:'active'});toast('Account Created!')}else{await auth.signInWithEmailAndPassword(email,pass);toast('Login Success!')}go('dashboard')}catch(err){toast(err.message)}});$('logoutBtn')?.addEventListener('click',()=>{auth.signOut();go('home');toast('লগ আউট হয়ে Welcome পেজে চলে আসছেন')});$('forgotBtn').addEventListener('click',async()=>{try{await auth.sendPasswordResetEmail($('authEmail').value);toast('Reset email sent')}catch(e){toast(e.message)}});$('securityReset')?.addEventListener('click',async()=>{try{await auth.sendPasswordResetEmail(currentUser.email);toast('Reset email sent')}catch(e){toast(e.message)}});$('supportForm')?.addEventListener('submit',e=>{e.preventDefault();toast('Support ticket submitted!')});go((location.hash||'#home').slice(1))});
-</script></body></html>
+
+<div class="topbar"><div class="logo">MH <span>- Modern Platform</span></div><div>বাংলা | EN &nbsp; 👤 Muna</div></div>
+
+<div class="wrap">
+<!-- 2. SIDEBAR -->
+<div class="sidebar">
+<a class="active" href="#">📊 Dashboard</a>
+<a href="#">💰 Balance</a>
+<a href="#">✅ Tasks</a>
+<a href="#">📝 My Tasks</a>
+<a href="#">🔄 Withdraw</a>
+<a href="#">💳 Transactions</a>
+<a href="#">👥 Referral</a>
+<a href="#">🔔 Notifications</a>
+<a href="#">👤 Profile</a>
+<a href="#">🔒 Security</a>
+<a href="#">❓ Help / Support</a>
+<a href="#">🚪 Logout</a>
+</div>
+
+<div class="main">
+<!-- 1. HERO / স্বাগতম -->
+<div class="hero">
+<h1>স্বাগতম</h1>
+<h2>MH - Modern Platform</h2>
+<p>কাজ করুন, পয়েন্ট জমা করুন, এগিয়ে যান...</p>
+<div class="hero-btn"><button class="b1">👤 অ্যাকাউন্ট করুন →</button><button class="b2">↪ লগইন করুন</button></div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="card">
+<h3>Dashboard</h3>
+<div class="grid4" style="margin-top:10px">
+<div class="box blue"><small>Total Members</small><b>12,450</b></div>
+<div class="box green"><small>Active Members</small><b>2,847</b></div>
+<div class="box purple"><small>Total Tasks</small><b>28</b></div>
+<div class="box orange"><small>Completed</small><b>8,120</b></div>
+</div>
+<div class="grid2" style="margin-top:10px">
+<div class="box" style="background:#1e2a6b"><small>Your Points</small><b>1,250 Points</b></div>
+<div class="box" style="background:#1e2a6b"><small>Completed Tasks</small><b>18 টি</b></div>
+</div>
+</div>
+
+<!-- 3. REFERRAL -->
+<div class="refer">
+<h3>🎁 Referral Program</h3>
+<p style="font-size:13px">Invite Your Friends - Get Bonus Together!</p>
+<div class="linkbox"><span>https://mh-platform.com/ref/muna</span><b>Copy</b></div>
+<div class="grid2" style="margin-top:12px">
+<div class="box" style="background:rgba(0,0,0,.25)"><small>Total Referrals</small><b>24</b></div>
+<div class="box" style="background:rgba(0,0,0,.25)"><small>Referral Points</small><b>240</b></div>
+</div>
+</div>
+
+<!-- 4. AVAILABLE TASKS -->
+<div class="card">
+<h3>Available Tasks</h3>
+<div class="grid4" style="margin-top:10px">
+<div class="task"><b>Task 1</b><br><small>ভিডিও দেখুন</small><br><b>10 Points</b><button>Start Task</button></div>
+<div class="task"><b>Task 2</b><br><small>পোস্ট শেয়ার</small><br><b>10 Points</b><button>Start Task</button></div>
+<div class="task"><b>Task 3</b><br><small>অ্যাপ ডাউনলোড</small><br><b>12 Points</b><button>Start Task</button></div>
+<div class="task"><b>Task 4</b><br><small>সার্ভে পূরণ</small><br><b>12 Points</b><button>Start Task</button></div>
+<div class="task"><b>Task 5</b><br><small>ফলো করুন</small><br><b>15 Points</b><button>Start Task</button></div>
+<div class="task"><b>Task 6</b><br><small>রিভিউ দিন</small><br><b>15 Points</b><button>Start Task</button></div>
+<div class="task"><b>Task 7</b><br><small>কুইজ খেলুন</small><br><b>18 Points</b><button>Start Task</button></div>
+<div class="task"><b>Task 8</b><br><small>বন্ধুকে ইনভাইট</small><br><b>18 Points</b><button>Start Task</button></div>
+</div>
+</div>
+
+<!-- 5. ADMIN PANEL -->
+<div class="card">
+<h3>🛠 Admin Panel</h3>
+<div class="grid4" style="margin-top:10px">
+<div class="box blue"><small>Total Members</small><b>12,450</b></div>
+<div class="box green"><small>Active Today</small><b>2,847</b></div>
+<div class="box purple"><small>Total Tasks</small><b>28</b></div>
+<div class="box orange"><small>Pending Tasks</small><b>12</b></div>
+</div>
+<button class="b1" style="width:100%;margin-top:12px">Manage Tasks</button>
+</div>
+
+<p style="text-align:center;opacity:.5;font-size:11px">MH Modern Platform - Demo Version (No Money Shown)</p>
+</div>
+</div>
+
+</body>
+  </html>
