@@ -6,7 +6,7 @@
 <title>MH - Sign Up</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-  body{min-height:100vh;min-height:100svh;background:url('1794603017686.jpg') center/cover no-repeat;display:flex;align-items:center;justify-content:center;padding:20px}
+  body{min-height:100vh;background:url('1794603017686.jpg') center/cover no-repeat;display:flex;align-items:center;justify-content:center;padding:20px}
   body::before{content:'';position:fixed;inset:0;background:rgba(2,5,30,0.78)}
   .box{position:relative;width:92%;max-width:420px;background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);border:1px solid rgba(255,215,0,0.4);padding:32px;border-radius:22px;text-align:center;color:#fff}
   .logo{font-size:48px;font-weight:900;background:linear-gradient(#ffd700,#ff9d00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -14,10 +14,10 @@
   h2{margin:20px 0 6px;font-size:24px}
   p{color:#bbb;font-size:14px;margin-bottom:20px}
   input{width:100%;padding:16px;margin-bottom:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.4);color:#fff;outline:none;font-size:16px}
-  input::placeholder{color:#999}
   button{width:100%;padding:16px;border:none;border-radius:12px;background:linear-gradient(#ffd700,#ff9d00);font-weight:bold;font-size:17px;cursor:pointer}
   a{color:#00e5ff;text-decoration:none;font-size:14px}
   .links{margin-top:18px;display:flex;justify-content:space-between}
+  #msg{font-size:14px;margin-top:12px;min-height:20px}
 </style>
 </head>
 <body>
@@ -26,12 +26,28 @@
   <div class="sub">MODERN EARNING PLATFORM</div>
   <h2>Create Account</h2>
   <p>Join MH and start earning</p>
-  <input type="text" placeholder="Full Name">
-  <input type="text" placeholder="Phone Number">
-  <input type="password" placeholder="Create Password">
-  <input type="text" placeholder="Refer Code (Optional)">
-  <button>Sign Up</button>
+  <input id="name" type="text" placeholder="Full Name">
+  <input id="email" type="email" placeholder="Gmail Address">
+  <input id="pass" type="password" placeholder="Create Password">
+  <input id="refer" type="text" placeholder="Refer Code (Optional)">
+  <button onclick="doSignup()">Sign Up</button>
+  <div id="msg"></div>
   <div class="links"><a href="index.html">← Back</a><a href="login.html">Already have account? Log In</a></div>
 </div>
+<script>
+function doSignup(){
+  var name=document.getElementById('name').value.trim();
+  var email=document.getElementById('email').value.trim().toLowerCase();
+  var pass=document.getElementById('pass').value.trim();
+  var refer=document.getElementById('refer').value.trim();
+  var msg=document.getElementById('msg');
+  if(!name || !email || !pass){ msg.style.color='red'; msg.innerText='Please fill Name, Gmail and Password!'; return; }
+  if(!email.includes('@')){ msg.style.color='red'; msg.innerText='Please enter a valid Gmail!'; return; }
+  if(localStorage.getItem('mh_user_' + email)){ msg.style.color='red'; msg.innerText='Already registered! Please Log In.'; return; }
+  localStorage.setItem('mh_user_' + email, JSON.stringify({name:name, email:email, pass:pass, refer:refer, balance:0}));
+  msg.style.color='#00ff88'; msg.innerText='Account Created! Going to Log In...';
+  setTimeout(()=>{ window.location.href='login.html'; }, 1000);
+}
+</script>
 </body>
 </html>
