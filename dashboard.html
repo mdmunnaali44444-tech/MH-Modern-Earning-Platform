@@ -3,97 +3,219 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MH | Member Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MH | Modern Earning Platform</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#020b20;--panel:#071a3b;--blue:#087bff;--cyan:#00d9ff;--white:#f4f8ff;--muted:#a9bfdc}
-body{background:var(--bg);color:var(--white);font-family:Arial,sans-serif}
-button,input,select,textarea{font:inherit}
-button,a{cursor:pointer}
-.app{display:flex;min-height:100vh;padding:8px;gap:12px}
-.sidebar{width:235px;flex-shrink:0;background:linear-gradient(180deg,#071e49,#020b24);border:1px solid #087bff;border-radius:17px;padding:14px 10px;box-shadow:0 0 17px #087bff55}
-.logo{text-align:center;padding:10px 5px 19px;border-bottom:1px solid #155ba5;margin-bottom:12px}
-.logo strong{font-size:38px;color:#35baff;text-shadow:0 0 15px #008cff}
-.logo p{font-size:12px;font-weight:bold}
-.nav button{width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:transparent;color:#eaf3ff;border:1px solid transparent;border-radius:10px;padding:12px 10px;margin:3px 0;font-size:14px}
-.nav button:hover,.nav button.active{background:linear-gradient(100deg,#087bff,#0645a9);border-color:#28caff;box-shadow:0 0 12px #008cff88}
-.nav button span{font-size:20px;width:25px;text-align:center}
-.nav button.admin{border-color:#bd8c19;background:linear-gradient(90deg,#b76a00,#5a3100)}
+:root{
+--bg:#030a1b;--panel:#091b39;--blue:#087cff;
+--cyan:#12d8ff;--text:#f4f8ff;--muted:#a9bfd9;
+}
+body{background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+.app{display:flex;gap:13px;padding:12px;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{
+width:235px;flex-shrink:0;
+background:linear-gradient(180deg,#0a214a,#030d25);
+border:1px solid #087bff;border-radius:19px;
+padding:15px 11px;box-shadow:0 0 20px #007bff33;
+}
+.logo{text-align:center;padding:13px 5px 22px;border-bottom:1px solid #174c88;margin-bottom:14px}
+.logo strong{font-size:39px;color:#27caff;text-shadow:0 0 18px #008cff}
+.logo p{font-size:10px;letter-spacing:1px;color:#d7eaff;margin-top:4px}
+.nav a{
+display:flex;align-items:center;gap:12px;
+padding:12px 10px;margin:4px 0;
+border-radius:10px;font-size:13px;color:#dceaff;
+border:1px solid transparent;transition:.2s;
+}
+.nav a span{font-size:19px;width:25px;text-align:center}
+.nav a:hover,.nav a.active{
+background:linear-gradient(100deg,#087bff,#063c9c);
+border-color:#25caff;box-shadow:0 0 13px #087bff66;
+}
+.nav a.admin{border-color:#a97820;color:#ffe09a}
+
+/* MAIN */
 .main{flex:1;min-width:0}
-.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 17px;background:#071a38;border:1px solid #086acb;border-radius:15px}
+.topbar{
+display:flex;align-items:center;justify-content:space-between;
+gap:12px;padding:14px 18px;min-height:75px;
+background:var(--panel);border:1px solid #126ac0;
+border-radius:16px;box-shadow:0 0 15px #006aff22;
+}
 .topleft{display:flex;align-items:center;gap:12px}
-.topbar h2{font-size:19px}
-.topbar p{font-size:12px;color:var(--muted);margin-top:5px}
-.actions{display:flex;align-items:center;gap:8px}
-.smallbtn{border:1px solid #168dff;background:#092b5a;color:white;border-radius:10px;padding:10px}
+.topbar h2{font-size:20px}
+.topbar p{font-size:11px;color:var(--muted);margin-top:5px}
+.actions{display:flex;align-items:center;gap:9px}
+.action{
+background:#0b2b59;border:1px solid #168bff;color:white;
+padding:10px 12px;border-radius:10px;
+}
+.avatar{
+width:39px;height:39px;border-radius:50%;
+display:grid;place-items:center;background:linear-gradient(135deg,#00cfff,#0755df);
+font-size:21px;border:2px solid #8beaff;
+}
 #toggle{display:none}
-.page{margin-top:13px}
-.hero{min-height:225px;padding:27px;border:2px solid #087bff;border-radius:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:radial-gradient(circle at 20% 50%,#005eff99,transparent 40%),linear-gradient(120deg,#071d4a,#03102b 65%,#063b80);box-shadow:0 0 18px #008cff66}
-.hero h1{font-size:clamp(25px,4vw,39px);margin-bottom:10px}
-.hero h1 span{color:#22caff;text-shadow:0 0 15px #00aaff}
-.hero p{color:#d6e8ff;line-height:1.7;font-size:14px}
-.hero .tag{display:inline-block;margin-top:17px;background:#ffd32a;color:#111;padding:9px 13px;border-radius:6px;font-weight:bold}
-.heroart{font-size:clamp(65px,10vw,115px);filter:drop-shadow(0 0 18px #00aaff)}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:13px}
-.stat{padding:17px 8px;text-align:center;border:1px solid #168dff;border-radius:15px;background:linear-gradient(145deg,#0646bf,#061a48);box-shadow:0 0 12px #006aff44}
-.stat:nth-child(2){background:linear-gradient(145deg,#008b60,#053c39);border-color:#00e6a0}
-.stat:nth-child(3){background:linear-gradient(145deg,#6818ce,#220c59);border-color:#b15cff}
-.stat:nth-child(4){background:linear-gradient(145deg,#d97706,#642b08);border-color:#ffb52b}
-.stat .ico{font-size:26px;margin-bottom:7px}
-.stat h3{font-size:12px;margin-bottom:9px}
-.stat strong{font-size:23px}
-.section{margin-top:13px;padding:16px;background:linear-gradient(145deg,#071b3b,#04132d);border:1px solid #087bff;border-radius:16px;box-shadow:0 0 13px #006aff33}
-.heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
-.heading h2{font-size:18px}
-.linkbtn,.primary{border:1px solid #25baff;background:#087bff;color:white;padding:9px 13px;border-radius:9px;text-decoration:none}
-.tasks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.task{display:flex;align-items:center;gap:10px;padding:13px;background:#061a3c;border:1px solid #087bff;border-radius:12px}
-.task .ico{font-size:26px}
-.taskinfo{flex:1;min-width:0}
-.taskinfo h3{font-size:13px;margin-bottom:5px}
-.taskinfo p{font-size:11px;color:var(--muted)}
-.badge{font-size:11px;color:#ffd56a}
-.referral{background:linear-gradient(110deg,#063e27,#052d30);border-color:#00d99b;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
-.referral h2{color:#42ffc2;margin-bottom:7px}
-.referral p{font-size:13px;line-height:1.6;color:#d7fff0}
-.referral button{background:#00dc85;color:#002b1d;border:0;border-radius:22px;padding:12px 16px;font-weight:bold}
-.activity{padding:14px;background:#06152e;border-radius:10px;color:var(--muted);font-size:13px;line-height:1.8}
-.footer{text-align:center;padding:22px;color:#829bbb;font-size:12px}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.info{padding:15px;border:1px solid #155fa9;background:#061a38;border-radius:12px}
-.info h3{font-size:14px;margin-bottom:9px}
-.info p{font-size:13px;color:var(--muted);line-height:1.6}
-.form{display:grid;gap:12px;max-width:550px}
-.form label{font-size:13px;color:#d9eaff}
-.form input,.form select,.form textarea{width:100%;margin-top:6px;padding:12px;border-radius:9px;background:#03132d;color:white;border:1px solid #1766b5}
-.form textarea{min-height:90px}
-.notice{padding:13px;background:#10264a;border-left:3px solid #12baff;border-radius:8px;color:#c7ddf7;font-size:13px;line-height:1.6}
-.rowitem{display:flex;justify-content:space-between;gap:10px;padding:13px 5px;border-bottom:1px solid #173b68;font-size:13px}
-.hidden{display:none!important}
-@media(max-width:850px){
-.app{padding:6px}
-.sidebar{position:fixed;z-index:20;top:0;bottom:0;left:-255px;width:245px;overflow-y:auto;border-radius:0 16px 16px 0;transition:left .25s}
+
+/* HERO */
+.hero{
+position:relative;overflow:hidden;
+display:flex;align-items:center;justify-content:space-between;
+gap:12px;min-height:245px;padding:27px 30px;margin-top:14px;
+border:1px solid #168fff;border-radius:19px;
+background:
+radial-gradient(ellipse at 80% 50%,#087bff66,transparent 40%),
+linear-gradient(110deg,#082b6b,#061631 55%,#073b79);
+box-shadow:0 0 20px #007bff55;
+}
+.hero:after{
+content:"";position:absolute;inset:0;pointer-events:none;
+background:repeating-linear-gradient(135deg,transparent 0 45px,#25aaff0b 46px 48px);
+}
+.hero-content{position:relative;z-index:1;max-width:590px}
+.hero .welcome{font-size:12px;color:#6bdfff;letter-spacing:2px;margin-bottom:9px}
+.hero h1{font-size:clamp(27px,4vw,43px);margin-bottom:12px}
+.hero h1 span{color:#27caff;text-shadow:0 0 17px #00aaff}
+.hero p{font-size:14px;line-height:1.8;color:#d8eaff}
+.hero-btn{
+display:inline-block;margin-top:17px;padding:11px 19px;
+border-radius:9px;background:linear-gradient(90deg,#087bff,#00baff);
+font-size:13px;font-weight:bold;box-shadow:0 0 15px #008cff66;
+}
+.hero-art{
+position:relative;z-index:1;min-width:180px;
+display:grid;place-items:center;
+}
+.hero-orb{
+width:165px;height:165px;border-radius:50%;
+display:grid;place-items:center;
+background:radial-gradient(circle at 35% 30%,#73eaff,#087bff 45%,#071b56 75%);
+border:2px solid #55dfff;
+box-shadow:0 0 30px #008cff, inset 0 0 22px #b5f4ff66;
+font-size:86px;
+}
+.coin{position:absolute;right:0;top:4px;font-size:31px;filter:drop-shadow(0 0 8px gold)}
+.coin2{position:absolute;left:0;bottom:0;font-size:29px}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+.stat{
+padding:17px 12px;min-height:130px;border-radius:16px;
+border:1px solid #188bff;
+background:linear-gradient(145deg,#0754c4,#071a45);
+box-shadow:0 0 13px #006aff33;
+}
+.stat:nth-child(2){background:linear-gradient(145deg,#008e67,#073c39);border-color:#00e7aa}
+.stat:nth-child(3){background:linear-gradient(145deg,#7628ce,#281052);border-color:#bd76ff}
+.stat:nth-child(4){background:linear-gradient(145deg,#d47a0b,#673009);border-color:#ffc04c}
+.stat-top{display:flex;justify-content:space-between;align-items:center}
+.stat-icon{font-size:26px}
+.stat small{font-size:11px;color:#e1edff}
+.stat strong{display:block;font-size:26px;margin-top:15px}
+.stat em{font-size:10px;font-style:normal;color:#d2e9ff}
+
+/* CONTENT */
+.content-grid{
+display:grid;grid-template-columns:1.45fr 1fr;
+gap:13px;margin-top:14px;
+}
+.section{
+padding:17px;background:linear-gradient(145deg,#0a2043,#05132b);
+border:1px solid #116ac3;border-radius:16px;
+box-shadow:0 0 13px #006aff22;min-width:0;
+}
+.section-title{
+display:flex;align-items:center;justify-content:space-between;
+gap:10px;margin-bottom:15px;
+}
+.section-title h2{font-size:17px}
+.more{font-size:11px;color:#52caff}
+.task-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.task{
+display:flex;align-items:center;gap:10px;padding:13px;
+background:#071a39;border:1px solid #145aa0;border-radius:12px;
+}
+.task-icon{font-size:25px}
+.task-info{flex:1;min-width:0}
+.task-info h3{font-size:12px;margin-bottom:5px}
+.task-info p{font-size:10px;color:var(--muted)}
+.pending{font-size:10px;color:#ffce65}
+.notice{
+padding:12px;margin-top:12px;border-radius:9px;
+background:#10284a;color:#bcd8f5;font-size:11px;line-height:1.7;
+border-left:3px solid #16baff;
+}
+
+/* REFERRAL */
+.referral{
+background:radial-gradient(circle at 90% 30%,#00ba8333,transparent 35%),linear-gradient(120deg,#063c34,#061b30);
+border-color:#00c999;
+}
+.referral h2{font-size:19px;color:#53ffca;margin-bottom:10px}
+.referral p{font-size:12px;color:#d7fff1;line-height:1.8}
+.referral-icon{font-size:49px;text-align:center;margin:12px}
+.ref-btn{
+display:inline-block;background:#00d99a;color:#032a20;
+padding:11px 17px;border-radius:20px;font-weight:bold;font-size:12px;
+}
+.activity-row{
+display:flex;justify-content:space-between;gap:10px;
+padding:12px 2px;border-bottom:1px solid #18385e;
+font-size:12px;color:#c8dcf4;
+}
+.activity-row small{color:#8ca9cb}
+.quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.quick{
+background:#081d3e;border:1px solid #175fa7;
+padding:14px;border-radius:11px;
+}
+.quick strong{display:block;font-size:12px;margin-top:7px}
+.quick span{font-size:22px}
+.footer{text-align:center;color:#7896b8;font-size:11px;padding:22px}
+
+/* MOBILE */
+@media(max-width:900px){
+.sidebar{
+position:fixed;z-index:20;top:0;bottom:0;left:-260px;
+width:245px;overflow-y:auto;transition:left .25s;
+border-radius:0 17px 17px 0;
+}
 .sidebar.open{left:0}
 #toggle{display:block}
-.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+.content-grid{grid-template-columns:1fr}
 }
-@media(max-width:520px){
-.topbar{padding:10px;height:68px}
+@media(max-width:600px){
+.app{padding:6px;gap:0}
+.topbar{min-height:65px;padding:10px}
 .topbar h2{font-size:16px}
 .topbar p{font-size:10px}
-.hero{min-height:175px;padding:16px}
-.hero h1{font-size:24px}
-.hero p{font-size:12px}
-.heroart{font-size:48px}
-.tasks,.grid2{grid-template-columns:1fr}
-.section{padding:12px}
-.stat{padding:13px 5px}
-.stat h3{font-size:11px}
-.stat strong{font-size:21px}
+.actions{gap:5px}
+.action{padding:8px}
+.hero{min-height:180px;padding:18px 14px}
+.hero h1{font-size:25px}
+.hero p{font-size:11px}
+.hero .welcome{font-size:10px}
+.hero-art{min-width:90px}
+.hero-orb{width:91px;height:91px;font-size:49px}
+.coin{font-size:20px}
+.coin2{font-size:18px}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.stat{min-height:112px;padding:12px 9px}
+.stat strong{font-size:22px;margin-top:10px}
+.stat small{font-size:10px}
+.section{padding:13px}
+.section-title h2{font-size:15px}
+.task-list{grid-template-columns:1fr}
+.task{padding:12px}
 }
 </style>
 </head>
+
 <body>
 <div class="app">
 
@@ -102,314 +224,149 @@ button,a{cursor:pointer}
   <strong>👑 MH</strong>
   <p>MODERN EARNING PLATFORM</p>
  </div>
- <nav class="nav" id="nav">
-  <button class="active" data-page="dashboard"><span>🏠</span>Dashboard</button>
-  <button data-page="tasks"><span>📋</span>Tasks</button>
-  <button data-page="mytasks"><span>📝</span>My Tasks</button>
-  <button data-page="balance"><span>👛</span>Balance</button>
-  <button data-page="withdraw"><span>💸</span>Withdraw</button>
-  <button data-page="transactions"><span>🔄</span>Transactions</button>
-  <button data-page="referral"><span>👥</span>Referral</button>
-  <button data-page="notifications"><span>🔔</span>Notifications</button>
-  <button data-page="profile"><span>👤</span>Profile</button>
-  <button data-page="security"><span>🛡️</span>Security</button>
-  <button data-page="support"><span>🎧</span>Help & Support</button>
-  <button data-page="terms"><span>📄</span>Terms & Conditions</button>
-  <button data-page="privacy"><span>🔐</span>Privacy Policy</button>
-  <button data-page="admin" class="admin"><span>⚙️</span>Admin Panel</button>
+ <nav class="nav">
+  <a class="active" href="dashboard.html"><span>🏠</span>Dashboard</a>
+  <a href="tasks.html"><span>📋</span>Tasks</a>
+  <a href="mytasks.html"><span>📝</span>My Tasks</a>
+  <a href="balance.html"><span>👛</span>Balance</a>
+  <a href="withdraw.html"><span>💸</span>Withdraw</a>
+  <a href="transactions.html"><span>🔄</span>Transactions</a>
+  <a href="referral.html"><span>👥</span>Referral</a>
+  <a href="notifications.html"><span>🔔</span>Notifications</a>
+  <a href="profile.html"><span>👤</span>Profile</a>
+  <a href="security.html"><span>🛡️</span>Security</a>
+  <a href="support.html"><span>🎧</span>Help & Support</a>
+  <a href="terms.html"><span>📄</span>Terms & Conditions</a>
+  <a href="privacy.html"><span>🔐</span>Privacy Policy</a>
+  <a class="admin" href="admin.html"><span>⚙️</span>Admin Panel</a>
  </nav>
 </aside>
 
 <main class="main">
+
 <header class="topbar">
  <div class="topleft">
-  <button class="smallbtn" id="toggle">☰</button>
-  <div><h2 id="pageTitle">Member Dashboard</h2><p>Welcome to your MH account</p></div>
+  <button class="action" id="toggle">☰</button>
+  <div>
+   <h2>Member Dashboard</h2>
+   <p>Welcome to your MH account</p>
+  </div>
  </div>
  <div class="actions">
-  <button class="smallbtn" data-go="notifications">🔔</button>
-  <button class="smallbtn" id="language">বাংলা</button>
-  <button class="smallbtn" data-go="profile">👤</button>
+  <a class="action" href="notifications.html">🔔</a>
+  <button class="action" id="language">বাংলা</button>
+  <a href="profile.html" class="avatar">👤</a>
  </div>
 </header>
 
-<div class="page" id="content">
+<section class="hero">
+ <div class="hero-content">
+  <div class="welcome">WELCOME TO YOUR DIGITAL WORLD</div>
+  <h1>Welcome to <span>MH</span></h1>
+  <p>
+   Modern Earning Platform<br>
+   Discover verified opportunities, manage your tasks
+   and keep track of your account.
+  </p>
+  <a class="hero-btn" href="tasks.html">Explore Tasks →</a>
+ </div>
+ <div class="hero-art">
+  <div class="hero-orb">👑</div>
+  <span class="coin">🪙</span>
+  <span class="coin2">💎</span>
+ </div>
+</section>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="view">
- <section class="hero">
-  <div>
-   <h1>Welcome to <span>MH</span></h1>
-   <p>Modern Earning Platform<br>Discover opportunities, complete verified tasks and manage your account.</p>
-   <span class="tag">YOUR SUCCESS • OUR MISSION</span>
-  </div>
-  <div class="heroart">👑</div>
- </section>
+<section class="stats">
+ <div class="stat">
+  <div class="stat-top"><span class="stat-icon">👥</span><small>MEMBERS</small></div>
+  <strong>—</strong><em>Total Members</em>
+ </div>
+ <div class="stat">
+  <div class="stat-top"><span class="stat-icon">🟢</span><small>ONLINE</small></div>
+  <strong>—</strong><em>Active Members</em>
+ </div>
+ <div class="stat">
+  <div class="stat-top"><span class="stat-icon">📋</span><small>TASKS</small></div>
+  <strong>28</strong><em>Total Task Slots</em>
+ </div>
+ <div class="stat">
+  <div class="stat-top"><span class="stat-icon">💰</span><small>REWARDS</small></div>
+  <strong>—</strong><em>Total Rewards</em>
+ </div>
+</section>
 
- <section class="stats">
-  <div class="stat"><div class="ico">👥</div><h3>Total Members</h3><strong>—</strong></div>
-  <div class="stat"><div class="ico">✅</div><h3>Active Members</h3><strong>—</strong></div>
-  <div class="stat"><div class="ico">📋</div><h3>Total Task Slots</h3><strong>28</strong></div>
-  <div class="stat"><div class="ico">💰</div><h3>Total Rewards</h3><strong>—</strong></div>
- </section>
+<div class="content-grid">
 
  <section class="section">
-  <div class="heading"><h2>⚡ Available Tasks</h2><button class="linkbtn" data-go="tasks">View All →</button></div>
-  <div class="tasks" id="taskPreview"></div>
-  <p class="notice" style="margin-top:12px">Task slots are awaiting verified provider integration. No task or reward is currently guaranteed.</p>
+  <div class="section-title">
+   <h2>⚡ Available Tasks</h2>
+   <a class="more" href="tasks.html">View All →</a>
+  </div>
+  <div class="task-list">
+   <div class="task"><span class="task-icon">🎬</span><div class="task-info"><h3>Task Slot 01</h3><p>Awaiting verified provider</p></div><span class="pending">Pending</span></div>
+   <div class="task"><span class="task-icon">📝</span><div class="task-info"><h3>Task Slot 02</h3><p>Awaiting verified provider</p></div><span class="pending">Pending</span></div>
+   <div class="task"><span class="task-icon">📱</span><div class="task-info"><h3>Task Slot 03</h3><p>Awaiting verified provider</p></div><span class="pending">Pending</span></div>
+   <div class="task"><span class="task-icon">🎮</span><div class="task-info"><h3>Task Slot 04</h3><p>Awaiting verified provider</p></div><span class="pending">Pending</span></div>
+  </div>
+  <div class="notice">28 task slots are planned. Verified offers and rewards will appear after provider integration.</div>
  </section>
 
  <section class="section referral">
-  <div><h2>🎁 Refer & Connect</h2><p>Invite friends to discover MH.<br>Referral rewards will be shown after configuration.</p></div>
-  <button data-go="referral">Referral Details →</button>
+  <div class="section-title"><h2>🎁 Referral Program</h2><span>👥</span></div>
+  <p>Invite friends to discover the MH platform. Your referral information and rewards will appear after account integration.</p>
+  <div class="referral-icon">🌐</div>
+  <a class="ref-btn" href="referral.html">Explore Referral →</a>
  </section>
 
  <section class="section">
-  <div class="heading"><h2>📊 Recent Activity</h2><button class="linkbtn" data-go="transactions">View All →</button></div>
-  <div class="activity">No account activity to display yet.</div>
+  <div class="section-title"><h2>📊 Recent Activity</h2><a href="transactions.html" class="more">View All →</a></div>
+  <div class="activity-row"><span>👤 Account Activity</span><small>—</small></div>
+  <div class="activity-row"><span>📋 Task Activity</span><small>—</small></div>
+  <div class="activity-row"><span>💰 Reward Activity</span><small>—</small></div>
+  <div class="activity-row"><span>💸 Withdrawal Activity</span><small>—</small></div>
+  <div class="notice">Live account activity will appear after database integration.</div>
  </section>
-</div>
 
-<!-- TASKS -->
-<div id="tasks" class="view hidden">
  <section class="section">
-  <div class="heading"><h2>📋 All Task Slots</h2><span class="badge">28 planned slots</span></div>
-  <div class="tasks" id="allTasks"></div>
-  <p class="notice" style="margin-top:13px">Real offers will appear only after a provider is connected and verified.</p>
- </section>
-</div>
-
-<!-- MY TASKS -->
-<div id="mytasks" class="view hidden">
- <section class="section">
-  <div class="heading"><h2>📝 My Tasks</h2></div>
-  <div class="notice">Your started, pending and completed tasks will appear here after account and task-provider integration.</div>
-  <div class="grid2" style="margin-top:13px">
-   <div class="info"><h3>Pending Tasks</h3><p>—</p></div>
-   <div class="info"><h3>Completed Tasks</h3><p>—</p></div>
+  <div class="section-title"><h2>🚀 Quick Access</h2></div>
+  <div class="quick-grid">
+   <a class="quick" href="balance.html"><span>👛</span><strong>My Balance</strong></a>
+   <a class="quick" href="withdraw.html"><span>💸</span><strong>Withdraw</strong></a>
+   <a class="quick" href="mytasks.html"><span>📝</span><strong>My Tasks</strong></a>
+   <a class="quick" href="support.html"><span>🎧</span><strong>Support</strong></a>
   </div>
  </section>
+
 </div>
 
-<!-- BALANCE -->
-<div id="balance" class="view hidden">
- <section class="section">
-  <h2>👛 My Balance</h2>
-  <div class="stats">
-   <div class="stat"><h3>Available Balance</h3><strong>—</strong></div>
-   <div class="stat"><h3>Pending Rewards</h3><strong>—</strong></div>
-  </div>
-  <p class="notice" style="margin-top:14px">Your verified balance will appear after the secure reward ledger is connected.</p>
- </section>
-</div>
+<footer class="footer">
+ © 2026 MH — Modern Earning Platform<br>
+ Secure • Modern • Transparent
+</footer>
 
-<!-- WITHDRAW -->
-<div id="withdraw" class="view hidden">
- <section class="section">
-  <h2>💸 Withdraw Request</h2>
-  <p class="notice" style="margin:12px 0">Withdrawal requests are not active until payment verification and backend integration are complete.</p>
-  <form class="form" data-form="withdraw">
-   <label>Payment Method<select required><option value="">Select method</option><option>bKash</option><option>Nagad</option><option>USDT BEP-20</option></select></label>
-   <label>Account / Wallet Number<input required placeholder="Enter your payment details"></label>
-   <label>Amount<input required type="number" min="1" placeholder="Enter amount"></label>
-   <button class="primary" type="submit">Submit Request</button>
-  </form>
-  <div class="activity" id="withdrawMessage" style="margin-top:12px">No withdrawal records available.</div>
- </section>
-</div>
-
-<!-- TRANSACTIONS -->
-<div id="transactions" class="view hidden">
- <section class="section">
-  <h2>🔄 Transactions</h2>
-  <div class="activity" style="margin-top:13px">No verified transactions available yet.</div>
- </section>
-</div>
-
-<!-- REFERRAL -->
-<div id="referral" class="view hidden">
- <section class="section">
-  <h2>👥 Referral Center</h2>
-  <p class="notice" style="margin:13px 0">Your personal referral link will be generated after account integration.</p>
-  <div class="info"><h3>Your Referral Link</h3><p id="refLink">Not generated yet</p></div>
-  <button class="primary" style="margin-top:12px" id="copyReferral">Copy Referral Link</button>
-  <div class="grid2" style="margin-top:13px">
-   <div class="info"><h3>Total Referrals</h3><p>—</p></div>
-   <div class="info"><h3>Referral Rewards</h3><p>—</p></div>
-  </div>
- </section>
-</div>
-
-<!-- NOTIFICATIONS -->
-<div id="notifications" class="view hidden">
- <section class="section">
-  <h2>🔔 Notifications</h2>
-  <div class="activity" style="margin-top:13px">You have no new notifications.</div>
- </section>
-</div>
-
-<!-- PROFILE -->
-<div id="profile" class="view hidden">
- <section class="section">
-  <h2>👤 My Profile</h2>
-  <form class="form" data-form="profile" style="margin-top:14px">
-   <label>Full Name<input placeholder="Your name"></label>
-   <label>Email Address<input type="email" placeholder="Your email"></label>
-   <label>Phone Number<input type="tel" placeholder="Your phone number"></label>
-   <button class="primary" type="submit">Save Profile</button>
-  </form>
-  <p class="notice" style="margin-top:13px">Profile saving will be activated after Firebase integration.</p>
- </section>
-</div>
-
-<!-- SECURITY -->
-<div id="security" class="view hidden">
- <section class="section">
-  <h2>🛡️ Account Security</h2>
-  <div class="info" style="margin-top:13px"><h3>Password & Login</h3><p>Password changes and account protection will be managed through Firebase Authentication.</p></div>
-  <div class="info" style="margin-top:10px"><h3>Login Sessions</h3><p>Session management is not connected yet.</p></div>
- </section>
-</div>
-
-<!-- SUPPORT -->
-<div id="support" class="view hidden">
- <section class="section">
-  <h2>🎧 Help & Support</h2>
-  <form class="form" data-form="support" style="margin-top:14px">
-   <label>Subject<input required placeholder="How can we help?"></label>
-   <label>Message<textarea required placeholder="Write your message"></textarea></label>
-   <button class="primary" type="submit">Send Support Request</button>
-  </form>
-  <p class="notice" style="margin-top:13px">Support messages will be submitted after backend integration.</p>
- </section>
-</div>
-
-<!-- TERMS -->
-<div id="terms" class="view hidden">
- <section class="section">
-  <h2>📄 Terms & Conditions</h2>
-  <div class="activity" style="margin-top:13px">
-   <b>1. Account</b><br>Members must provide accurate account information and protect their login credentials.<br><br>
-   <b>2. Tasks</b><br>Only genuine tasks from verified providers may be offered. Members must follow each provider's rules.<br><br>
-   <b>3. Rewards</b><br>Rewards are subject to provider verification. No income or task availability is guaranteed.<br><br>
-   <b>4. Withdrawals</b><br>Payment requests are subject to published eligibility, verification and payment terms.<br><br>
-   <b>5. Fair Use</b><br>Fraud, fake accounts and manipulation are prohibited.<br><br>
-   <b>6. Updates</b><br>These terms must be reviewed and finalized before platform launch.
-  </div>
- </section>
-</div>
-
-<!-- PRIVACY -->
-<div id="privacy" class="view hidden">
- <section class="section">
-  <h2>🔐 Privacy Policy</h2>
-  <div class="activity" style="margin-top:13px">
-   <b>1. Information</b><br>MH will collect only information needed to operate member accounts and platform services.<br><br>
-   <b>2. Usage</b><br>Information may be used for account management, task verification, support and payment processing.<br><br>
-   <b>3. Security</b><br>Reasonable technical and organizational safeguards will be used to protect member information.<br><br>
-   <b>4. Sharing</b><br>Information may be shared with necessary service providers only for legitimate platform operations.<br><br>
-   <b>5. Member Rights</b><br>Members should be able to request access, correction or deletion where applicable.<br><br>
-   <b>6. Final Policy</b><br>This draft must be reviewed against actual data practices before launch.
-  </div>
- </section>
-</div>
-
-<!-- ADMIN -->
-<div id="admin" class="view hidden">
- <section class="section">
-  <h2>⚙️ Admin Panel</h2>
-  <p class="notice" style="margin:13px 0">Admin access is not enabled in this frontend. Only authorized administrators will be allowed after secure server-side role verification.</p>
-  <div class="grid2">
-   <div class="info"><h3>👥 Member Management</h3><p>Manage member accounts</p></div>
-   <div class="info"><h3>📋 28 Task Slots</h3><p>Add, edit, enable or disable slots</p></div>
-   <div class="info"><h3>💸 Withdrawals</h3><p>Review payment requests</p></div>
-   <div class="info"><h3>🔔 Notifications</h3><p>Manage member updates</p></div>
-  </div>
- </section>
-</div>
-
-<footer class="footer">© 2026 MH — Modern Earning Platform | All rights reserved.</footer>
-</div>
 </main>
 </div>
 
 <script>
-const titles={
- dashboard:"Member Dashboard",tasks:"Available Tasks",mytasks:"My Tasks",
- balance:"My Balance",withdraw:"Withdraw",transactions:"Transactions",
- referral:"Referral Center",notifications:"Notifications",profile:"My Profile",
- security:"Account Security",support:"Help & Support",
- terms:"Terms & Conditions",privacy:"Privacy Policy",admin:"Admin Panel"
-};
-
 const sidebar=document.getElementById("sidebar");
-const content=document.getElementById("content");
-
-function showPage(name){
- if(!document.getElementById(name)) return;
- document.querySelectorAll(".view").forEach(v=>v.classList.add("hidden"));
- document.getElementById(name).classList.remove("hidden");
- document.getElementById("pageTitle").textContent=titles[name]||name;
- document.querySelectorAll("#nav button").forEach(b=>{
-  b.classList.toggle("active",b.dataset.page===name);
- });
- sidebar.classList.remove("open");
- window.scrollTo(0,0);
-}
-
-document.getElementById("nav").addEventListener("click",e=>{
- const btn=e.target.closest("button[data-page]");
- if(btn) showPage(btn.dataset.page);
-});
-
-content.addEventListener("click",e=>{
- const btn=e.target.closest("[data-go]");
- if(btn) showPage(btn.dataset.go);
-});
-
 document.getElementById("toggle").addEventListener("click",()=>{
  sidebar.classList.toggle("open");
 });
-
 document.querySelector(".main").addEventListener("click",e=>{
- if(innerWidth<=850 && sidebar.classList.contains("open") &&
- !e.target.closest("#toggle")) sidebar.classList.remove("open");
+ if(innerWidth<=900 && sidebar.classList.contains("open") &&
+ !e.target.closest("#toggle")){
+ sidebar.classList.remove("open");
+ }
 });
 
-// Generate 28 visual task slots
-const taskIcons=["🎬","📝","📱","🎮","🌐","📊","📷"];
-function taskCard(i){
- return `<div class="task">
- <div class="ico">${taskIcons[(i-1)%taskIcons.length]}</div>
- <div class="taskinfo"><h3>Task Slot ${String(i).padStart(2,"0")}</h3>
- <p>Awaiting verified provider</p></div>
- <span class="badge">Pending</span></div>`;
-}
-document.getElementById("taskPreview").innerHTML=
- [1,2,3,4].map(taskCard).join("");
-document.getElementById("allTasks").innerHTML=
- Array.from({length:28},(_,i)=>taskCard(i+1)).join("");
-
-// Language toggle
-let bengali=false;
+let bangla=false;
 document.getElementById("language").addEventListener("click",e=>{
- bengali=!bengali;
- e.target.textContent=bengali?"English":"বাংলা";
- document.getElementById("pageTitle").textContent=
- bengali?"সদস্য ড্যাশবোর্ড":titles.dashboard;
-});
-
-// Forms: safely explain that backend is not connected
-document.querySelectorAll("form[data-form]").forEach(form=>{
- form.addEventListener("submit",e=>{
-  e.preventDefault();
-  alert("This feature will be activated after secure Firebase and backend integration.");
- });
-});
-
-// Referral copy
-document.getElementById("copyReferral").addEventListener("click",()=>{
- alert("Your referral link will be available after account integration.");
+ bangla=!bangla;
+ e.target.textContent=bangla?"English":"বাংলা";
+ document.documentElement.lang=bangla?"bn":"en";
+ document.querySelector(".topbar h2").textContent=
+ bangla?"সদস্য ড্যাশবোর্ড":"Member Dashboard";
 });
 </script>
 </body>
