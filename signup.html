@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,19 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MH - Sign Up</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-  body{min-height:100vh;background:url('1794603017686.jpg') center/cover no-repeat;display:flex;align-items:center;justify-content:center;padding:20px}
-  body::before{content:'';position:fixed;inset:0;background:rgba(2,5,30,0.78)}
-  .box{position:relative;width:92%;max-width:420px;background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);border:1px solid rgba(255,215,0,0.4);padding:32px;border-radius:22px;text-align:center;color:#fff}
-  .logo{font-size:48px;font-weight:900;background:linear-gradient(#ffd700,#ff9d00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  .sub{font-size:11px;letter-spacing:3px;color:#ccc}
-  h2{margin:20px 0 6px;font-size:24px}
-  p{color:#bbb;font-size:14px;margin-bottom:20px}
-  input{width:100%;padding:16px;margin-bottom:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.4);color:#fff;outline:none;font-size:16px}
-  button{width:100%;padding:16px;border:none;border-radius:12px;background:linear-gradient(#ffd700,#ff9d00);font-weight:bold;font-size:17px;cursor:pointer}
-  a{color:#00e5ff;text-decoration:none;font-size:14px}
-  .links{margin-top:18px;display:flex;justify-content:space-between}
-  #msg{font-size:14px;margin-top:12px;min-height:20px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{min-height:100vh;background:url('1794603017686.jpg') center/cover no-repeat;display:flex;align-items:center;justify-content:center;padding:20px}
+body::before{content:'';position:fixed;inset:0;background:rgba(2,5,30,.78)}
+.box{position:relative;width:92%;max-width:420px;background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:1px solid rgba(255,215,0,.4);padding:32px;border-radius:22px;text-align:center;color:#fff}
+.logo{font-size:48px;font-weight:900;background:linear-gradient(#ffd700,#ff9d00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:11px;letter-spacing:3px;color:#ccc}
+h2{margin:20px 0 6px;font-size:24px}
+p{color:#bbb;font-size:14px;margin-bottom:20px}
+input{width:100%;padding:16px;margin-bottom:14px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.4);color:#fff;outline:none;font-size:16px}
+button{width:100%;padding:16px;border:none;border-radius:12px;background:linear-gradient(#ffd700,#ff9d00);font-weight:bold;font-size:17px;cursor:pointer}
+button:disabled{opacity:.6;cursor:wait}
+a{color:#00e5ff;text-decoration:none;font-size:14px}
+.links{margin-top:18px;display:flex;justify-content:space-between;gap:12px}
+#msg{font-size:14px;margin-top:12px;min-height:20px}
 </style>
 </head>
 <body>
@@ -25,29 +27,136 @@
   <div class="logo">MH</div>
   <div class="sub">MODERN EARNING PLATFORM</div>
   <h2>Create Account</h2>
-  <p>Join MH and start earning</p>
-  <input id="name" type="text" placeholder="Full Name">
-  <input id="email" type="email" placeholder="Gmail Address">
-  <input id="pass" type="password" placeholder="Create Password">
-  <input id="refer" type="text" placeholder="Refer Code (Optional)">
-  <button onclick="doSignup()">Sign Up</button>
-  <div id="msg"></div>
-  <div class="links"><a href="index.html">← Back</a><a href="login.html">Already have account? Log In</a></div>
+  <p>Join MH and create your account</p>
+
+  <form id="signupForm">
+    <input id="name" type="text" placeholder="Full Name" autocomplete="name" required>
+    <input id="email" type="email" placeholder="Email Address" autocomplete="email" required>
+    <input id="pass" type="password" placeholder="Create Password" autocomplete="new-password" minlength="6" required>
+    <input id="refer" type="text" placeholder="Refer Code (Optional)">
+    <button id="signupBtn" type="submit">Sign Up</button>
+  </form>
+
+  <div id="msg" role="status"></div>
+  <div class="links">
+    <a href="index.html">← Back</a>
+    <a href="login.html">Already have account? Log In</a>
+  </div>
 </div>
-<script>
-function doSignup(){
-  var name=document.getElementById('name').value.trim();
-  var email=document.getElementById('email').value.trim().toLowerCase();
-  var pass=document.getElementById('pass').value.trim();
-  var refer=document.getElementById('refer').value.trim();
-  var msg=document.getElementById('msg');
-  if(!name || !email || !pass){ msg.style.color='red'; msg.innerText='Please fill Name, Gmail and Password!'; return; }
-  if(!email.includes('@')){ msg.style.color='red'; msg.innerText='Please enter a valid Gmail!'; return; }
-  if(localStorage.getItem('mh_user_' + email)){ msg.style.color='red'; msg.innerText='Already registered! Please Log In.'; return; }
-  localStorage.setItem('mh_user_' + email, JSON.stringify({name:name, email:email, pass:pass, refer:refer, balance:0}));
-  msg.style.color='#00ff88'; msg.innerText='Account Created! Going to Log In...';
-  setTimeout(()=>{ window.location.href='login.html'; }, 1000);
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBEeIVyP44rJE8QkmumMNWj8CeKlAj9r9hg",
+  authDomain: "mh-modern-earning-platform.firebaseapp.com",
+  projectId: "mh-modern-earning-platform",
+  storageBucket: "mh-modern-earning-platform.firebasestorage.app",
+  messagingSenderId: "743565295091",
+  appId: "1:743565295091:web:fdaf5dc868a38e24a6a686",
+  measurementId: "G-WZMYQ9M3W4"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const form = document.getElementById("signupForm");
+const msg = document.getElementById("msg");
+const btn = document.getElementById("signupBtn");
+
+function showMessage(text, color = "#ff7777") {
+  msg.style.color = color;
+  msg.textContent = text;
 }
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const password = document.getElementById("pass").value;
+  const refer = document.getElementById("refer").value.trim();
+
+  if (!name || !email || !password) {
+    showMessage("Please fill in all required fields.");
+    return;
+  }
+
+  if (password.length < 6) {
+    showMessage("Password must be at least 6 characters.");
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Creating Account...";
+  showMessage("Creating your MH account...", "#00e5ff");
+
+  let createdUser = null;
+
+  try {
+    const credential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    createdUser = credential.user;
+
+    await setDoc(doc(db, "users", createdUser.uid), {
+      uid: createdUser.uid,
+      displayName: name,
+      email: email,
+      role: "member",
+      status: "active",
+      referralCodeEntered: refer,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+
+    await signOut(auth);
+
+    showMessage(
+      "Account created successfully! Redirecting to Login...",
+      "#00ff88"
+    );
+
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1200);
+
+  } catch (error) {
+    console.error("Signup error:", error);
+
+    const errors = {
+      "auth/email-already-in-use": "This email is already registered. Please log in.",
+      "auth/invalid-email": "Please enter a valid email address.",
+      "auth/weak-password": "Please choose a stronger password.",
+      "auth/network-request-failed": "Network error. Check your internet connection.",
+      "permission-denied": "Database permission denied. Please contact support."
+    };
+
+    if (createdUser && error.code === "permission-denied") {
+      showMessage("Account was created, but profile saving failed. Please contact support.");
+    } else {
+      showMessage(errors[error.code] || "Signup failed: " + error.message);
+    }
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Sign Up";
+  }
+});
 </script>
 </body>
 </html>
