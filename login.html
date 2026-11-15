@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,19 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MH - Log In</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-  body{min-height:100vh;background:url('1794603017686.jpg') center/cover no-repeat;display:flex;align-items:center;justify-content:center;padding:20px}
-  body::before{content:'';position:fixed;inset:0;background:rgba(2,5,30,0.78)}
-  .box{position:relative;width:92%;max-width:420px;background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);border:1px solid rgba(255,215,0,0.4);padding:32px;border-radius:22px;text-align:center;color:#fff}
-  .logo{font-size:48px;font-weight:900;background:linear-gradient(#ffd700,#ff9d00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  .sub{font-size:11px;letter-spacing:3px;color:#ccc}
-  h2{margin:20px 0 6px;font-size:24px}
-  p{color:#bbb;font-size:14px;margin-bottom:20px}
-  input{width:100%;padding:16px;margin-bottom:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.4);color:#fff;outline:none;font-size:16px}
-  button{width:100%;padding:16px;border:none;border-radius:12px;background:linear-gradient(#ffd700,#ff9d00);font-weight:bold;font-size:17px;cursor:pointer}
-  a{color:#00e5ff;text-decoration:none;font-size:14px}
-  .links{margin-top:18px;display:flex;justify-content:space-between}
-  #msg{font-size:14px;margin-top:12px;min-height:20px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{min-height:100vh;background:url('1794603017686.jpg') center/cover no-repeat;display:flex;align-items:center;justify-content:center;padding:20px}
+body::before{content:'';position:fixed;inset:0;background:rgba(2,5,30,.78)}
+.box{position:relative;width:92%;max-width:420px;background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:1px solid rgba(255,215,0,.4);padding:32px;border-radius:22px;text-align:center;color:#fff}
+.logo{font-size:48px;font-weight:900;background:linear-gradient(#ffd700,#ff9d00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:11px;letter-spacing:3px;color:#ccc}
+h2{margin:20px 0 6px;font-size:24px}
+p{color:#bbb;font-size:14px;margin-bottom:20px}
+input{width:100%;padding:16px;margin-bottom:14px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.4);color:#fff;outline:none;font-size:16px}
+button{width:100%;padding:16px;border:none;border-radius:12px;background:linear-gradient(#ffd700,#ff9d00);font-weight:bold;font-size:17px;cursor:pointer}
+button:disabled{opacity:.6;cursor:wait}
+a{color:#00e5ff;text-decoration:none;font-size:14px}
+.links{margin-top:18px;display:flex;justify-content:space-between;gap:12px}
+#msg{font-size:14px;margin-top:12px;min-height:20px}
 </style>
 </head>
 <body>
@@ -26,26 +28,124 @@
   <div class="sub">MODERN EARNING PLATFORM</div>
   <h2>Welcome Back</h2>
   <p>Log in to your MH account</p>
-  <input id="email" type="email" placeholder="Gmail Address">
-  <input id="pass" type="password" placeholder="Password">
-  <button onclick="doLogin()">Log In</button>
-  <div id="msg"></div>
-  <div class="links"><a href="index.html">← Back</a><a href="signup.html">Don't have account? Sign Up</a></div>
+
+  <form id="loginForm">
+    <input id="email" type="email" placeholder="Email Address" autocomplete="email" required>
+    <input id="pass" type="password" placeholder="Password" autocomplete="current-password" required>
+    <button id="loginBtn" type="submit">Log In</button>
+  </form>
+
+  <div id="msg" role="status"></div>
+  <div class="links">
+    <a href="index.html">← Back</a>
+    <a href="signup.html">Don't have account? Sign Up</a>
+  </div>
 </div>
-<script>
-function doLogin(){
-  var email=document.getElementById('email').value.trim().toLowerCase();
-  var pass=document.getElementById('pass').value.trim();
-  var msg=document.getElementById('msg');
-  if(!email || !pass){ msg.style.color='red'; msg.innerText='Please fill Gmail and Password!'; return; }
-  var data = localStorage.getItem('mh_user_' + email);
-  if(!data){ msg.style.color='red'; msg.innerText='No account found! Please Sign Up first.'; return; }
-  var user = JSON.parse(data);
-  if(user.pass !== pass){ msg.style.color='red'; msg.innerText='Wrong Password!'; return; }
-  localStorage.setItem('mh_login', email);
-  msg.style.color='#00ff88'; msg.innerText='Login Success! Going to Dashboard...';
-  setTimeout(()=>{ window.location.href='dashboard.html'; }, 800);
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBEeIVyP44rJE8QkmumMNWj8CeKlAjr9hg",
+  authDomain: "mh-modern-earning-platform.firebaseapp.com",
+  projectId: "mh-modern-earning-platform",
+  storageBucket: "mh-modern-earning-platform.firebasestorage.app",
+  messagingSenderId: "743565295091",
+  appId: "1:743565295091:web:fdaf5dc868a38e24a6a686",
+  measurementId: "G-WZMYQ9M3W4"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const form = document.getElementById("loginForm");
+const msg = document.getElementById("msg");
+const btn = document.getElementById("loginBtn");
+
+function showMessage(text, color = "#ff7777") {
+  msg.style.color = color;
+  msg.textContent = text;
 }
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const password = document.getElementById("pass").value;
+
+  if (!email || !password) {
+    showMessage("Please enter your email and password.");
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Logging in...";
+  showMessage("Checking your account...", "#00e5ff");
+
+  try {
+    const credential = await signInWithEmailAndPassword(auth, email, password);
+    const user = credential.user;
+
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      await signOut(auth);
+      showMessage("Account profile not found. Please contact support.");
+      return;
+    }
+
+    const profile = userSnap.data();
+
+    if (profile.status === "blocked") {
+      await signOut(auth);
+      showMessage("Your account is blocked. Please contact support.");
+      return;
+    }
+
+    if (profile.status !== "active") {
+      await signOut(auth);
+      showMessage("Your account is not active. Please contact support.");
+      return;
+    }
+
+    showMessage("Login successful! Opening your account...", "#00ff88");
+
+    if (profile.role === "admin") {
+      window.location.href = "admin.html";
+    } else {
+      window.location.href = "dashboard.html";
+    }
+
+  } catch (error) {
+    console.error("Login error:", error);
+
+    const errors = {
+      "auth/invalid-credential": "Incorrect email or password, or account does not exist.",
+      "auth/user-not-found": "No account found. Please sign up first.",
+      "auth/wrong-password": "Incorrect password.",
+      "auth/invalid-email": "Please enter a valid email address.",
+      "auth/too-many-requests": "Too many attempts. Please try again later.",
+      "auth/network-request-failed": "Network error. Check your internet connection."
+    };
+
+    showMessage(errors[error.code] || "Login failed: " + error.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Log In";
+  }
+});
 </script>
 </body>
 </html>
