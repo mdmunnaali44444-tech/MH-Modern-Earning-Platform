@@ -3,757 +3,414 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MH | Member Dashboard</title>
-
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#020b20;--panel:#071a3b;--blue:#087bff;--cyan:#00d9ff;--white:#f4f8ff;--muted:#a9bfdc}
+body{background:var(--bg);color:var(--white);font-family:Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+button,a{cursor:pointer}
+.app{display:flex;min-height:100vh;padding:8px;gap:12px}
+.sidebar{width:235px;flex-shrink:0;background:linear-gradient(180deg,#071e49,#020b24);border:1px solid #087bff;border-radius:17px;padding:14px 10px;box-shadow:0 0 17px #087bff55}
+.logo{text-align:center;padding:10px 5px 19px;border-bottom:1px solid #155ba5;margin-bottom:12px}
+.logo strong{font-size:38px;color:#35baff;text-shadow:0 0 15px #008cff}
+.logo p{font-size:12px;font-weight:bold}
+.nav button{width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:transparent;color:#eaf3ff;border:1px solid transparent;border-radius:10px;padding:12px 10px;margin:3px 0;font-size:14px}
+.nav button:hover,.nav button.active{background:linear-gradient(100deg,#087bff,#0645a9);border-color:#28caff;box-shadow:0 0 12px #008cff88}
+.nav button span{font-size:20px;width:25px;text-align:center}
+.nav button.admin{border-color:#bd8c19;background:linear-gradient(90deg,#b76a00,#5a3100)}
+.main{flex:1;min-width:0}
+.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 17px;background:#071a38;border:1px solid #086acb;border-radius:15px}
+.topleft{display:flex;align-items:center;gap:12px}
+.topbar h2{font-size:19px}
+.topbar p{font-size:12px;color:var(--muted);margin-top:5px}
+.actions{display:flex;align-items:center;gap:8px}
+.smallbtn{border:1px solid #168dff;background:#092b5a;color:white;border-radius:10px;padding:10px}
+#toggle{display:none}
+.page{margin-top:13px}
+.hero{min-height:225px;padding:27px;border:2px solid #087bff;border-radius:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:radial-gradient(circle at 20% 50%,#005eff99,transparent 40%),linear-gradient(120deg,#071d4a,#03102b 65%,#063b80);box-shadow:0 0 18px #008cff66}
+.hero h1{font-size:clamp(25px,4vw,39px);margin-bottom:10px}
+.hero h1 span{color:#22caff;text-shadow:0 0 15px #00aaff}
+.hero p{color:#d6e8ff;line-height:1.7;font-size:14px}
+.hero .tag{display:inline-block;margin-top:17px;background:#ffd32a;color:#111;padding:9px 13px;border-radius:6px;font-weight:bold}
+.heroart{font-size:clamp(65px,10vw,115px);filter:drop-shadow(0 0 18px #00aaff)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:13px}
+.stat{padding:17px 8px;text-align:center;border:1px solid #168dff;border-radius:15px;background:linear-gradient(145deg,#0646bf,#061a48);box-shadow:0 0 12px #006aff44}
+.stat:nth-child(2){background:linear-gradient(145deg,#008b60,#053c39);border-color:#00e6a0}
+.stat:nth-child(3){background:linear-gradient(145deg,#6818ce,#220c59);border-color:#b15cff}
+.stat:nth-child(4){background:linear-gradient(145deg,#d97706,#642b08);border-color:#ffb52b}
+.stat .ico{font-size:26px;margin-bottom:7px}
+.stat h3{font-size:12px;margin-bottom:9px}
+.stat strong{font-size:23px}
+.section{margin-top:13px;padding:16px;background:linear-gradient(145deg,#071b3b,#04132d);border:1px solid #087bff;border-radius:16px;box-shadow:0 0 13px #006aff33}
+.heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.heading h2{font-size:18px}
+.linkbtn,.primary{border:1px solid #25baff;background:#087bff;color:white;padding:9px 13px;border-radius:9px;text-decoration:none}
+.tasks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.task{display:flex;align-items:center;gap:10px;padding:13px;background:#061a3c;border:1px solid #087bff;border-radius:12px}
+.task .ico{font-size:26px}
+.taskinfo{flex:1;min-width:0}
+.taskinfo h3{font-size:13px;margin-bottom:5px}
+.taskinfo p{font-size:11px;color:var(--muted)}
+.badge{font-size:11px;color:#ffd56a}
+.referral{background:linear-gradient(110deg,#063e27,#052d30);border-color:#00d99b;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.referral h2{color:#42ffc2;margin-bottom:7px}
+.referral p{font-size:13px;line-height:1.6;color:#d7fff0}
+.referral button{background:#00dc85;color:#002b1d;border:0;border-radius:22px;padding:12px 16px;font-weight:bold}
+.activity{padding:14px;background:#06152e;border-radius:10px;color:var(--muted);font-size:13px;line-height:1.8}
+.footer{text-align:center;padding:22px;color:#829bbb;font-size:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.info{padding:15px;border:1px solid #155fa9;background:#061a38;border-radius:12px}
+.info h3{font-size:14px;margin-bottom:9px}
+.info p{font-size:13px;color:var(--muted);line-height:1.6}
+.form{display:grid;gap:12px;max-width:550px}
+.form label{font-size:13px;color:#d9eaff}
+.form input,.form select,.form textarea{width:100%;margin-top:6px;padding:12px;border-radius:9px;background:#03132d;color:white;border:1px solid #1766b5}
+.form textarea{min-height:90px}
+.notice{padding:13px;background:#10264a;border-left:3px solid #12baff;border-radius:8px;color:#c7ddf7;font-size:13px;line-height:1.6}
+.rowitem{display:flex;justify-content:space-between;gap:10px;padding:13px 5px;border-bottom:1px solid #173b68;font-size:13px}
+.hidden{display:none!important}
+@media(max-width:850px){
+.app{padding:6px}
+.sidebar{position:fixed;z-index:20;top:0;bottom:0;left:-255px;width:245px;overflow-y:auto;border-radius:0 16px 16px 0;transition:left .25s}
+.sidebar.open{left:0}
+#toggle{display:block}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-
-:root {
-  --bg: #030b1d;
-  --panel: #071a38;
-  --blue: #087bff;
-  --cyan: #00d9ff;
-  --text: #f3f8ff;
-  --muted: #a9bad5;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-}
-
-button, a {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-.app {
-  display: flex;
-  min-height: 100vh;
-  gap: 12px;
-  padding: 10px;
-}
-
-/* SIDEBAR */
-
-.sidebar {
-  width: 240px;
-  flex-shrink: 0;
-  background: linear-gradient(180deg,#071d45,#030d27);
-  border: 1px solid #087bff;
-  border-radius: 20px;
-  padding: 18px 12px;
-  box-shadow: 0 0 18px #006aff44;
-}
-
-.logo {
-  text-align: center;
-  padding: 12px 5px 25px;
-  border-bottom: 1px solid #1265bd;
-  margin-bottom: 18px;
-}
-
-.logo h1 {
-  font-size: 38px;
-  font-weight: 900;
-  color: #28baff;
-  text-shadow: 0 0 15px #008cff;
-}
-
-.logo p {
-  color: #dcecff;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.menu a {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  color: #e8f2ff;
-  text-decoration: none;
-  padding: 17px 12px;
-  margin: 7px 0;
-  border-radius: 12px;
-  border: 1px solid transparent;
-  font-size: 15px;
-  transition: .2s;
-}
-
-.menu a:hover,
-.menu a.active {
-  background: linear-gradient(100deg,#087bff,#0648b8);
-  border-color: #25caff;
-  box-shadow: 0 0 15px #008cff88;
-}
-
-.menu .emoji {
-  font-size: 21px;
-  width: 27px;
-  text-align: center;
-}
-
-/* MAIN */
-
-.main {
-  flex: 1;
-  min-width: 0;
-}
-
-.topbar {
-  background: #071a38;
-  border: 1px solid #075dba;
-  border-radius: 17px;
-  min-height: 82px;
-  padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  box-shadow: 0 0 15px #006aff33;
-}
-
-.top-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.topbar h2 {
-  font-size: 21px;
-  color: white;
-}
-
-.topbar p {
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.top-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.icon-btn {
-  background: #0a2855;
-  border: 1px solid #168dff;
-  color: white;
-  padding: 10px 13px;
-  border-radius: 12px;
-  text-decoration: none;
-}
-
-.lang {
-  background: #087bff;
-  border: 1px solid #25caff;
-  color: white;
-  border-radius: 20px;
-  padding: 10px 15px;
-}
-
-#menuToggle {
-  display: none;
-}
-
-/* HERO */
-
-.hero {
-  margin-top: 14px;
-  min-height: 245px;
-  border: 2px solid #087bff;
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-  padding: 30px;
-  display: flex;
-  align-items: center;
-  background:
-    radial-gradient(circle at 15% 50%,#005cff99,transparent 35%),
-    linear-gradient(120deg,#071b48,#03102a 65%,#063b81);
-  box-shadow: 0 0 20px #008cff66;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    130deg,
-    transparent 0 45px,
-    #168dff12 46px 49px
-  );
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 600px;
-}
-
-.hero h1 {
-  font-size: clamp(25px,4vw,42px);
-  color: white;
-  margin-bottom: 12px;
-}
-
-.hero h1 span {
-  color: #19caff;
-  text-shadow: 0 0 15px #00aaff;
-}
-
-.hero p {
-  color: #d4e7ff;
-  line-height: 1.7;
-  font-size: 14px;
-}
-
-.hero-tag {
-  display: inline-block;
-  margin-top: 20px;
-  background: #ffd32a;
-  color: #071426;
-  font-weight: bold;
-  padding: 10px 16px;
-  border-radius: 7px;
-}
-
-.hero-art {
-  margin-left: auto;
-  font-size: clamp(65px,12vw,130px);
-  filter: drop-shadow(0 0 20px #00aaff);
-  padding: 15px;
-}
-
-/* STATS */
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  gap: 12px;
-  margin-top: 15px;
-}
-
-.stat {
-  min-height: 145px;
-  padding: 18px 12px;
-  text-align: center;
-  border-radius: 18px;
-  border: 1px solid #168dff;
-  background: linear-gradient(145deg,#063fbd,#061a48);
-  box-shadow: 0 0 13px #006aff44;
-}
-
-.stat:nth-child(2) {
-  background: linear-gradient(145deg,#008b60,#053c39);
-  border-color: #00e6a0;
-}
-
-.stat:nth-child(3) {
-  background: linear-gradient(145deg,#6818ce,#220c59);
-  border-color: #b15cff;
-}
-
-.stat:nth-child(4) {
-  background: linear-gradient(145deg,#d97706,#642b08);
-  border-color: #ffb52b;
-}
-
-.stat-icon {
-  font-size: 28px;
-  margin-bottom: 9px;
-}
-
-.stat h3 {
-  font-size: 13px;
-  margin-bottom: 12px;
-}
-
-.stat strong {
-  font-size: 24px;
-  color: white;
-}
-
-/* SECTIONS */
-
-.section {
-  margin-top: 15px;
-  padding: 17px;
-  background: linear-gradient(145deg,#071b3b,#04132d);
-  border: 1px solid #087bff;
-  border-radius: 19px;
-  box-shadow: 0 0 15px #006aff33;
-}
-
-.section-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 17px;
-}
-
-.section-heading h2 {
-  font-size: 19px;
-}
-
-.view-link {
-  color: #53caff;
-  text-decoration: none;
-  font-size: 13px;
-}
-
-/* TASKS */
-
-.tasks {
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 12px;
-}
-
-.task {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  border: 1px solid #087bff;
-  border-radius: 13px;
-  background: #061a3c;
-}
-
-.task-icon {
-  font-size: 28px;
-}
-
-.task-info {
-  flex: 1;
-}
-
-.task-info h3 {
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-
-.task-info p {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.task-btn {
-  border: 1px solid #29baff;
-  background: #087bff;
-  color: white;
-  border-radius: 9px;
-  padding: 9px 13px;
-  text-decoration: none;
-  font-size: 12px;
-}
-
-/* REFERRAL */
-
-.referral {
-  background: linear-gradient(110deg,#063e27,#052d30);
-  border-color: #00d99b;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.referral h2 {
-  color: #42ffc2;
-  margin-bottom: 8px;
-}
-
-.referral p {
-  color: #d7fff0;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.referral a {
-  background: #00dc85;
-  color: #002b1d;
-  text-decoration: none;
-  padding: 12px 18px;
-  border-radius: 25px;
-  font-weight: bold;
-}
-
-/* ACTIVITY */
-
-.activity {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.8;
-  padding: 12px;
-  background: #06152e;
-  border-radius: 10px;
-}
-
-.footer {
-  text-align: center;
-  color: #7f9bbb;
-  padding: 22px 5px;
-  font-size: 12px;
-}
-
-/* MOBILE */
-
-@media(max-width:850px) {
-  .app {
-    padding: 7px;
-    gap: 0;
-  }
-
-  .sidebar {
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    bottom: 0;
-    left: -260px;
-    width: 245px;
-    overflow-y: auto;
-    border-radius: 0 18px 18px 0;
-    transition: left .25s;
-  }
-
-  .sidebar.open {
-    left: 0;
-  }
-
-  #menuToggle {
-    display: block;
-    background: #087bff;
-    border: 1px solid #25caff;
-    color: white;
-    border-radius: 9px;
-    padding: 9px 12px;
-    font-size: 19px;
-  }
-
-  .stats {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-  }
-
-  .hero {
-    padding: 22px;
-    min-height: 190px;
-  }
-
-  .hero-art {
-    font-size: 65px;
-  }
-}
-
-@media(max-width:520px) {
-  .topbar {
-    padding: 12px;
-  }
-
-  .topbar h2 {
-    font-size: 17px;
-  }
-
-  .topbar p {
-    font-size: 10px;
-  }
-
-  .top-actions {
-    gap: 6px;
-  }
-
-  .lang {
-    padding: 8px 10px;
-    font-size: 12px;
-  }
-
-  .hero {
-    padding: 19px 15px;
-    min-height: 180px;
-  }
-
-  .hero h1 {
-    font-size: 25px;
-  }
-
-  .hero p {
-    font-size: 12px;
-  }
-
-  .hero-art {
-    font-size: 48px;
-    padding: 4px;
-  }
-
-  .stat {
-    min-height: 125px;
-    padding: 14px 7px;
-  }
-
-  .stat h3 {
-    font-size: 11px;
-  }
-
-  .stat strong {
-    font-size: 21px;
-  }
-
-  .tasks {
-    grid-template-columns: 1fr;
-  }
-
-  .task {
-    padding: 13px 10px;
-  }
-
-  .section {
-    padding: 13px;
-  }
+@media(max-width:520px){
+.topbar{padding:10px;height:68px}
+.topbar h2{font-size:16px}
+.topbar p{font-size:10px}
+.hero{min-height:175px;padding:16px}
+.hero h1{font-size:24px}
+.hero p{font-size:12px}
+.heroart{font-size:48px}
+.tasks,.grid2{grid-template-columns:1fr}
+.section{padding:12px}
+.stat{padding:13px 5px}
+.stat h3{font-size:11px}
+.stat strong{font-size:21px}
 }
 </style>
 </head>
-
 <body>
-
 <div class="app">
 
-<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
-
-  <div class="logo">
-    <h1>👑 MH</h1>
-    <p>MODERN EARNING PLATFORM</p>
-  </div>
-
-  <nav class="menu">
-    <a href="dashboard.html" class="active">
-      <span class="emoji">🏠</span> Dashboard
-    </a>
-
-    <a href="tasks.html">
-      <span class="emoji">📋</span> Tasks
-    </a>
-
-    <a href="balance.html">
-      <span class="emoji">👛</span> Balance
-    </a>
-
-    <a href="withdraw.html">
-      <span class="emoji">💸</span> Withdraw
-    </a>
-
-    <a href="referral.html">
-      <span class="emoji">👥</span> Referral
-    </a>
-
-    <a href="notifications.html">
-      <span class="emoji">🔔</span> Notifications
-    </a>
-
-    <a href="admin.html">
-      <span class="emoji">⚙️</span> Admin Panel
-    </a>
-  </nav>
-
+ <div class="logo">
+  <strong>👑 MH</strong>
+  <p>MODERN EARNING PLATFORM</p>
+ </div>
+ <nav class="nav" id="nav">
+  <button class="active" data-page="dashboard"><span>🏠</span>Dashboard</button>
+  <button data-page="tasks"><span>📋</span>Tasks</button>
+  <button data-page="mytasks"><span>📝</span>My Tasks</button>
+  <button data-page="balance"><span>👛</span>Balance</button>
+  <button data-page="withdraw"><span>💸</span>Withdraw</button>
+  <button data-page="transactions"><span>🔄</span>Transactions</button>
+  <button data-page="referral"><span>👥</span>Referral</button>
+  <button data-page="notifications"><span>🔔</span>Notifications</button>
+  <button data-page="profile"><span>👤</span>Profile</button>
+  <button data-page="security"><span>🛡️</span>Security</button>
+  <button data-page="support"><span>🎧</span>Help & Support</button>
+  <button data-page="terms"><span>📄</span>Terms & Conditions</button>
+  <button data-page="privacy"><span>🔐</span>Privacy Policy</button>
+  <button data-page="admin" class="admin"><span>⚙️</span>Admin Panel</button>
+ </nav>
 </aside>
 
-<!-- MAIN CONTENT -->
 <main class="main">
+<header class="topbar">
+ <div class="topleft">
+  <button class="smallbtn" id="toggle">☰</button>
+  <div><h2 id="pageTitle">Member Dashboard</h2><p>Welcome to your MH account</p></div>
+ </div>
+ <div class="actions">
+  <button class="smallbtn" data-go="notifications">🔔</button>
+  <button class="smallbtn" id="language">বাংলা</button>
+  <button class="smallbtn" data-go="profile">👤</button>
+ </div>
+</header>
 
-  <!-- TOPBAR -->
-  <header class="topbar">
+<div class="page" id="content">
 
-    <div class="top-left">
-      <button id="menuToggle" aria-label="Open menu">☰</button>
+<!-- DASHBOARD -->
+<div id="dashboard" class="view">
+ <section class="hero">
+  <div>
+   <h1>Welcome to <span>MH</span></h1>
+   <p>Modern Earning Platform<br>Discover opportunities, complete verified tasks and manage your account.</p>
+   <span class="tag">YOUR SUCCESS • OUR MISSION</span>
+  </div>
+  <div class="heroart">👑</div>
+ </section>
 
-      <div>
-        <h2>Member Dashboard</h2>
-        <p>Welcome to your MH account</p>
-      </div>
-    </div>
+ <section class="stats">
+  <div class="stat"><div class="ico">👥</div><h3>Total Members</h3><strong>—</strong></div>
+  <div class="stat"><div class="ico">✅</div><h3>Active Members</h3><strong>—</strong></div>
+  <div class="stat"><div class="ico">📋</div><h3>Total Task Slots</h3><strong>28</strong></div>
+  <div class="stat"><div class="ico">💰</div><h3>Total Rewards</h3><strong>—</strong></div>
+ </section>
 
-    <div class="top-actions">
-      <a class="icon-btn" href="notifications.html">🔔</a>
-      <button class="lang" type="button">বাংলা | EN</button>
-    </div>
+ <section class="section">
+  <div class="heading"><h2>⚡ Available Tasks</h2><button class="linkbtn" data-go="tasks">View All →</button></div>
+  <div class="tasks" id="taskPreview"></div>
+  <p class="notice" style="margin-top:12px">Task slots are awaiting verified provider integration. No task or reward is currently guaranteed.</p>
+ </section>
 
-  </header>
+ <section class="section referral">
+  <div><h2>🎁 Refer & Connect</h2><p>Invite friends to discover MH.<br>Referral rewards will be shown after configuration.</p></div>
+  <button data-go="referral">Referral Details →</button>
+ </section>
 
-  <!-- HERO -->
-  <section class="hero">
+ <section class="section">
+  <div class="heading"><h2>📊 Recent Activity</h2><button class="linkbtn" data-go="transactions">View All →</button></div>
+  <div class="activity">No account activity to display yet.</div>
+ </section>
+</div>
 
-    <div class="hero-content">
-      <h1>Welcome to <span>MH</span></h1>
+<!-- TASKS -->
+<div id="tasks" class="view hidden">
+ <section class="section">
+  <div class="heading"><h2>📋 All Task Slots</h2><span class="badge">28 planned slots</span></div>
+  <div class="tasks" id="allTasks"></div>
+  <p class="notice" style="margin-top:13px">Real offers will appear only after a provider is connected and verified.</p>
+ </section>
+</div>
 
-      <p>
-        Modern Earning Platform<br>
-        Discover opportunities, complete verified tasks
-        and manage your account in one place.
-      </p>
+<!-- MY TASKS -->
+<div id="mytasks" class="view hidden">
+ <section class="section">
+  <div class="heading"><h2>📝 My Tasks</h2></div>
+  <div class="notice">Your started, pending and completed tasks will appear here after account and task-provider integration.</div>
+  <div class="grid2" style="margin-top:13px">
+   <div class="info"><h3>Pending Tasks</h3><p>—</p></div>
+   <div class="info"><h3>Completed Tasks</h3><p>—</p></div>
+  </div>
+ </section>
+</div>
 
-      <span class="hero-tag">
-        YOUR SUCCESS • OUR MISSION
-      </span>
-    </div>
+<!-- BALANCE -->
+<div id="balance" class="view hidden">
+ <section class="section">
+  <h2>👛 My Balance</h2>
+  <div class="stats">
+   <div class="stat"><h3>Available Balance</h3><strong>—</strong></div>
+   <div class="stat"><h3>Pending Rewards</h3><strong>—</strong></div>
+  </div>
+  <p class="notice" style="margin-top:14px">Your verified balance will appear after the secure reward ledger is connected.</p>
+ </section>
+</div>
 
-    <div class="hero-art">👑</div>
+<!-- WITHDRAW -->
+<div id="withdraw" class="view hidden">
+ <section class="section">
+  <h2>💸 Withdraw Request</h2>
+  <p class="notice" style="margin:12px 0">Withdrawal requests are not active until payment verification and backend integration are complete.</p>
+  <form class="form" data-form="withdraw">
+   <label>Payment Method<select required><option value="">Select method</option><option>bKash</option><option>Nagad</option><option>USDT BEP-20</option></select></label>
+   <label>Account / Wallet Number<input required placeholder="Enter your payment details"></label>
+   <label>Amount<input required type="number" min="1" placeholder="Enter amount"></label>
+   <button class="primary" type="submit">Submit Request</button>
+  </form>
+  <div class="activity" id="withdrawMessage" style="margin-top:12px">No withdrawal records available.</div>
+ </section>
+</div>
 
-  </section>
+<!-- TRANSACTIONS -->
+<div id="transactions" class="view hidden">
+ <section class="section">
+  <h2>🔄 Transactions</h2>
+  <div class="activity" style="margin-top:13px">No verified transactions available yet.</div>
+ </section>
+</div>
 
-  <!-- STATISTICS -->
-  <section class="stats">
+<!-- REFERRAL -->
+<div id="referral" class="view hidden">
+ <section class="section">
+  <h2>👥 Referral Center</h2>
+  <p class="notice" style="margin:13px 0">Your personal referral link will be generated after account integration.</p>
+  <div class="info"><h3>Your Referral Link</h3><p id="refLink">Not generated yet</p></div>
+  <button class="primary" style="margin-top:12px" id="copyReferral">Copy Referral Link</button>
+  <div class="grid2" style="margin-top:13px">
+   <div class="info"><h3>Total Referrals</h3><p>—</p></div>
+   <div class="info"><h3>Referral Rewards</h3><p>—</p></div>
+  </div>
+ </section>
+</div>
 
-    <div class="stat">
-      <div class="stat-icon">👥</div>
-      <h3>Total Members</h3>
-      <strong>—</strong>
-    </div>
+<!-- NOTIFICATIONS -->
+<div id="notifications" class="view hidden">
+ <section class="section">
+  <h2>🔔 Notifications</h2>
+  <div class="activity" style="margin-top:13px">You have no new notifications.</div>
+ </section>
+</div>
 
-    <div class="stat">
-      <div class="stat-icon">✅</div>
-      <h3>Active Members</h3>
-      <strong>—</strong>
-    </div>
+<!-- PROFILE -->
+<div id="profile" class="view hidden">
+ <section class="section">
+  <h2>👤 My Profile</h2>
+  <form class="form" data-form="profile" style="margin-top:14px">
+   <label>Full Name<input placeholder="Your name"></label>
+   <label>Email Address<input type="email" placeholder="Your email"></label>
+   <label>Phone Number<input type="tel" placeholder="Your phone number"></label>
+   <button class="primary" type="submit">Save Profile</button>
+  </form>
+  <p class="notice" style="margin-top:13px">Profile saving will be activated after Firebase integration.</p>
+ </section>
+</div>
 
-    <div class="stat">
-      <div class="stat-icon">📋</div>
-      <h3>Total Task Slots</h3>
-      <strong>28</strong>
-    </div>
+<!-- SECURITY -->
+<div id="security" class="view hidden">
+ <section class="section">
+  <h2>🛡️ Account Security</h2>
+  <div class="info" style="margin-top:13px"><h3>Password & Login</h3><p>Password changes and account protection will be managed through Firebase Authentication.</p></div>
+  <div class="info" style="margin-top:10px"><h3>Login Sessions</h3><p>Session management is not connected yet.</p></div>
+ </section>
+</div>
 
-    <div class="stat">
-      <div class="stat-icon">💰</div>
-      <h3>Total Rewards</h3>
-      <strong>—</strong>
-    </div>
+<!-- SUPPORT -->
+<div id="support" class="view hidden">
+ <section class="section">
+  <h2>🎧 Help & Support</h2>
+  <form class="form" data-form="support" style="margin-top:14px">
+   <label>Subject<input required placeholder="How can we help?"></label>
+   <label>Message<textarea required placeholder="Write your message"></textarea></label>
+   <button class="primary" type="submit">Send Support Request</button>
+  </form>
+  <p class="notice" style="margin-top:13px">Support messages will be submitted after backend integration.</p>
+ </section>
+</div>
 
-  </section>
+<!-- TERMS -->
+<div id="terms" class="view hidden">
+ <section class="section">
+  <h2>📄 Terms & Conditions</h2>
+  <div class="activity" style="margin-top:13px">
+   <b>1. Account</b><br>Members must provide accurate account information and protect their login credentials.<br><br>
+   <b>2. Tasks</b><br>Only genuine tasks from verified providers may be offered. Members must follow each provider's rules.<br><br>
+   <b>3. Rewards</b><br>Rewards are subject to provider verification. No income or task availability is guaranteed.<br><br>
+   <b>4. Withdrawals</b><br>Payment requests are subject to published eligibility, verification and payment terms.<br><br>
+   <b>5. Fair Use</b><br>Fraud, fake accounts and manipulation are prohibited.<br><br>
+   <b>6. Updates</b><br>These terms must be reviewed and finalized before platform launch.
+  </div>
+ </section>
+</div>
 
-  <!-- AVAILABLE TASKS -->
-  <section class="section">
+<!-- PRIVACY -->
+<div id="privacy" class="view hidden">
+ <section class="section">
+  <h2>🔐 Privacy Policy</h2>
+  <div class="activity" style="margin-top:13px">
+   <b>1. Information</b><br>MH will collect only information needed to operate member accounts and platform services.<br><br>
+   <b>2. Usage</b><br>Information may be used for account management, task verification, support and payment processing.<br><br>
+   <b>3. Security</b><br>Reasonable technical and organizational safeguards will be used to protect member information.<br><br>
+   <b>4. Sharing</b><br>Information may be shared with necessary service providers only for legitimate platform operations.<br><br>
+   <b>5. Member Rights</b><br>Members should be able to request access, correction or deletion where applicable.<br><br>
+   <b>6. Final Policy</b><br>This draft must be reviewed against actual data practices before launch.
+  </div>
+ </section>
+</div>
 
-    <div class="section-heading">
-      <h2>⚡ Available Tasks</h2>
-      <a href="tasks.html" class="view-link">View All →</a>
-    </div>
+<!-- ADMIN -->
+<div id="admin" class="view hidden">
+ <section class="section">
+  <h2>⚙️ Admin Panel</h2>
+  <p class="notice" style="margin:13px 0">Admin access is not enabled in this frontend. Only authorized administrators will be allowed after secure server-side role verification.</p>
+  <div class="grid2">
+   <div class="info"><h3>👥 Member Management</h3><p>Manage member accounts</p></div>
+   <div class="info"><h3>📋 28 Task Slots</h3><p>Add, edit, enable or disable slots</p></div>
+   <div class="info"><h3>💸 Withdrawals</h3><p>Review payment requests</p></div>
+   <div class="info"><h3>🔔 Notifications</h3><p>Manage member updates</p></div>
+  </div>
+ </section>
+</div>
 
-    <div class="tasks">
-
-      <div class="task">
-        <div class="task-icon">🎬</div>
-        <div class="task-info">
-          <h3>Task Slot 01</h3>
-          <p>Waiting for verified provider</p>
-        </div>
-        <span class="task-btn">Pending</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">📝</div>
-        <div class="task-info">
-          <h3>Task Slot 02</h3>
-          <p>Waiting for verified provider</p>
-        </div>
-        <span class="task-btn">Pending</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">📱</div>
-        <div class="task-info">
-          <h3>Task Slot 03</h3>
-          <p>Waiting for verified provider</p>
-        </div>
-        <span class="task-btn">Pending</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">🎮</div>
-        <div class="task-info">
-          <h3>Task Slot 04</h3>
-          <p>Waiting for verified provider</p>
-        </div>
-        <span class="task-btn">Pending</span>
-      </div>
-
-    </div>
-
-    <div class="activity" style="margin-top:13px">
-      28 task slots are planned. Real tasks and rewards will appear
-      only after verified provider integration.
-    </div>
-
-  </section>
-
-  <!-- REFERRAL -->
-  <section class="section referral">
-
-    <div>
-      <h2>🎁 Refer & Connect</h2>
-      <p>
-        Invite friends to discover the MH platform.<br>
-        Referral rewards will be shown after the system is configured.
-      </p>
-    </div>
-
-    <a href="referral.html">Referral Details →</a>
-
-  </section>
-
-  <!-- RECENT ACTIVITY -->
-  <section class="section">
-
-    <div class="section-heading">
-      <h2>📊 Recent Activity</h2>
-      <a href="transactions.html" class="view-link">
-        Transactions →
-      </a>
-    </div>
-
-    <div class="activity">
-      No account activity to display yet.
-      Your verified account activity will appear here.
-    </div>
-
-  </section>
-
-  <footer class="footer">
-    © 2026 MH — Modern Earning Platform
-  </footer>
-
+<footer class="footer">© 2026 MH — Modern Earning Platform | All rights reserved.</footer>
+</div>
 </main>
 </div>
 
 <script>
-const menuToggle = document.getElementById("menuToggle");
-const sidebar = document.getElementById("sidebar");
+const titles={
+ dashboard:"Member Dashboard",tasks:"Available Tasks",mytasks:"My Tasks",
+ balance:"My Balance",withdraw:"Withdraw",transactions:"Transactions",
+ referral:"Referral Center",notifications:"Notifications",profile:"My Profile",
+ security:"Account Security",support:"Help & Support",
+ terms:"Terms & Conditions",privacy:"Privacy Policy",admin:"Admin Panel"
+};
 
-menuToggle.addEventListener("click", function() {
-  sidebar.classList.toggle("open");
+const sidebar=document.getElementById("sidebar");
+const content=document.getElementById("content");
+
+function showPage(name){
+ if(!document.getElementById(name)) return;
+ document.querySelectorAll(".view").forEach(v=>v.classList.add("hidden"));
+ document.getElementById(name).classList.remove("hidden");
+ document.getElementById("pageTitle").textContent=titles[name]||name;
+ document.querySelectorAll("#nav button").forEach(b=>{
+  b.classList.toggle("active",b.dataset.page===name);
+ });
+ sidebar.classList.remove("open");
+ window.scrollTo(0,0);
+}
+
+document.getElementById("nav").addEventListener("click",e=>{
+ const btn=e.target.closest("button[data-page]");
+ if(btn) showPage(btn.dataset.page);
 });
 
-document.querySelector(".main").addEventListener("click", function(e) {
-  if (
-    window.innerWidth <= 850 &&
-    sidebar.classList.contains("open") &&
-    !e.target.closest("#menuToggle")
-  ) {
-    sidebar.classList.remove("open");
-  }
+content.addEventListener("click",e=>{
+ const btn=e.target.closest("[data-go]");
+ if(btn) showPage(btn.dataset.go);
+});
+
+document.getElementById("toggle").addEventListener("click",()=>{
+ sidebar.classList.toggle("open");
+});
+
+document.querySelector(".main").addEventListener("click",e=>{
+ if(innerWidth<=850 && sidebar.classList.contains("open") &&
+ !e.target.closest("#toggle")) sidebar.classList.remove("open");
+});
+
+// Generate 28 visual task slots
+const taskIcons=["🎬","📝","📱","🎮","🌐","📊","📷"];
+function taskCard(i){
+ return `<div class="task">
+ <div class="ico">${taskIcons[(i-1)%taskIcons.length]}</div>
+ <div class="taskinfo"><h3>Task Slot ${String(i).padStart(2,"0")}</h3>
+ <p>Awaiting verified provider</p></div>
+ <span class="badge">Pending</span></div>`;
+}
+document.getElementById("taskPreview").innerHTML=
+ [1,2,3,4].map(taskCard).join("");
+document.getElementById("allTasks").innerHTML=
+ Array.from({length:28},(_,i)=>taskCard(i+1)).join("");
+
+// Language toggle
+let bengali=false;
+document.getElementById("language").addEventListener("click",e=>{
+ bengali=!bengali;
+ e.target.textContent=bengali?"English":"বাংলা";
+ document.getElementById("pageTitle").textContent=
+ bengali?"সদস্য ড্যাশবোর্ড":titles.dashboard;
+});
+
+// Forms: safely explain that backend is not connected
+document.querySelectorAll("form[data-form]").forEach(form=>{
+ form.addEventListener("submit",e=>{
+  e.preventDefault();
+  alert("This feature will be activated after secure Firebase and backend integration.");
+ });
+});
+
+// Referral copy
+document.getElementById("copyReferral").addEventListener("click",()=>{
+ alert("Your referral link will be available after account integration.");
 });
 </script>
-
 </body>
 </html>
