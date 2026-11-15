@@ -1,0 +1,607 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MH | Admin Control Center</title>
+<style>
+:root{
+ --bg:#070d1c;--panel:#101b31;--panel2:#142440;
+ --line:#203d62;--blue:#168cff;--cyan:#35d5ff;
+ --text:#edf5ff;--muted:#91a9c8;--green:#35d69a;
+ --red:#ff657d;--gold:#ffc857;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:245px;background:#0b1428;border-right:1px solid var(--line);padding:20px 13px;flex-shrink:0}
+.brand{padding:8px 12px 22px;border-bottom:1px solid var(--line)}
+.brand h2{margin:0;color:var(--cyan);font-size:25px}
+.brand small{color:var(--muted)}
+.nav-title{font-size:11px;color:#6884a8;margin:22px 12px 9px;letter-spacing:1.5px}
+.nav button{display:flex;align-items:center;gap:11px;width:100%;padding:12px;margin:3px 0;border:0;border-radius:9px;background:transparent;color:#b7c9e1;text-align:left}
+.nav button:hover,.nav button.active{background:#12345a;color:white;border:1px solid #176bb0}
+.nav button span{font-size:17px;width:22px}
+.main{flex:1;min-width:0}
+.topbar{height:70px;background:#0c172b;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 25px}
+.topbar strong{color:var(--cyan)}
+.top-actions{display:flex;align-items:center;gap:10px}
+.content{padding:25px;max-width:1250px;margin:auto}
+.page{display:none}
+.page.active{display:block}
+h1{font-size:25px;margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 22px;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.card{background:linear-gradient(145deg,#12223d,#0d172b);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:17px}
+.stat small{color:var(--muted)}
+.stat h2{font-size:28px;margin:13px 0 3px}
+.stat .symbol{font-size:24px}
+.card h3{margin:0 0 16px;color:#c9eaff}
+.two{display:grid;grid-template-columns:1.2fr .8fr;gap:17px}
+.btn{border:0;border-radius:8px;padding:11px 15px;background:var(--blue);color:white;font-weight:bold}
+.btn:hover{filter:brightness(1.12)}
+.btn.secondary{background:#243b5c}
+.btn.danger{background:#a92e4b}
+.btn.green{background:#087d61}
+.btn.small{padding:7px 10px;font-size:12px}
+input,textarea,select{width:100%;background:#081326;color:white;border:1px solid #315477;border-radius:8px;padding:12px;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--cyan)}
+label{display:block;color:#a9c1df;font-size:13px;margin:13px 0 7px}
+textarea{min-height:85px;resize:vertical}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.check{display:flex;align-items:center;gap:8px}
+.check input{width:auto}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:570px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #243b59;font-size:13px}
+th{color:#83b8e7}
+td{color:#d5e4f5}
+.muted{color:var(--muted)}
+.tag{display:inline-block;padding:5px 9px;border-radius:20px;background:#183b5b;color:#8bdcff;font-size:11px}
+.tag.green{background:#123c35;color:#73e6ba}
+.tag.red{background:#482235;color:#ff9bad}
+.notice{padding:13px;border:1px solid #775d2a;background:#332a18;color:#ffda8c;border-radius:9px;font-size:13px;line-height:1.6}
+.info{padding:13px;border:1px solid #1c527d;background:#102b46;color:#a9dfff;border-radius:9px;font-size:13px;line-height:1.6}
+.slot-list{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.slot{padding:12px;border-radius:9px;background:#0a1629;border:1px solid var(--line);font-size:12px}
+.slot strong{display:block;margin-bottom:7px;color:#a8dfff}
+.slot button{margin-top:9px}
+.empty{padding:25px;text-align:center;color:var(--muted)}
+#loginScreen{max-width:420px;margin:9vh auto;padding:20px}
+#loginScreen .card{padding:28px}
+#loginScreen h1{color:var(--cyan)}
+#loginMsg,#appMsg{font-size:13px;color:var(--gold);margin-top:12px}
+.mobile-menu{display:none}
+.footer{padding:20px;text-align:center;color:#647e9e;font-size:12px}
+@media(max-width:850px){
+ .sidebar{width:205px}
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .two{grid-template-columns:1fr}
+ .content{padding:17px}
+}
+@media(max-width:620px){
+ .app{display:block}
+ .sidebar{width:100%;padding:10px;border-right:0;border-bottom:1px solid var(--line)}
+ .brand{display:flex;align-items:center;justify-content:space-between;padding:8px}
+ .nav-title{margin:12px}
+ .nav{display:grid;grid-template-columns:repeat(2,1fr);gap:3px}
+ .nav button{font-size:12px;padding:10px 7px}
+ .topbar{height:58px;padding:0 14px}
+ .topbar .right-label{display:none}
+ .content{padding:14px}
+ .grid{gap:9px}
+ .stat{padding:13px}
+ .stat h2{font-size:23px}
+ .slot-list{grid-template-columns:repeat(2,1fr)}
+ .form-grid{grid-template-columns:1fr}
+ h1{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+ <div class="card">
+  <h1>MH Admin</h1>
+  <p class="sub">Secure administrator sign in</p>
+  <form id="loginForm">
+   <label>Email Address</label>
+   <input id="loginEmail" type="email" required autocomplete="username">
+   <label>Password</label>
+   <input id="loginPassword" type="password" required autocomplete="current-password">
+   <button class="btn" style="width:100%;margin-top:18px">Sign In</button>
+  </form>
+  <p id="loginMsg"></p>
+  <p class="muted" style="font-size:12px">Only authorized MH administrators can enter this panel.</p>
+ </div>
+</div>
+
+<div class="app" id="adminApp" style="display:none">
+ <aside class="sidebar">
+  <div class="brand">
+   <div><h2>MH <span style="color:white">ADMIN</span></h2>
+   <small>Modern Earning Platform</small></div>
+  </div>
+  <div class="nav-title">CONTROL CENTER</div>
+  <nav class="nav" id="navigation">
+   <button class="active" data-page="dashboard"><span>▦</span>Dashboard</button>
+   <button data-page="users"><span>♙</span>Users</button>
+   <button data-page="tasks"><span>▤</span>Task Slots</button>
+   <button data-page="smartlinks"><span>↗</span>Smartlinks</button>
+   <button data-page="withdrawals"><span>⇄</span>Withdrawals</button>
+   <button data-page="transactions"><span>▣</span>Transactions</button>
+   <button data-page="referrals"><span>♧</span>Referrals</button>
+   <button data-page="notifications"><span>♢</span>Notifications</button>
+   <button data-page="settings"><span>⚙</span>Settings</button>
+   <button data-page="security"><span>⬡</span>Security & Logs</button>
+  </nav>
+  <button class="btn danger" id="logoutBtn" style="width:100%;margin-top:20px">Sign Out</button>
+ </aside>
+
+ <main class="main">
+  <header class="topbar">
+   <strong>MH CONTROL CENTER</strong>
+   <div class="top-actions">
+    <span class="right-label muted" id="adminEmail">Administrator</span>
+    <span class="tag green">SECURE PANEL</span>
+   </div>
+  </header>
+
+  <div class="content">
+
+   <section class="page active" id="page-dashboard">
+    <h1>Admin Dashboard</h1>
+    <p class="sub">Platform overview and live database statistics</p>
+    <div class="grid">
+     <div class="card stat"><span class="symbol">♙</span><small>Total Members</small><h2 id="totalUsers">—</h2><span class="muted">Firestore users</span></div>
+     <div class="card stat"><span class="symbol">●</span><small>Active Members</small><h2 id="activeUsers">—</h2><span class="muted">Status active</span></div>
+     <div class="card stat"><span class="symbol">▤</span><small>Task Slots</small><h2>28</h2><span class="muted">Planned slots</span></div>
+     <div class="card stat"><span class="symbol">↗</span><small>Enabled Tasks</small><h2 id="enabledTasks">—</h2><span class="muted">Enabled task records</span></div>
+    </div>
+    <div class="two">
+     <div class="card">
+      <h3>Platform Overview</h3>
+      <p class="muted">Reward totals, withdrawals and transactions will appear after their secure backend is implemented.</p>
+      <div class="grid" style="grid-template-columns:1fr 1fr">
+       <div><small class="muted">Total Rewards</small><h2>—</h2></div>
+       <div><small class="muted">Pending Withdrawals</small><h2>—</h2></div>
+      </div>
+     </div>
+     <div class="card">
+      <h3>System Status</h3>
+      <p><span class="tag green">Authentication connected</span></p>
+      <p><span class="tag green">Firestore connected</span></p>
+      <p><span class="tag">Backend functions pending</span></p>
+      <button class="btn secondary" id="refreshDashboard">Refresh Statistics</button>
+     </div>
+    </div>
+    <div class="card">
+     <h3>Recent Activity</h3>
+     <p class="muted">Admin activity log will be enabled after its protected backend is connected.</p>
+    </div>
+   </section>
+
+   <section class="page" id="page-users">
+    <h1>User Management</h1>
+    <p class="sub">View member profiles and manage account status</p>
+    <div class="card">
+     <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+      <h3>Member Directory</h3>
+      <button class="btn secondary" id="refreshUsers">Refresh</button>
+     </div>
+     <div class="table-wrap">
+      <table><thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Role</th><th>Action</th></tr></thead>
+      <tbody id="usersTable"><tr><td colspan="5" class="empty">Loading members...</td></tr></tbody></table>
+     </div>
+    </div>
+    <p class="notice">This panel does not create administrator roles or delete Firebase Authentication accounts. Admin privileges must be assigned through a trusted process.</p>
+   </section>
+
+   <section class="page" id="page-tasks">
+    <h1>Task Slot Management</h1>
+    <p class="sub">Manage the 28 planned task slots</p>
+    <div class="card">
+     <h3>Add or Edit a Task</h3>
+     <form id="taskForm">
+      <div class="form-grid">
+       <div><label>Task Slot</label><select id="taskSlot" required></select></div>
+       <div><label>Task Name</label><input id="taskName" required maxlength="100"></div>
+       <div><label>Category</label><input id="taskCategory" placeholder="Survey, Game, Offer..."></div>
+       <div><label>Reward Amount</label><input id="taskReward" type="number" min="0" step="0.01" value="0"></div>
+      </div>
+      <label>Description</label><textarea id="taskDescription"></textarea>
+      <label>Task URL (optional)</label><input id="taskUrl" type="url" placeholder="https://...">
+      <label class="check"><input id="taskEnabled" type="checkbox"> Enable this task</label>
+      <button class="btn">Save Task Slot</button>
+      <button type="button" class="btn secondary" id="clearTask">Clear Form</button>
+     </form>
+     <p id="taskMsg" class="muted"></p>
+    </div>
+    <div class="card">
+     <h3>All 28 Task Slots</h3>
+     <div id="slotList" class="slot-list"><div class="empty">Loading task slots...</div></div>
+    </div>
+   </section>
+
+   <section class="page" id="page-smartlinks">
+    <h1>Smartlink Management</h1>
+    <p class="sub">Manage the Adsterra Smartlink from the Admin Panel</p>
+    <div class="notice">Only add a Smartlink URL supplied by your approved provider account. Review the destination and advertising content before enabling it. A Smartlink is not a guaranteed earning task.</div>
+    <div class="card" style="margin-top:17px">
+     <h3>Adsterra Smartlink</h3>
+     <form id="smartForm">
+      <label>Display Name</label>
+      <input id="smartName" value="Adsterra Smartlink" required>
+      <label>Smartlink URL</label>
+      <input id="smartUrl" type="url" placeholder="Paste your Smartlink URL here" required>
+      <label>Description</label>
+      <textarea id="smartDescription">Sponsored link. Availability and rewards depend on provider terms.</textarea>
+      <label class="check"><input id="smartEnabled" type="checkbox"> Enable Smartlink on Tasks page</label>
+      <button class="btn">Save Smartlink</button>
+      <button class="btn secondary" type="button" id="disableSmart">Disable Smartlink</button>
+     </form>
+     <p id="smartMsg" class="muted"></p>
+    </div>
+    <div class="card">
+     <h3>Current Smartlink Status</h3>
+     <p id="smartStatus" class="muted">Loading...</p>
+     <p class="muted">Smartlink data is stored in the Firestore tasks collection using the document ID smartlink-adsterra.</p>
+    </div>
+   </section>
+
+   <section class="page" id="page-withdrawals">
+    <h1>Withdrawal Management</h1>
+    <p class="sub">Withdrawal request administration</p>
+    <div class="notice">Not connected yet. A secure server-side workflow is required before requests can be approved, rejected or paid. No payment action is active here.</div>
+   </section>
+
+   <section class="page" id="page-transactions">
+    <h1>Transaction Management</h1>
+    <p class="sub">Reward, payment and transaction records</p>
+    <div class="notice">Not connected yet. Transaction records must be written by trusted backend workflows and protected from member editing.</div>
+   </section>
+
+   <section class="page" id="page-referrals">
+    <h1>Referral Management</h1>
+    <p class="sub">Referral activity and reward settings</p>
+    <div class="notice">Not connected yet. Referral attribution and rewards require server-side validation to prevent fake referrals.</div>
+   </section>
+
+   <section class="page" id="page-notifications">
+    <h1>Notification Management</h1>
+    <p class="sub">Platform announcements and member notices</p>
+    <div class="notice">Not connected yet. A protected notification workflow is required before announcements can be published.</div>
+   </section>
+
+   <section class="page" id="page-settings">
+    <h1>Platform Settings</h1>
+    <p class="sub">General platform configuration</p>
+    <div class="card">
+     <h3>Current Platform</h3>
+     <p>Platform Name: <strong>MH — Modern Earning Platform</strong></p>
+     <p>Task Slots: <strong>28</strong></p>
+     <p>Database: <strong>Cloud Firestore</strong></p>
+     <p>Authentication: <strong>Email / Password</strong></p>
+     <p class="muted">Editable global settings will be connected after a protected settings schema is deployed.</p>
+    </div>
+   </section>
+
+   <section class="page" id="page-security">
+    <h1>Security & Admin Logs</h1>
+    <p class="sub">Access control and administrator activity</p>
+    <div class="card">
+     <h3>Security Information</h3>
+     <p>Admin access is checked against the Firestore users document.</p>
+     <p>Only a user with role <code>admin</code> and a non-blocked status can enter.</p>
+     <p class="muted">Do not change your own role through this website.</p>
+    </div>
+    <div class="notice">Protected audit logs and server-side security actions require additional backend functions and Firestore rules. This page does not claim those systems are already active.</div>
+   </section>
+
+  </div>
+  <div class="footer">MH — Modern Earning Platform · Admin Control Center</div>
+ </main>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+ getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import {
+ getFirestore,doc,getDoc,getDocs,collection,setDoc,updateDoc,
+ serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+/* MH Website Firebase configuration */
+const firebaseConfig={
+ apiKey:"AIzaSyBEeIVyP44rJE8QkmumMNWj8CeKlAjr9hg",
+ authDomain:"mh-modern-earning-platform.firebaseapp.com",
+ projectId:"mh-modern-earning-platform",
+ storageBucket:"mh-modern-earning-platform.firebasestorage.app",
+ messagingSenderId:"743565295091",
+ appId:"1:743565295091:web:fdaf5dc868a38e24a6a686",
+ measurementId:"G-WZMYQ9M3W4"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+const $=id=>document.getElementById(id);
+let currentAdmin=null;
+let cachedTasks=[];
+
+function message(id,text){$(id).textContent=text}
+function showLogin(text=""){
+ $("loginScreen").style.display="block";
+ $("adminApp").style.display="none";
+ message("loginMsg",text);
+}
+function showAdmin(user){
+ $("loginScreen").style.display="none";
+ $("adminApp").style.display="flex";
+ $("adminEmail").textContent=user.email||"Administrator";
+}
+function escapeHTML(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+function slotId(n){return "slot-"+String(n).padStart(2,"0")}
+
+async function verifyAdmin(user){
+ const snap=await getDoc(doc(db,"users",user.uid));
+ if(!snap.exists())return false;
+ const data=snap.data();
+ return data.role==="admin" && data.status!=="blocked";
+}
+
+onAuthStateChanged(auth,async user=>{
+ if(!user){currentAdmin=null;showLogin();return}
+ try{
+  if(!(await verifyAdmin(user))){
+   await signOut(auth);
+   showLogin("Access denied. This account is not an authorized administrator.");
+   return;
+  }
+  currentAdmin=user;
+  showAdmin(user);
+  await refreshAll();
+ }catch(error){
+  console.error(error);
+  await signOut(auth);
+  showLogin("Admin verification failed: "+error.message);
+ }
+});
+
+$("loginForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const email=$("loginEmail").value.trim();
+ const password=$("loginPassword").value;
+ message("loginMsg","Signing in...");
+ try{
+  await signInWithEmailAndPassword(auth,email,password);
+ }catch(error){
+  message("loginMsg","Login failed: "+error.message);
+ }
+});
+
+$("logoutBtn").addEventListener("click",()=>signOut(auth));
+
+$("navigation").addEventListener("click",e=>{
+ const button=e.target.closest("button[data-page]");
+ if(!button)return;
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+ button.classList.add("active");
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ $("page-"+button.dataset.page).classList.add("active");
+ if(button.dataset.page==="users")loadUsers();
+ if(button.dataset.page==="tasks")loadTasks();
+ if(button.dataset.page==="smartlinks")loadSmartlink();
+});
+
+async function refreshDashboard(){
+ if(!currentAdmin)return;
+ try{
+  const [usersSnap,tasksSnap]=await Promise.all([
+   getDocs(collection(db,"users")),
+   getDocs(collection(db,"tasks"))
+  ]);
+  let active=0,enabled=0;
+  usersSnap.forEach(d=>{if(d.data().status==="active")active++});
+  tasksSnap.forEach(d=>{if(d.data().enabled===true)enabled++});
+  $("totalUsers").textContent=usersSnap.size;
+  $("activeUsers").textContent=active;
+  $("enabledTasks").textContent=enabled;
+  cachedTasks=tasksSnap.docs.map(d=>({id:d.id,...d.data()}));
+ }catch(error){
+  console.error(error);
+  message("appMsg","Dashboard load failed: "+error.message);
+ }
+}
+$("refreshDashboard").addEventListener("click",refreshDashboard);
+
+async function loadUsers(){
+ const body=$("usersTable");
+ body.innerHTML='<tr><td colspan="5">Loading...</td></tr>';
+ try{
+  const snap=await getDocs(collection(db,"users"));
+  if(snap.empty){body.innerHTML='<tr><td colspan="5">No members found.</td></tr>';return}
+  body.innerHTML="";
+  snap.forEach(item=>{
+   const u=item.data();
+   const tr=document.createElement("tr");
+   tr.innerHTML=`
+    <td>${escapeHTML(u.displayName||"—")}</td>
+    <td>${escapeHTML(u.email||"—")}</td>
+    <td><span class="tag ${u.status==="blocked"?"red":"green"}">${escapeHTML(u.status||"unknown")}</span></td>
+    <td>${escapeHTML(u.role||"member")}</td>
+    <td>
+     ${u.status==="blocked"
+      ?'<button class="btn green small" data-action="activate">Activate</button>'
+      :'<button class="btn danger small" data-action="block">Block</button>'}
+    </td>`;
+   tr.querySelector("button").addEventListener("click",async()=>{
+    if(!confirm("Change this member's account status?"))return;
+    try{
+     await updateDoc(doc(db,"users",item.id),{
+      status:u.status==="blocked"?"active":"blocked",
+      updatedAt:serverTimestamp()
+     });
+     await loadUsers();
+     await refreshDashboard();
+    }catch(error){alert("Update failed: "+error.message)}
+   });
+   body.appendChild(tr);
+  });
+ }catch(error){
+  body.innerHTML='<tr><td colspan="5">Could not load users: '+escapeHTML(error.message)+'</td></tr>';
+ }
+}
+$("refreshUsers").addEventListener("click",loadUsers);
+
+function setupSlotOptions(){
+ const select=$("taskSlot");
+ select.innerHTML="";
+ for(let n=1;n<=28;n++){
+  const opt=document.createElement("option");
+  opt.value=slotId(n);
+  opt.textContent="Task Slot "+String(n).padStart(2,"0");
+  select.appendChild(opt);
+ }
+}
+setupSlotOptions();
+
+function clearTaskForm(){
+ $("taskForm").reset();
+ $("taskReward").value="0";
+ message("taskMsg","");
+}
+$("clearTask").addEventListener("click",clearTaskForm);
+
+async function loadTasks(){
+ const area=$("slotList");
+ area.innerHTML='<div class="empty">Loading slots...</div>';
+ try{
+  const snap=await getDocs(collection(db,"tasks"));
+  cachedTasks=snap.docs.map(d=>({id:d.id,...d.data()}));
+  const map=new Map(cachedTasks.map(t=>[t.id,t]));
+  area.innerHTML="";
+  for(let n=1;n<=28;n++){
+   const id=slotId(n),task=map.get(id);
+   const div=document.createElement("div");
+   div.className="slot";
+   div.innerHTML=`
+    <strong>Slot ${String(n).padStart(2,"0")}</strong>
+    <div>${escapeHTML(task?.name||"Empty slot")}</div>
+    <p>${task?(task.enabled?"<span class='tag green'>Enabled</span>":"<span class='tag red'>Disabled</span>"):"<span class='tag'>Not configured</span>"}</p>
+    <button class="btn secondary small">Edit</button>`;
+   div.querySelector("button").addEventListener("click",()=>{
+    $("taskSlot").value=id;
+    $("taskName").value=task?.name||"";
+    $("taskCategory").value=task?.category||"";
+    $("taskReward").value=task?.reward??0;
+    $("taskDescription").value=task?.description||"";
+    $("taskUrl").value=task?.url||"";
+    $("taskEnabled").checked=task?.enabled===true;
+    window.scrollTo({top:0,behavior:"smooth"});
+   });
+   area.appendChild(div);
+  }
+ }catch(error){
+  area.innerHTML='<div class="empty">Could not load tasks: '+escapeHTML(error.message)+'</div>';
+ }
+}
+
+$("taskForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(!currentAdmin)return;
+ const id=$("taskSlot").value;
+ const reward=Number($("taskReward").value);
+ if(!Number.isFinite(reward)||reward<0){message("taskMsg","Enter a valid reward amount.");return}
+ const data={
+  slot:id,
+  name:$("taskName").value.trim(),
+  category:$("taskCategory").value.trim(),
+  description:$("taskDescription").value.trim(),
+  reward,
+  url:$("taskUrl").value.trim(),
+  enabled:$("taskEnabled").checked,
+  updatedAt:serverTimestamp()
+ };
+ if(!data.name){message("taskMsg","Task name is required.");return}
+ message("taskMsg","Saving task...");
+ try{
+  await setDoc(doc(db,"tasks",id),data,{merge:true});
+  message("taskMsg","Task slot saved successfully.");
+  await loadTasks();
+  await refreshDashboard();
+ }catch(error){
+  message("taskMsg","Save failed: "+error.message);
+ }
+});
+
+async function loadSmartlink(){
+ try{
+  const snap=await getDoc(doc(db,"tasks","smartlink-adsterra"));
+  if(!snap.exists()){
+   $("smartName").value="Adsterra Smartlink";
+   $("smartUrl").value="";
+   $("smartDescription").value="Sponsored link. Availability and rewards depend on provider terms.";
+   $("smartEnabled").checked=false;
+   message("smartStatus","No Smartlink has been added.");
+   return;
+  }
+  const d=snap.data();
+  $("smartName").value=d.name||"Adsterra Smartlink";
+  $("smartUrl").value=d.url||"";
+  $("smartDescription").value=d.description||"";
+  $("smartEnabled").checked=d.enabled===true;
+  message("smartStatus",d.enabled?"Smartlink is enabled.":"Smartlink is disabled.");
+ }catch(error){
+  message("smartStatus","Could not load Smartlink: "+error.message);
+ }
+}
+
+async function saveSmartlink(forceDisable=false){
+ if(!currentAdmin)return;
+ const url=$("smartUrl").value.trim();
+ if(!forceDisable){
+  try{const parsed=new URL(url);if(!["https:","http:"].includes(parsed.protocol))throw new Error();}
+  catch{message("smartMsg","Enter a valid HTTP or HTTPS Smartlink URL.");return}
+ }
+ const data={
+  slot:"smartlink-01",
+  name:$("smartName").value.trim()||"Adsterra Smartlink",
+  category:"Smartlink",
+  description:$("smartDescription").value.trim(),
+  reward:0,
+  url:forceDisable?"":url,
+  enabled:forceDisable?false:$("smartEnabled").checked,
+  updatedAt:serverTimestamp()
+ };
+ message("smartMsg","Saving Smartlink...");
+ try{
+  await setDoc(doc(db,"tasks","smartlink-adsterra"),data,{merge:true});
+  message("smartMsg",forceDisable?"Smartlink disabled.":"Smartlink settings saved.");
+  await loadSmartlink();
+  await refreshDashboard();
+ }catch(error){
+  message("smartMsg","Save failed: "+error.message);
+ }
+}
+$("smartForm").addEventListener("submit",e=>{e.preventDefault();saveSmartlink(false)});
+$("disableSmart").addEventListener("click",()=>saveSmartlink(true));
+
+async function refreshAll(){
+ await refreshDashboard();
+ await loadTasks();
+ await loadSmartlink();
+}
+</script>
+</body>
+</html>
