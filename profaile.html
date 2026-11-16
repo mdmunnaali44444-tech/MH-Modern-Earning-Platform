@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MH - My Profile</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#070d20;color:#fff;min-height:100vh}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:235px;background:#0b1530;border-right:1px solid #173d70;padding:25px 14px}
+.brand{text-align:center;font-size:30px;font-weight:900;color:#ffd700;margin-bottom:28px}
+.brand small{display:block;font-size:9px;letter-spacing:2px;color:#9db9df}
+.nav a{display:block;text-decoration:none;color:#b9cce8;padding:13px 15px;margin:5px 0;border-radius:10px;font-size:14px}
+.nav a:hover,.nav a.active{background:linear-gradient(90deg,#123c77,#087bba);color:#fff}
+.main{flex:1;padding:28px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:25px}
+.top h1{font-size:25px}
+.tag{color:#5de5ff;font-size:12px}
+.card{max-width:850px;margin:auto;background:#0d1933;border:1px solid #164b83;border-radius:18px;padding:25px;box-shadow:0 0 25px #007bff16}
+.profile-head{text-align:center;padding:10px 0 25px;border-bottom:1px solid #20395e;margin-bottom:22px}
+.avatar{width:105px;height:105px;border-radius:50%;border:3px solid #08c8ff;object-fit:cover;background:#14294c;margin-bottom:12px}
+.profile-head h2{font-size:22px}
+.profile-head p{color:#8fa9cc;font-size:13px;margin-top:6px;word-break:break-word}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field label{display:block;color:#9db9df;font-size:13px;margin-bottom:8px}
+.field input{width:100%;padding:13px;background:#071126;border:1px solid #29476c;border-radius:10px;color:#fff;font-size:15px;outline:none}
+.field input:focus{border-color:#00cfff}
+.field input[readonly]{opacity:.65}
+.full{grid-column:1/-1}
+.status{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+.pill{padding:9px 13px;border-radius:20px;background:#102b4d;color:#70eaff;font-size:12px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+button{border:0;border-radius:10px;padding:13px 22px;font-weight:bold;cursor:pointer}
+.save{background:linear-gradient(90deg,#00cfff,#1679ff);color:white}
+.logout{background:#4a1e32;color:#ffb8c8}
+button:disabled{opacity:.55}
+#msg{min-height:22px;margin-top:15px;font-size:13px;color:#72eaff}
+@media(max-width:760px){
+ .layout{display:block}
+ .sidebar{width:100%;padding:12px}
+ .brand{margin-bottom:10px}
+ .nav{display:flex;overflow-x:auto;gap:5px}
+ .nav a{white-space:nowrap;padding:10px}
+ .main{padding:17px}
+ .grid{grid-template-columns:1fr}
+ .full{grid-column:auto}
+ .card{padding:18px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+  <div class="brand">MH<small>MODERN EARNING PLATFORM</small></div>
+  <nav class="nav">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="tasks.html">Tasks</a>
+    <a href="my-tasks.html">My Tasks</a>
+    <a href="balance.html">Balance</a>
+    <a href="withdraw.html">Withdraw</a>
+    <a href="transactions.html">Transactions</a>
+    <a href="referral.html">Referral</a>
+    <a href="notifications.html">Notifications</a>
+    <a href="profile.html" class="active">Profile</a>
+    <a href="security.html">Security</a>
+    <a href="support.html">Help & Support</a>
+    <a href="terms.html">Terms & Conditions</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="admin.html">Admin Panel</a>
+  </nav>
+</aside>
+
+<main class="main">
+  <div class="top">
+    <div>
+      <h1>My Profile</h1>
+      <div class="tag">Manage your personal information</div>
+    </div>
+  </div>
+
+  <section class="card">
+    <div class="profile-head">
+      <img id="avatar" class="avatar"
+        src="https://placehold.co/105x105/14294c/ffffff?text=MH"
+        alt="Profile picture">
+      <h2 id="displayTitle">Loading Profile...</h2>
+      <p id="emailTitle">Please wait</p>
+    </div>
+
+    <form id="profileForm">
+      <div class="grid">
+        <div class="field">
+          <label>Full Name</label>
+          <input id="name" type="text" maxlength="80" required>
+        </div>
+
+        <div class="field">
+          <label>Email Address</label>
+          <input id="email" type="email" readonly>
+        </div>
+
+        <div class="field">
+          <label>Phone Number</label>
+          <input id="phone" type="tel" maxlength="20" placeholder="Your phone number">
+        </div>
+
+        <div class="field">
+          <label>Profile Picture URL</label>
+          <input id="photoURL" type="url" maxlength="500" placeholder="https://example.com/photo.jpg">
+        </div>
+
+        <div class="field full">
+          <label>Member ID</label>
+          <input id="uid" type="text" readonly>
+        </div>
+      </div>
+
+      <div class="status">
+        <span class="pill" id="role">Role: Loading</span>
+        <span class="pill" id="accountStatus">Status: Loading</span>
+      </div>
+
+      <div class="actions">
+        <button class="save" id="saveBtn" type="submit">Save Changes</button>
+        <button class="logout" id="logoutBtn" type="button">Log Out</button>
+      </div>
+      <div id="msg" role="status"></div>
+    </form>
+  </section>
+</main>
+</div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+  getAuth,onAuthStateChanged,signOut
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import {
+  getFirestore,doc,getDoc,updateDoc,serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyBEeIVyP44rJE8QkmumMNWj8CeKlAj9rgh",
+  authDomain:"mh-modern-earning-platform.firebaseapp.com",
+  projectId:"mh-modern-earning-platform",
+  storageBucket:"mh-modern-earning-platform.firebasestorage.app",
+  messagingSenderId:"743565295091",
+  appId:"1:743565295091:web:fdaf5dc868a38e24a6a686",
+  measurementId:"G-WZMYQ9M3W4"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+const form=document.getElementById("profileForm");
+const msg=document.getElementById("msg");
+const saveBtn=document.getElementById("saveBtn");
+let currentUser=null;
+
+function message(text,color="#70eaff"){
+  msg.style.color=color;
+  msg.textContent=text;
+}
+
+function safePhoto(url){
+  try{
+    const parsed=new URL(url);
+    return ["https:","http:"].includes(parsed.protocol);
+  }catch{
+    return false;
+  }
+}
+
+function showProfile(data,user){
+  document.getElementById("name").value=data.displayName||"";
+  document.getElementById("email").value=user.email||"";
+  document.getElementById("phone").value=data.phone||"";
+  document.getElementById("photoURL").value=data.photoURL||"";
+  document.getElementById("uid").value=user.uid;
+
+  document.getElementById("displayTitle").textContent=data.displayName||"MH Member";
+  document.getElementById("emailTitle").textContent=user.email||"";
+  document.getElementById("role").textContent="Role: "+(data.role||"member");
+  document.getElementById("accountStatus").textContent="Status: "+(data.status||"unknown");
+
+  const avatar=document.getElementById("avatar");
+  if(data.photoURL&&safePhoto(data.photoURL)){
+    avatar.src=data.photoURL;
+  }else{
+    avatar.src="https://placehold.co/105x105/14294c/ffffff?text=MH";
+  }
+  avatar.onerror=()=>{
+    avatar.src="https://placehold.co/105x105/14294c/ffffff?text=MH";
+  };
+}
+
+onAuthStateChanged(auth,async user=>{
+  if(!user){
+    window.location.href="login.html";
+    return;
+  }
+
+  currentUser=user;
+
+  try{
+    const snap=await getDoc(doc(db,"users",user.uid));
+    if(!snap.exists()){
+      message("Member profile not found. Please contact support.","#ff7777");
+      return;
+    }
+
+    const data=snap.data();
+
+    if(data.status!=="active"){
+      message("Your account is not active.","#ff7777");
+      await signOut(auth);
+      return;
+    }
+
+    showProfile(data,user);
+  }catch(error){
+    console.error(error);
+    message("Could not load profile: "+error.message,"#ff7777");
+  }
+});
+
+form.addEventListener("submit",async event=>{
+  event.preventDefault();
+  if(!currentUser)return;
+
+  const name=document.getElementById("name").value.trim();
+  const phone=document.getElementById("phone").value.trim();
+  const photoURL=document.getElementById("photoURL").value.trim();
+
+  if(!name){
+    message("Please enter your full name.","#ff7777");
+    return;
+  }
+
+  if(photoURL&&!safePhoto(photoURL)){
+    message("Please enter a valid HTTP or HTTPS photo URL.","#ff7777");
+    return;
+  }
+
+  saveBtn.disabled=true;
+  saveBtn.textContent="Saving...";
+  message("Saving your profile...");
+
+  try{
+    await updateDoc(doc(db,"users",currentUser.uid),{
+      displayName:name,
+      phone:phone,
+      photoURL:photoURL,
+      updatedAt:serverTimestamp()
+    });
+
+    document.getElementById("displayTitle").textContent=name;
+    document.getElementById("avatar").src=
+      photoURL||"https://placehold.co/105x105/14294c/ffffff?text=MH";
+
+    message("Profile updated successfully!","#00ff88");
+  }catch(error){
+    console.error(error);
+    message("Could not save profile: "+error.message,"#ff7777");
+  }finally{
+    saveBtn.disabled=false;
+    saveBtn.textContent="Save Changes";
+  }
+});
+
+document.getElementById("logoutBtn").addEventListener("click",async()=>{
+  try{
+    await signOut(auth);
+    window.location.href="login.html";
+  }catch(error){
+    message("Logout failed: "+error.message,"#ff7777");
+  }
+});
+</script>
+</body>
+</html>
