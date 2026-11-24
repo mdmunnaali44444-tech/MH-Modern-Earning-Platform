@@ -122,12 +122,8 @@ form.addEventListener("submit", async (event) => {
 
     showMessage("Login successful! Opening your account...", "#00ff88");
 
-    if (profile.role === "admin") {
-      window.location.href = "admin.html";
-    } else {
-      window.location.href = "dashboard.html";
-    }
-
+    window.location.href = "dashboard.html";
+    
   } catch (error) {
     console.error("Login error:", error);
 
