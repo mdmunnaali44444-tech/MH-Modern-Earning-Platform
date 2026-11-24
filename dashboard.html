@@ -238,7 +238,7 @@ border-radius:0 17px 17px 0;
   <a href="support.html"><span>🎧</span>Help & Support</a>
   <a href="terms.html"><span>📄</span>Terms & Conditions</a>
   <a href="privacy.html"><span>🔐</span>Privacy Policy</a>
-  <a class="admin" href="admin.html"><span>⚙️</span>Admin Panel</a>
+  <a class="admin" id="adminLink" href="admin.html" style="display:none;"><span>⚙️</span>Admin Panel</a>
  </nav>
 </aside>
 
@@ -369,5 +369,32 @@ document.getElementById("language").addEventListener("click",e=>{
  bangla?"সদস্য ড্যাশবোর্ড":"Member Dashboard";
 });
 </script>
+ <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBEeIVyP44rJE8QkmumMNWj8CeKlAjr9hg",
+  authDomain: "mh-modern-earning-platform.firebaseapp.com",
+  projectId: "mh-modern-earning-platform",
+  storageBucket: "mh-modern-earning-platform.firebasestorage.app",
+  messagingSenderId: "743565295091",
+  appId: "1:743565295091:web:fdaf5dc868a38e24a6a686",
+  measurementId: "G-WZMYQ9M3W4"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { window.location.href = "login.html"; return; }
+  const snap = await getDoc(doc(db, "users", user.uid));
+  if (snap.exists() && snap.data().role === "admin") {
+    document.getElementById("adminLink").style.display = "flex";
+  }
+});
+ </script>
 </body>
 </html>
