@@ -253,10 +253,19 @@ td{color:#d5e4f5}
    </section>
 
    <section class="page" id="page-withdrawals">
-    <h1>Withdrawal Management</h1>
-    <p class="sub">Withdrawal request administration</p>
-    <div class="notice">Not connected yet. A secure server-side workflow is required before requests can be approved, rejected or paid. No payment action is active here.</div>
-   </section>
+<h2>Withdrawal Management</h2>
+<p class="sub">Withdrawal request administration</p>
+<div class="card">
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+<button class="btn secondary" onclick="loadWithdrawals('pending')">Pending</button>
+<button class="btn secondary" onclick="loadWithdrawals('approved')">Approved</button>
+<button class="btn secondary" onclick="loadWithdrawals('rejected')">Rejected</button>
+<button class="btn secondary" onclick="loadWithdrawals('all')">All</button>
+</div>
+<div id="withdrawalList"><div class="empty">Loading withdrawals...</div></div>
+<p id="withdrawalMsg" class="muted"></p>
+</div>
+</section>
 
    <section class="page" id="page-transactions">
     <h1>Transaction Management</h1>
@@ -302,17 +311,14 @@ td{color:#d5e4f5}
    </section>
 
   </div>
-  <div class="footer">MH — Modern Earning Platform · Admin Control Center</div>
- </main>
-</div>
-
+ 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import {
  getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 import {
- getFirestore,doc,getDoc,getDocs,collection,setDoc,updateDoc,
+ getFirestore,doc,getDoc,getDocs,collection,setDoc,updateDoc,query,orderBy,where,
  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
