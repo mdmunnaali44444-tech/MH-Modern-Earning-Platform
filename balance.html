@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balance - MH Platform</title>
+<style>
+body{margin:0;background:#0b0f1a;color:#fff;font-family:sans-serif}
+.top{background:#111827;padding:15px;display:flex;justify-content:space-between;align-items:center}
+.top a{color:#fff;text-decoration:none}
+.card{background:#1a2233;margin:20px;padding:25px;border-radius:15px;text-align:center}
+.card p{color:#9ca3af}
+.card h1{font-size:48px;color:#4ade80;margin:10px 0}
+.btn{background:#2563eb;color:#fff;border:none;padding:12px 20px;border-radius:10px;width:100%;font-size:16px;margin-top:15px}
+.small{color:#9ca3af;font-size:13px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="top">
+<a href="dashboard.html">← Back</a>
+<b>💰 My Balance</b>
+<span></span>
+</div>
+
+<div class="card">
+<p>Your Current Balance</p>
+<h1 id="bal">Loading...</h1>
+<p id="user">...</p>
+<p class="small">Firebase থেকে লাইভ ব্যালান্স দেখাচ্ছে</p>
+<button class="btn" onclick="location.reload()">Refresh Balance</button>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script>
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBEeIVyP44rJE8QkmumMNWj8CeKlAjr9hg",
+  authDomain: "mh-modern-earning-platform.firebaseapp.com",
+  projectId: "mh-modern-earning-platform",
+  storageBucket: "mh-modern-earning-platform.firebasestorage.app",
+  messagingSenderId: "743565295091",
+  appId: "1:743565295091:web:fdaf5dc868a38e24a6a686",
+  measurementId: "G-WZMYQ9M3W4"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+auth.onAuthStateChanged(async (user)=>{
+  if(!user){ document.getElementById('bal').innerText = "Login First"; return; }
+  document.getElementById('user').innerText = user.email || user.uid;
+  try{
+    let bal = null;
+    const doc = await db.collection('users').doc(user.uid).get();
+    if(doc.exists){
+      bal = doc.data().balance;
+    } else {
+      // uid দিয়ে না পাইলে email দিয়ে খুঁজবে - কারণ তুমি Anisha নামে ডকুমেন্ট বানাইছিলা
+      const q = await db.collection('users').where('email','==',user.email).get();
+      if(!q.empty){ bal = q.docs[0].data().balance; }
+    }
+    if(bal !== null && bal !== undefined){
+      document.getElementById('bal').innerText = "৳ " + bal;
+    } else {
+      document.getElementById('bal').innerText = "৳ 0";
+    }
+  }catch(e){ document.getElementById('bal').innerText = "Error: " + e.message; }
+});
+</script>
+</body>
+</html>
