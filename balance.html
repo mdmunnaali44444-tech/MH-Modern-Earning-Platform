@@ -1,40 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Balance - MH Platform</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-body{margin:0;background:#0b0f1a;color:#fff;font-family:sans-serif}
-.top{background:#111827;padding:15px;display:flex;justify-content:space-between;align-items:center}
-.top a{color:#fff;text-decoration:none}
-.card{background:#1a2233;margin:20px;padding:25px;border-radius:15px;text-align:center}
-.card p{color:#9ca3af}
-.card h1{font-size:48px;color:#4ade80;margin:10px 0}
-.btn{background:#2563eb;color:#fff;border:none;padding:12px 20px;border-radius:10px;width:100%;font-size:16px;margin-top:15px}
-.small{color:#9ca3af;font-size:13px;margin-top:10px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#070b14;color:#fff;min-height:100vh;padding-bottom:30px}
+.top{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);padding:16px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;z-index:10}
+.top a{color:#fff;text-decoration:none;font-weight:600}
+.top b{font-size:17px}
+.main{padding:18px}
+/* Main Balance Card - Premium Gold */
+.balance-card{background:linear-gradient(135deg,#0f172a 0%,#1e293b 45%,#b45309 100%);border:1px solid rgba(251,191,36,0.35);border-radius:22px;padding:26px 22px;position:relative;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,0.45)}
+.balance-card:before{content:"";position:absolute;width:220px;height:220px;background:radial-gradient(circle,rgba(251,191,36,0.35),transparent 70%);top:-80px;right:-60px}
+.balance-card small{color:#fcd34d;letter-spacing:1px;font-weight:700;font-size:12px}
+.balance-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px;position:relative;z-index:2}
+.balance-row h1{font-size:44px;font-weight:800;line-height:1}
+.balance-row h1 span{font-size:26px;color:#fbbf24}
+.refresh-btn{width:44px;height:44px;min-width:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.12);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+.refresh-btn:active{transform:rotate(180deg)}
+.refresh-btn.spin i{animation:spin 0.8s linear}
+@keyframes spin{to{transform:rotate(360deg)}}
+#user{margin-top:12px;color:#cbd5e1;font-size:13px;position:relative;z-index:2}
+#user i{color:#4ade80;margin-right:6px}
+.update{margin-top:14px;background:rgba(0,0,0,0.25);padding:10px 12px;border-radius:12px;font-size:12px;color:#e2e8f0;position:relative;z-index:2}
+/* Today / Yesterday */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.mini{background:#111827;border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:18px 14px;text-align:left}
+.mini.today{border-top:3px solid #22c55e}
+.mini.yest{border-top:3px solid #f59e0b}
+.mini .icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px}
+.today .icon{background:rgba(34,197,94,0.18);color:#4ade80}
+.yest .icon{background:rgba(245,158,11,0.18);color:#fbbf24}
+.mini p{color:#9ca3af;font-size:12px}
+.mini h2{font-size:22px;margin-top:4px}
+.mini h2 span{font-size:14px;color:#9ca3af}
+.mini small{color:#6b7280;font-size:11px}
+/* Info */
+.info{margin-top:16px;background:#111827;border-radius:16px;padding:16px;display:flex;gap:12px;align-items:center}
+.info i{color:#fbbf24;font-size:20px}
+.info b{font-size:14px}
+.info p{color:#9ca3af;font-size:12px;margin-top:2px}
+.back-btn{display:block;text-align:center;margin-top:18px;color:#9ca3af;text-decoration:none;font-size:14px}
 </style>
 </head>
 <body>
 <div class="top">
 <a href="dashboard.html">← Back</a>
 <b>💰 My Balance</b>
-<span></span>
+<span style="width:40px"></span>
 </div>
 
-<div class="card">
-<p>Your Current Balance</p>
-<h1 id="bal">Loading...</h1>
-<p id="user">...</p>
-<p class="small">Firebase থেকে লাইভ ব্যালান্স দেখাচ্ছে</p>
-<button class="btn" onclick="location.reload()">Refresh Balance</button>
+<div class="main">
+  <div class="balance-card">
+    <small>TOTAL BALANCE</small>
+    <div class="balance-row">
+      <h1><span>৳</span> <span id="bal">Loading...</span></h1>
+      <button class="refresh-btn" id="refreshBtn" onclick="loadBalance(true)" title="Refresh"><i class="fa-solid fa-rotate-right"></i></button>
+    </div>
+    <p id="user"><i class="fa-solid fa-circle"></i> Loading...</p>
+    <div class="update">🔄 Firebase থেকে লাইভ ব্যালান্স দেখাচ্ছে • <span id="lastUpdate">Just now</span></div>
+  </div>
+
+  <div class="grid">
+    <div class="mini today">
+      <div class="icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+      <p>আজকের ইনকাম</p>
+      <h2>৳ <span id="todayBal">0</span></h2>
+      <small>Today</small>
+    </div>
+    <div class="mini yest">
+      <div class="icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+      <p>গতকালের ইনকাম</p>
+      <h2>৳ <span id="yestBal">0</span></h2>
+      <small>Yesterday</small>
+    </div>
+  </div>
+
+  <div class="info">
+    <i class="fa-solid fa-shield-halved"></i>
+    <div><b>100% Secure Wallet</b><p>তোমার টাকা Firebase এ সেভ থাকে। Refresh আইকনে চাপ দিলে নতুন ব্যালান্স আসবে।</p></div>
+  </div>
+  <a class="back-btn" href="dashboard.html">← Dashboard এ ফিরে যাও</a>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script>
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyBEeIVyP44rJE8QkmumMNWj8CeKlAjr9hg",
   authDomain: "mh-modern-earning-platform.firebaseapp.com",
@@ -47,26 +102,59 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+let currentUser = null;
+
+function getField(data, names){
+  for(let n of names){ if(data[n]!==undefined && data[n]!==null) return data[n]; }
+  return 0;
+}
+
+async function getUserData(user){
+  // 1. UID দিয়ে খুঁজবে
+  let doc = await db.collection('users').doc(user.uid).get();
+  let data = null;
+  if(doc.exists) data = doc.data();
+  // 2. UID ডকুমেন্টে balance না থাকলে email দিয়ে খুঁজবে - এটাই আগের বাগ ছিল
+  if(!data || data.balance===undefined || data.balance===null){
+    const q = await db.collection('users').where('email','==',user.email).get();
+    if(!q.empty){
+      for(let d of q.docs){
+        let dd = d.data();
+        if(dd.balance!==undefined && dd.balance!==null){ data = dd; break; }
+        if(!data) data = dd;
+      }
+    }
+  }
+  return data || {};
+}
+
+async function loadBalance(isRefresh=false){
+  if(!currentUser) return;
+  const btn = document.getElementById('refreshBtn');
+  if(isRefresh){ btn.classList.add('spin'); }
+  try{
+    const data = await getUserData(currentUser);
+    let bal = data.balance || 0;
+    // Firebase এ যেই নামেই সেভ থাকুক, সব নাম থেকে নিবে
+    let today = getField(data, ['todayIncome','today_income','todaysIncome','todayEarning','todayEarningAmount','today']);
+    let yest = getField(data, ['yesterdayIncome','yesterday_income','yestIncome','yesterdayEarning','yesterday']);
+
+    document.getElementById('bal').innerText = Number(bal).toLocaleString('en-IN');
+    document.getElementById('todayBal').innerText = Number(today).toLocaleString('en-IN');
+    document.getElementById('yestBal').innerText = Number(yest).toLocaleString('en-IN');
+    document.getElementById('lastUpdate').innerText = new Date().toLocaleTimeString('bn-BD',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){
+    document.getElementById('bal').innerText = "Error";
+    console.log(e);
+  }
+  setTimeout(()=>btn.classList.remove('spin'),800);
+}
 
 auth.onAuthStateChanged(async (user)=>{
   if(!user){ document.getElementById('bal').innerText = "Login First"; return; }
-  document.getElementById('user').innerText = user.email || user.uid;
-  try{
-    let bal = null;
-    const doc = await db.collection('users').doc(user.uid).get();
-    if(doc.exists){
-      bal = doc.data().balance;
-    } else {
-      // uid দিয়ে না পাইলে email দিয়ে খুঁজবে - কারণ তুমি Anisha নামে ডকুমেন্ট বানাইছিলা
-      const q = await db.collection('users').where('email','==',user.email).get();
-      if(!q.empty){ bal = q.docs[0].data().balance; }
-    }
-    if(bal !== null && bal !== undefined){
-      document.getElementById('bal').innerText = "৳ " + bal;
-    } else {
-      document.getElementById('bal').innerText = "৳ 0";
-    }
-  }catch(e){ document.getElementById('bal').innerText = "Error: " + e.message; }
+  currentUser = user;
+  document.getElementById('user').innerHTML = '<i class="fa-solid fa-circle"></i> ' + (user.email || user.uid);
+  loadBalance(false);
 });
 </script>
 </body>
