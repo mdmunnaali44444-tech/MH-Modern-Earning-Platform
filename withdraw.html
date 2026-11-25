@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Withdraw - MH Modern Earning 👑</title>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<style>
+*{box-sizing:border-box;font-family:Hind Siliguri, Arial, sans-serif}
+body{margin:0;background:#0a0a0a;padding:15px;color:#fff}
+.card{background:linear-gradient(180deg,#1a1a1a,#121212);border:1px solid #d4af37;border-radius:20px;padding:20px;max-width:480px;margin:0 auto;box-shadow:0 0 30px rgba(212,175,55,.25)}
+h2{text-align:center;margin:0;color:#FFD700;font-size:24px;letter-spacing:1px}
+.sub{text-align:center;color:#aaa;font-size:13px;margin-bottom:15px}
+.balance{background:linear-gradient(135deg,#000,#2b2100,#000);border:1px solid #FFD700;border-radius:16px;padding:18px;text-align:center;box-shadow:inset 0 0 20px rgba(255,215,0,.15)}
+.balance div:first-child{color:#FFD700;font-size:14px;letter-spacing:1px}
+.balance b{font-size:32px;color:#fff;text-shadow:0 0 10px #FFD700}
+.label{font-weight:bold;margin:16px 0 7px;font-size:14px;color:#FFD700}
+input{width:100%;padding:13px;border:1px solid #333;border-radius:12px;font-size:15px;outline:none;background:#0f0f0f;color:#fff}
+input:focus{border-color:#FFD700;box-shadow:0 0 10px rgba(255,215,0,.3)}
+input::placeholder{color:#777}
+.pay-row{display:flex;gap:10px}
+.pay{flex:1;border:2px solid #333;border-radius:14px;padding:10px;text-align:center;cursor:pointer;background:#0f0f0f;transition:.2s}
+.pay.active{border-color:#FFD700;background:#1e1a00;box-shadow:0 0 15px rgba(255,215,0,.35);transform:scale(1.03)}
+.pay img{width:48px;height:48px;object-fit:contain;border-radius:50%;background:#fff;padding:2px}
+.pay span{display:block;font-weight:bold;font-size:13px;margin-top:4px;color:#fff}
+.fee-box{background:#1e1a00;border:1px dashed #FFD700;border-radius:12px;padding:12px;font-size:14px;margin-top:12px;line-height:1.8;color:#FFD700}
+button#submitBtn{width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;font-size:18px;font-weight:900;margin-top:16px;cursor:pointer;box-shadow:0 5px 20px rgba(255,215,0,.4);letter-spacing:.5px}
+button:disabled{background:#444 !important;color:#999 !important;box-shadow:none}
+.msg{text-align:center;font-size:14px;margin-top:10px;font-weight:bold}
+.history{max-width:480px;margin:15px auto;background:#141414;border:1px solid #333;border-radius:20px;padding:16px}
+.history h3{color:#FFD700;margin:0}
+.h-item{border-bottom:1px solid #2a2a2a;padding:11px 0;display:flex;justify-content:space-between;font-size:14px;color:#fff}
+.h-item small{color:#aaa}
+.badge{padding:4px 11px;border-radius:20px;font-size:12px;font-weight:bold;height:fit-content}
+.pending{background:#3a2f00;color:#FFD700;border:1px solid #FFD700}
+.approved{background:#003d1a;color:#00ff88;border:1px solid #00ff88}
+.rejected{background:#3d0000;color:#ff6b6b;border:1px solid #ff6b6b}
+.note{text-align:center;font-size:13px;color:#aaa;margin-top:10px;line-height:1.6}
+.note b{color:#FFD700}
+.vip{ text-align:center; font-size:12px; color:#FFD700; letter-spacing:3px; margin-bottom:10px; font-weight:bold; }
+</style>
+</head>
+<body>
+
+<div class="card">
+<div class="vip">✦ PREMIUM VIP ✦</div>
+<h2>👑 টাকা উত্তোলন</h2>
+<p class="sub">Withdraw Money - MH Modern Earning</p>
+
+<div class="balance">
+  <div>✦ আপনার ব্যালান্স ✦</div>
+  <b><span id="balance">0</span> ৳</b>
+  <div id="cooldown" style="font-size:13px;margin-top:5px;color:#FFD700"></div>
+</div>
+
+<div class="label">💳 পেমেন্ট মেথড বাছুন</div>
+<div class="pay-row">
+  <div class="pay active" data-method="bKash" onclick="selectPay(this)">
+    <img src="https://logos-world.net/wp-content/uploads/2022/04/bKash-Logo.png"><span>bKash</span>
+  </div>
+  <div class="pay" data-method="Nagad" onclick="selectPay(this)">
+    <img src="https://logos-world.net/wp-content/uploads/2023/01/Nagad-Logo.png"><span>Nagad</span>
+  </div>
+  <div class="pay" data-method="USDT" onclick="selectPay(this)">
+    <img src="https://cryptologos.cc/logos/tether-usdt-logo.png"><span>USDT</span>
+  </div>
+</div>
+
+<div class="label">আপনার নাম্বার / Wallet Address</div>
+<input id="number" placeholder="যেমন: 01XXXXXXXXX বা USDT Address">
+
+<div class="label">টাকার পরিমাণ (সর্বনিম্ন ১০০ ৳)</div>
+<input id="amount" type="number" placeholder="100" oninput="calcFee()">
+
+<div class="fee-box" id="feeBox">
+  👑 ফি (৫%): ০ ৳ <br> 💰 আপনি পাবেন: ০ ৳
+</div>
+
+<button id="submitBtn" onclick="doWithdraw()">👑 Withdraw করুন</button>
+<div class="msg" id="msg"></div>
+<div class="note">⏰ Withdraw দেওয়ার পর <b>৬-১২ ঘণ্টার</b> মধ্যে পেমেন্ট পাবেন।<br>⚠️ একবার Withdraw করলে আবার <b>২৪ ঘণ্টা</b> পর করতে পারবেন।</div>
+</div>
+
+<div class="history">
+<h3>📜 Withdraw History</h3>
+<div id="historyList" style="margin-top:10px">লোড হচ্ছে...</div>
+</div>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBEeIVyP44rJE8QkmumMNWj8CeKlAjr9hg",
+  authDomain: "mh-modern-earning-platform.firebaseapp.com",
+  projectId: "mh-modern-earning-platform",
+  storageBucket: "mh-modern-earning-platform.firebasestorage.app",
+  messagingSenderId: "743565295091",
+  appId: "1:743565295091:web:fdaf5dc868a38e24a6a686",
+  measurementId: "G-WZMYQ9M3W4"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+let userId = localStorage.getItem("userId") || localStorage.getItem("userEmail") || "test_user";
+let selectedMethod = "bKash";
+let userBalance = 0;
+let lastWithdrawTime = null;
+function selectPay(el){
+  document.querySelectorAll('.pay').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  selectedMethod = el.dataset.method;
+  document.getElementById("number").placeholder = selectedMethod==="USDT" ? "আপনার USDT Address (TRC20)" : "যেমন: 01XXXXXXXXX";
+}
+function calcFee(){
+  let amt = parseFloat(document.getElementById("amount").value) || 0;
+  let fee = amt * 0.05;
+  let net = amt - fee;
+  document.getElementById("feeBox").innerHTML = `👑 ফি (৫%): ${fee.toFixed(0)} ৳ <br> 💰 আপনি পাবেন: ${net.toFixed(0)} ৳`;
+  return {fee, net};
+}
+async function loadData(){
+  try{
+    let doc = await db.collection("users").doc(userId).get();
+    if(doc.exists){ userBalance = doc.data().balance || 0; }
+  }catch(e){}
+  document.getElementById("balance").innerText = userBalance;
+  let snap = await db.collection("withdrawals").where("userId","==",userId).orderBy("createdAt","desc").get();
+  let html = "";
+  snap.forEach((d,i)=>{
+    let w = d.data();
+    if(i===0 && w.createdAt){ lastWithdrawTime = w.createdAt.toDate ? w.createdAt.toDate() : new Date(w.createdAt); }
+    let st = w.status || "pending";
+    html += `<div class="h-item"><div><b>${w.amount} ৳</b> - ${w.method}<br><small>${w.createdAt?.toDate ? w.createdAt.toDate().toLocaleString() : ""} | Fee: ${w.fee} ৳ | পাবেন: ${w.netAmount} ৳</small></div><span class="badge ${st}">${st}</span></div>`;
+  });
+  document.getElementById("historyList").innerHTML = html || "এখনো কোনো Withdraw নাই।";
+  if(lastWithdrawTime){
+    let diff = Date.now() - lastWithdrawTime.getTime();
+    let remain = 24*60*60*1000 - diff;
+    if(remain > 0){
+      let h = Math.floor(remain/3600000), m = Math.floor((remain%3600000)/60000);
+      document.getElementById("cooldown").innerText = `⏳ আবার Withdraw করতে পারবেন ${h} ঘণ্টা ${m} মিনিট পর`;
+      document.getElementById("submitBtn").disabled = true;
+      document.getElementById("submitBtn").innerText = `২৪ ঘণ্টা অপেক্ষা করুন (${h}h ${m}m বাকি)`;
+    }
+  }
+}
+async function doWithdraw(){
+  let amt = parseFloat(document.getElementById("amount").value);
+  let num = document.getElementById("number").value.trim();
+  let msg = document.getElementById("msg");
+  if(lastWithdrawTime && (Date.now() - lastWithdrawTime.getTime()) < 24*60*60*1000){
+    msg.style.color="#ff6b6b"; msg.innerText="❌ ২৪ ঘণ্টা হয় নাই। আবার পরে চেষ্টা করুন।"; return;
+  }
+  if(!amt || amt < 100){
+    msg.style.color="#ff6b6b"; msg.innerText="❌ Insufficient Balance - সর্বনিম্ন ১০০ টাকা তুলতে হবে!"; return;
+  }
+  if(amt > userBalance){
+    msg.style.color="#ff6b6b"; msg.innerText="❌ Insufficient Balance - আপনার ব্যালান্স কম আছে!"; return;
+  }
+  if(!num){ msg.style.color="#ff6b6b"; msg.innerText="❌ নাম্বার / Address দিন!"; return; }
+  let {fee, net} = calcFee();
+  document.getElementById("submitBtn").disabled = true;
+  await db.collection("withdrawals").add({
+    userId: userId,
+    method: selectedMethod,
+    number: num,
+    amount: amt,
+    fee: fee,
+    netAmount: net,
+    status: "pending",
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+  await db.collection("users").doc(userId).update({ balance: userBalance - amt });
+  msg.style.color="#00ff88";
+  msg.innerText="✅ আবেদন সফল! ৬-১২ ঘণ্টার মধ্যে পেমেন্ট পাবেন।";
+  alert("✅ Withdraw সফল! ৬-১২ ঘণ্টার মধ্যে পেমেন্ট পাবেন।");
+  location.reload();
+}
+loadData();
+</script>
+</body>
+</html>
