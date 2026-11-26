@@ -1,15 +1,127 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MH | Referral</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Referral - MH</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#eef2ff;font-family:Arial,sans-serif}.wrap{max-width:760px;margin:auto;padding:18px}.top{display:flex;align-items:center;gap:12px;margin-bottom:18px}a.back{color:#9fb8ff;text-decoration:none}.card{background:#151d33;border:1px solid #263454;border-radius:16px;padding:16px;margin:12px 0}h1{font-size:23px;margin:8px 0}h2{font-size:17px;margin:0 0 12px}.muted{color:#9eabc7;font-size:13px}.linkrow{display:flex;gap:8px}.linkrow input{min-width:0;flex:1;background:#0d1426;color:white;border:1px solid #344466;border-radius:9px;padding:11px}button{border:0;border-radius:9px;padding:11px 14px;background:#5b83ff;color:#fff;font-weight:bold;cursor:pointer}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#0d1426;border-radius:12px;padding:14px}.num{font-size:22px;font-weight:bold;margin-top:6px}.notice{background:#392e15;color:#ffdf91;border-radius:10px;padding:12px;font-size:13px}table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:10px;border-bottom:1px solid #293653}
-</style></head><body><div class="wrap">
-<div class="top"><a class="back" href="dashboard.html">← Back</a><span class="muted">MH Modern Earning Platform</span></div><h1>Referral Program</h1><p class="muted">আপনার রেফারেল ও কমিশনের তথ্য</p>
-<section class="card"><h2>আপনার Referral Link</h2><div class="linkrow"><input id="refLink" readonly placeholder="লগইন করলে আপনার লিংক দেখাবে"><button id="copyBtn">Copy</button></div><p id="status" class="muted">Firebase সংযোগ কনফিগার করা বাকি।</p></section>
-<section class="card"><h2>বোনাস নিয়ম</h2><div class="stats"><div class="stat"><span class="muted">১ম Generation</span><div class="num">৳১০</div></div><div class="stat"><span class="muted">২য় Generation</span><div class="num">৳৫</div></div><div class="stat"><span class="muted">৩য় Generation</span><div class="num">৳২</div></div><div class="stat"><span class="muted">Direct withdrawal commission</span><div class="num">৫%</div></div></div></section>
-<section class="card"><h2>Referral Summary</h2><div class="stats"><div class="stat"><span class="muted">১ম Generation</span><div class="num" id="gen1">—</div></div><div class="stat"><span class="muted">২য় Generation</span><div class="num" id="gen2">—</div></div><div class="stat"><span class="muted">৩য় Generation</span><div class="num" id="gen3">—</div></div><div class="stat"><span class="muted">মোট Referral Bonus</span><div class="num" id="bonus">৳—</div></div><div class="stat"><span class="muted">Withdrawal Commission</span><div class="num" id="commission">৳—</div></div></div></section>
-<section class="card"><h2>Referral History</h2><div class="notice">Firebase-এর ডেটাবেস ও সুরক্ষিত bonus processing যুক্ত হলে এখানে রেফারেল হিস্ট্রি দেখাবে।</div><table><thead><tr><th>Member</th><th>Generation</th><th>Bonus</th><th>Status</th></tr></thead><tbody id="history"><tr><td colspan="4" class="muted">ডেটা এখনো সংযুক্ত হয়নি।</td></tr></tbody></table></section>
-</div><script>
-document.getElementById('copyBtn').addEventListener('click',async()=>{const input=document.getElementById('refLink');if(!input.value){document.getElementById('status').textContent='Referral link তৈরি/লোড হয়নি।';return;}try{await navigator.clipboard.writeText(input.value);document.getElementById('status').textContent='লিংক কপি হয়েছে!';}catch(e){input.select();document.execCommand('copy');document.getElementById('status').textContent='লিংক কপি করার চেষ্টা করা হয়েছে।';}});
-</script></body></html>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#f1f5f9;color:#1e293b}
+.top{background:linear-gradient(90deg,#4c1d95,#2563eb);color:#fff;padding:12px 14px;display:flex;align-items:center;gap:12px}
+.top a{color:#fff;text-decoration:none;font-size:22px}
+.top h2{font-size:18px;line-height:1.2}
+.top h2 span{color:#fde047;font-size:18px}
+.top .bell{margin-left:auto;font-size:22px}
+.top .av{width:38px;height:38px;border-radius:50%;background:#fff;color:#000;display:flex;align-items:center;justify-content:center;font-weight:800}
+.main{padding:12px}
+.banner{background:linear-gradient(90deg,#1e1b4b,#1d4ed8);color:#fff;border-radius:16px;padding:16px;display:flex;justify-content:space-between;align-items:center}
+.banner h1{color:#fde047;font-size:22px}
+.banner p{font-size:13px}
+.win{background:#16a34a;color:#fff;border:none;padding:8px 12px;border-radius:20px;font-weight:700;cursor:pointer}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.c{background:#fff;border-radius:12px;padding:12px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.c b{font-size:22px}
+.c small{color:#64748b}
+.c1{background:#eff6ff}.c2{background:#f0fdf4}.c3{background:#fff7ed}
+.linkbox{background:#fff;border-radius:14px;padding:14px;margin-top:12px}
+.linkbox h3{font-size:16px}
+.row{display:flex;gap:8px;margin-top:8px}
+.row input{flex:1;padding:11px;border-radius:10px;border:1px solid #e2e8f0;background:#f8fafc;font-size:12px}
+.row button{background:#4c1d95;color:#fff;border:none;padding:11px 12px;border-radius:10px;font-weight:700;cursor:pointer}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.box{background:#fff;border-radius:14px;padding:14px}
+.box h3{font-size:15px;margin-bottom:10px}
+.bonus3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center}
+.bonus3 div{padding:10px 4px;border-radius:10px}
+.bonus3 b{font-size:20px}
+.total{background:linear-gradient(90deg,#16a34a,#065f46);color:#fff;border-radius:14px;padding:14px;margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.total b{color:#fde047;font-size:22px}
+.total .white{background:#fff;color:#166534;padding:8px 12px;border-radius:12px;text-align:center}
+.total .white b{color:#166534}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.tree{display:flex;justify-content:space-around;text-align:center;margin-top:10px}
+.tree div{padding:8px;border-radius:10px;font-size:12px}
+.item{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
+.badge{padding:4px 8px;border-radius:20px;font-size:11px;font-weight:700}
+.g1{background:#ede9fe;color:#6d28d9}.g2{background:#dcfce7;color:#15803d}.g3{background:#ffedd5;color:#ea580c}
+.note{background:#ede9fe;border-radius:12px;padding:12px;margin-top:12px;font-size:13px}
+@media(max-width:600px){.split,.bottom{grid-template-columns:1fr}.banner h1{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="top"><a href="dashboard.html">←</a><h2>👑 MH Modern<br><span>Earning Platform</span></h2><span class="bell">🔔</span><div class="av">M</div></div>
+<div class="main">
+  <div class="banner"><div><h1>Referral Program</h1><p>Invite Your Friends & Earn More!</p></div><button class="win">🎁 Win Together ↗</button></div>
+
+  <div class="grid3">
+    <div class="c c1"><small>Direct Referral</small><br><b id="c1">0</b> <small>(1st Gen)</small></div>
+    <div class="c c2"><small>2nd Gen Members</small><br><b id="c2">0</b></div>
+    <div class="c c3"><small>3rd Gen Members</small><br><b id="c3">0</b></div>
+  </div>
+
+  <div class="linkbox"><h3>🔗 Your Referral Link</h3>
+    <div class="row"><input id="refLink" readonly><button onclick="copyLink()">📋 Copy Link</button></div>
+    <p style="font-size:13px;margin-top:8px">✅ Share this link and earn bonuses!</p><p id="msg" style="color:#16a34a;font-size:13px"></p>
+  </div>
+
+  <div class="split">
+    <div class="box"><h3>🎁 Referral Bonus (3 Generation)</h3><div class="bonus3">
+      <div style="background:#ede9fe"><small>1st Gen</small><br><b style="color:#6d28d9">৳10</b></div>
+      <div style="background:#dcfce7"><small>2nd Gen</small><br><b style="color:#15803d">৳5</b></div>
+      <div style="background:#ffedd5"><small>3rd Gen</small><br><b style="color:#ea580c">৳2</b></div>
+    </div></div>
+    <div class="box"><h3>💰 Withdrawal Commission</h3><b style="font-size:28px;color:#16a34a">5%</b><p style="font-size:12px;color:#64748b">Only for 1st Generation<br>When your direct referral withdraws</p></div>
+  </div>
+
+  <div class="total">
+    <div><small>Total Referral Bonus</small><br><b id="totBonus">৳ 0</b></div>
+    <div><small>Withdrawal Commission</small><br><b id="totComm">৳ 0</b></div>
+    <div class="white"><small>Total Earned</small><br><b id="totEarn">৳ 0</b></div>
+  </div>
+
+  <div class="bottom">
+    <div class="box"><h3>🌐 Your Referral Tree</h3><div class="tree">
+      <div style="background:#ede9fe">1st Gen<br><b id="t1">0</b></div>
+      <div style="background:#dcfce7">2nd Gen<br><b id="t2">0</b></div>
+      <div style="background:#ffedd5">3rd Gen<br><b id="t3">0</b></div>
+    </div><p style="font-size:12px;text-align:center;margin-top:8px">👤 You</p></div>
+    <div class="box"><h3>🕐 Referral History <span style="float:right;color:#2563eb;font-size:12px">View All →</span></h3><div id="history"><p style="color:#94a3b8;font-size:13px">এখনো কেউ জয়েন করে নাই</p></div></div>
+  </div>
+
+  <div class="note">ℹ️ <b>Note:</b> Share your link, get rewards! And your direct referral's withdrawal will give you 5% commission. 🏆</div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig={apiKey:"AIzaSyBEeIVyP44rJE8QkmumMNWj8CeKlAjr9hg",authDomain:"mh-modern-earning-platform.firebaseapp.com",projectId:"mh-modern-earning-platform",storageBucket:"mh-modern-earning-platform.firebasestorage.app",messagingSenderId:"743565295091",appId:"1:743565295091:web:fdaf5dc868a38e24a6a686"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(), db=firebase.firestore();
+function copyLink(){let i=document.getElementById('refLink');i.select();navigator.clipboard.writeText(i.value);document.getElementById('msg').innerText="✅ লিংক কপি হইছে!";}
+auth.onAuthStateChanged(async(user)=>{
+  if(!user) return location.href='login.html';
+  let ref=db.collection('users').doc(user.uid);
+  let snap=await ref.get(); let d=snap.exists?snap.data():{};
+  if(!d.referralCode){let code="U"+Math.floor(10000+Math.random()*89999);await ref.set({referralCode:code},{merge:true});d.referralCode=code;}
+  let base=location.origin+location.pathname.replace('referral.html','');
+  document.getElementById('refLink').value=base+'?ref='+d.referralCode;
+  let q1=await db.collection('users').where('referredBy','==',d.referralCode).get();
+  let c1=q1.size, html=""; let gen2Codes=[];
+  q1.forEach(doc=>{let u=doc.data(); if(u.referralCode) gen2Codes.push(u.referralCode); html+=`<div class="item"><span>${u.email||'User'}</span><span class="badge g1">1st Gen</span><b>+৳10</b></div>`;});
+  let c2=0, gen3Codes=[];
+  for(let code of gen2Codes){let q=await db.collection('users').where('referredBy','==',code).get(); c2+=q.size; q.forEach(doc=>{let u=doc.data(); if(u.referralCode) gen3Codes.push(u.referralCode); html+=`<div class="item"><span>${u.email||'User'}</span><span class="badge g2">2nd Gen</span><b>+৳5</b></div>`;});}
+  let c3=0;
+  for(let code of gen3Codes){let q=await db.collection('users').where('referredBy','==',code).get(); c3+=q.size; q.forEach(doc=>{let u=doc.data(); html+=`<div class="item"><span>${u.email||'User'}</span><span class="badge g3">3rd Gen</span><b>+৳2</b></div>`;});}
+  let bonus=c1*10+c2*5+c3*2;
+  let comm=d.withdrawalCommission||0;
+  document.getElementById('c1').innerText=c1; document.getElementById('c2').innerText=c2; document.getElementById('c3').innerText=c3;
+  document.getElementById('t1').innerText=c1; document.getElementById('t2').innerText=c2; document.getElementById('t3').innerText=c3;
+  document.getElementById('totBonus').innerText="৳ "+bonus;
+  document.getElementById('totComm').innerText="৳ "+comm;
+  document.getElementById('totEarn').innerText="৳ "+(bonus+comm);
+  if(html) document.getElementById('history').innerHTML=html;
+});
+</script>
+</body>
+</html>
