@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Tasks</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f1f2f7}
+.header{background:linear-gradient(135deg,#7b2ff7,#9b30ff);color:#fff;padding:20px;text-align:center;border-radius:0 0 20px 20px}
+.header a{color:#fff;text-decoration:none;float:left}
+.tabs{display:flex;gap:8px;padding:15px;overflow:auto}
+.tabs button{border:1px solid #7b2ff7;background:#fff;color:#7b2ff7;padding:8px 16px;border-radius:20px;white-space:nowrap}
+.tabs button.active{background:#7b2ff7;color:#fff}
+.card{background:#fff;margin:0 15px 12px;padding:15px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.card h3{font-size:16px;margin-bottom:4px}
+.card p{font-size:13px;color:#777}
+.price{color:#0a9d4e;font-weight:bold;font-size:15px}
+.btn{background:#7b2ff7;color:#fff;border:none;padding:9px 18px;border-radius:20px;font-weight:bold}
+</style>
+</head>
+<body>
+
+<div class="header">
+<a href="dashboard.html">← Back</a>
+<h2>All Tasks</h2>
+<p>কাজ বেছে নিয়ে আয় শুরু করুন</p>
+</div>
+
+<div class="tabs">
+<button class="active">All</button>
+<button>Video</button>
+<button>Follow</button>
+<button>App</button>
+</div>
+
+<div class="card">
+<div><h3>📺 YouTube ভিডিও দেখুন</h3><p>2 মিনিট দেখলেই হবে</p></div>
+<div style="text-align:right"><div class="price">৳10</div><br><button class="btn" onclick="startTask(this)">Start</button></div>
+</div>
+
+<div class="card">
+<div><h3>👍 Facebook Page Follow</h3><p>Follow করে স্ক্রিনশট দিন</p></div>
+<div style="text-align:right"><div class="price">৳15</div><br><button class="btn" onclick="startTask(this)">Start</button></div>
+</div>
+
+<div class="card">
+<div><h3>📱 App Install করুন</h3><p>5 মিনিট ব্যবহার করুন</p></div>
+<div style="text-align:right"><div class="price">৳25</div><br><button class="btn" onclick="startTask(this)">Start</button></div>
+</div>
+
+<div class="card">
+<div><h3>📸 Instagram Follow</h3><p>Follow করে প্রমাণ দিন</p></div>
+<div style="text-align:right"><div class="price">৳12</div><br><button class="btn" onclick="startTask(this)">Start</button></div>
+</div>
+
+<script>
+function startTask(btn){
+  btn.innerText = "Started ✓";
+  btn.style.background = "#0a9d4e";
+  alert("কাজটি My Tasks এ চলে গেছে!");
+  window.location.href = "my-tasks.html";
+}
+</script>
+
+</body>
+</html>
