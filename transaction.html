@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transactions - MH Modern Earning</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',Arial,sans-serif}
+body{background:#f4f0ff;color:#1a1a2e;min-height:100vh}
+.topbar{background:linear-gradient(135deg,#2e1065,#4c1d95,#6d28d9);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20}
+.left{display:flex;align-items:center;gap:12px}
+.back{font-size:20px;text-decoration:none;color:#fff;width:36px;height:36px;background:rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:42px;height:42px;background:linear-gradient(135deg,#a78bfa,#7c3aed);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 20px rgba(255,255,255,.3)}
+.logo b{font-size:20px;line-height:1}
+.logo b i{color:#fbbf24;font-style:normal}
+.logo span{display:block;font-size:9px;color:#ddd6fe;letter-spacing:1.5px;margin-top:2px}
+.right{display:flex;gap:10px;align-items:center}
+.search-box{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:25px;padding:8px 14px;display:flex;align-items:center;gap:6px;min-width:220px}
+.search-box input{background:transparent;border:none;outline:none;color:#fff;width:100%;font-size:13px}
+.search-box input::placeholder{color:#ddd6fe}
+.bell{font-size:20px;width:38px;height:38px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative}
+.bell i{position:absolute;top:8px;right:9px;width:8px;height:8px;background:#ef4444;border-radius:50%;border:1px solid #fff}
+.avatar{width:38px;height:38px;background:#fbbf24;color:#4c1d95;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900}
+.main{max-width:1150px;margin:0 auto;padding:22px 20px 30px}
+.title-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.title-row .ico{font-size:26px}
+.title-row h1{font-size:28px;color:#4c1d95}
+.sub{font-size:14px;color:#6b7280;margin-bottom:18px}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin-bottom:20px}
+.stat{background:#fff;border:1px solid #e9d5ff;border-radius:14px;padding:16px;box-shadow:0 4px 15px rgba(76,29,149,.08);display:flex;gap:12px;align-items:center}
+.stat .s-ic{width:46px;height:46px;min-width:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.green-bg{background:#dcfce7}.red-bg{background:#fee2e2}.orange-bg{background:#fef3c7}.blue-bg{background:#dbeafe}
+.stat small{font-size:12px;color:#6b7280;display:block}
+.stat b{font-size:19px;color:#111827}
+.stat span{font-size:11px;color:#9ca3af}
+.card{background:#fff;border:1px solid #e9d5ff;border-radius:16px;box-shadow:0 4px 20px rgba(76,29,149,.08);overflow:hidden}
+.card-head{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid #f3f4f6}
+.card-head h2{font-size:17px;color:#1f2937}
+.filters{display:flex;gap:8px}
+.filters select,.filters button{padding:8px 12px;border-radius:20px;border:1px solid #e5e7eb;background:#f9fafb;font-size:12px;cursor:pointer}
+.filters button{background:#4c1d95;color:#fff;border-color:#4c1d95;font-weight:700}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:800px}
+th{background:#f8f5ff;color:#4c1d95;font-size:12px;text-align:left;padding:13px 16px;letter-spacing:.5px;text-transform:uppercase}
+td{padding:14px 16px;font-size:13.5px;border-top:1px solid #f3f4f6;vertical-align:middle}
+.type{display:flex;align-items:center;gap:9px;font-weight:600}
+.type .t-ic{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px}
+.plus{color:#16a34a;font-weight:800}
+.minus{color:#dc2626;font-weight:800}
+.badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:800;white-space:nowrap}
+.completed{background:#dcfce7;color:#15803d}
+.processed{background:#dbeafe;color:#1d4ed8}
+.pending{background:#fef3c7;color:#b45309}
+.view{color:#6d28d9;text-decoration:none;font-weight:700;font-size:13px}
+.banner{margin-top:18px;background:linear-gradient(135deg,#4c1d95,#7c3aed);color:#fff;border-radius:14px;padding:20px;text-align:center}
+.banner h3{font-size:17px;margin-bottom:6px}
+.banner p{font-size:13px;color:#ddd6fe;line-height:1.6}
+.footer{margin-top:18px;text-align:center}
+.footer b{font-size:18px;color:#4c1d95}
+.footer b span{color:#7c3aed}
+.footer p{font-size:12px;color:#6b7280;line-height:1.6;margin-top:6px}
+.copy{font-size:11px;color:#9ca3af;text-align:center;margin-top:10px}
+@media(max-width:700px){.search-box{display:none}.stats{grid-template-columns:1fr 1fr}.title-row h1{font-size:22px}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="left">
+    <a class="back" href="index.html">←</a>
+    <div class="logo"><div class="logo-icon">👑</div><div><b>MH <i>Modern Earning</i></b><span>DIRECT EARNING PLATFORM</span></div></div>
+  </div>
+  <div class="right">
+    <div class="search-box">🔍 <input placeholder="Search transactions..."></div>
+    <div class="bell">🔔<i></i></div>
+    <div class="avatar">M</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="title-row"><span class="ico">🔄</span><h1>Transactions</h1></div>
+  <p class="sub">Track your income, withdraws and bonus earnings in one place.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="s-ic green-bg">💰</div><div><small>Total Earnings</small><b>$245.75</b><br><span>All time</span></div></div>
+    <div class="stat"><div class="s-ic red-bg">💸</div><div><small>Total Withdraw</small><b>$120.00</b><br><span>Paid out</span></div></div>
+    <div class="stat"><div class="s-ic orange-bg">🎁</div><div><small>Total Bonus</small><b>$25.00</b><br><span>Referral + Daily</span></div></div>
+    <div class="stat"><div class="s-ic blue-bg">👛</div><div><small>Available Balance</small><b>$125.75</b><br><span>Ready to withdraw</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2>Transaction History</h2><div class="filters"><select><option>All Types</option><option>Earning</option><option>Withdraw</option><option>Bonus</option></select><button>Filter</button></div></div>
+    <div class="table-wrap">
+    <table>
+      <tr><th>#</th><th>Type</th><th>Amount</th><th>Status</th><th>Date & Time</th><th>Details</th></tr>
+      <tr><td>1</td><td><div class="type"><span class="t-ic green-bg">💰</span> Task Earning</div></td><td><span class="plus">+ $50.00</span></td><td><span class="badge completed">Completed</span></td><td>07-06-2025, 06:42 PM</td><td><a class="view" href="#">View</a></td></tr>
+      <tr><td>2</td><td><div class="type"><span class="t-ic red-bg">💸</span> Withdraw</div></td><td><span class="minus">- $50.00</span></td><td><span class="badge processed">Processed</span></td><td>05-06-2025, 08:15 PM</td><td><a class="view" href="#">View</a></td></tr>
+      <tr><td>3</td><td><div class="type"><span class="t-ic orange-bg">🎁</span> Referral Bonus</div></td><td><span class="plus">+ $25.00</span></td><td><span class="badge completed">Completed</span></td><td>04-06-2025, 02:10 PM</td><td><a class="view" href="#">View</a></td></tr>
+      <tr><td>4</td><td><div class="type"><span class="t-ic blue-bg">🎁</span> Daily Bonus</div></td><td><span class="plus">+ $5.75</span></td><td><span class="badge completed">Completed</span></td><td>03-06-2025, 09:00 AM</td><td><a class="view" href="#">View</a></td></tr>
+      <tr><td>5</td><td><div class="type"><span class="t-ic red-bg">💸</span> Withdraw</div></td><td><span class="minus">- $70.00</span></td><td><span class="badge pending">Pending</span></td><td>02-06-2025, 07:30 PM</td><td><a class="view" href="#">View</a></td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="banner"><h3>💡 Stay Updated, Stay Ahead</h3><p>Your transactions are updated in real-time. Always check your balance before requesting a withdraw. For any issue, contact official support only.</p></div>
+
+  <div class="footer"><b>👑 MH <span>Modern Earning</span></b><p>Together We Grow<br>Work Hard, Earn Smart, Build Your Future With Us.</p></div>
+  <div class="copy">© 2026 MH Modern Earning • All Rights Reserved</div>
+</div>
+
+</body>
+</html>
