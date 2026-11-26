@@ -7,26 +7,26 @@
 <title>MH | Admin Control Center</title>
 <style>
 :root{
- --bg:#070d1c;--panel:#101b31;--panel2:#142440;
- --line:#203d62;--blue:#168cff;--cyan:#35d5ff;
- --text:#edf5ff;--muted:#91a9c8;--green:#35d69a;
- --red:#ff657d;--gold:#ffc857;
+--bg:#0B0B15;--panel:#161625;--panel2:#1E1E33;
+--line:rgba(255,255,255,0.08);--blue:#7C5CFF;--cyan:#00D2FF;
+--text:#FFFFFF;--muted:#A0A0B8;--green:#00D68F;
+--red:#FF4D6D;--gold:#FFD166;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 .app{display:flex;min-height:100vh}
-.sidebar{width:245px;background:#0b1428;border-right:1px solid var(--line);padding:20px 13px;flex-shrink:0}
+.sidebar{width:245px;background:#14142B;border-right:1px solid var(--line);padding:20px 13px;flex-shrink:0}
 .brand{padding:8px 12px 22px;border-bottom:1px solid var(--line)}
 .brand h2{margin:0;color:var(--cyan);font-size:25px}
 .brand small{color:var(--muted)}
 .nav-title{font-size:11px;color:#6884a8;margin:22px 12px 9px;letter-spacing:1.5px}
 .nav button{display:flex;align-items:center;gap:11px;width:100%;padding:12px;margin:3px 0;border:0;border-radius:9px;background:transparent;color:#b7c9e1;text-align:left}
-.nav button:hover,.nav button.active{background:#12345a;color:white;border:1px solid #176bb0}
+.nav button:hover{background:#2A2A4A;border-color:var(--line)}.nav button.active{background:linear-gradient(90deg,var(--blue),var(--cyan));color:#fff}
 .nav button span{font-size:17px;width:22px}
 .main{flex:1;min-width:0}
-.topbar{height:70px;background:#0c172b;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 25px}
+.topbar{height:70px;background:#14142B;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 25px}
 .topbar strong{color:var(--cyan)}
 .top-actions{display:flex;align-items:center;gap:10px}
 .content{padding:25px;max-width:1250px;margin:auto}
@@ -35,7 +35,7 @@ button{cursor:pointer}
 h1{font-size:25px;margin:0 0 8px}
 .sub{color:var(--muted);margin:0 0 22px;font-size:14px}
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
-.card{background:linear-gradient(145deg,#12223d,#0d172b);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:17px}
+.card{background:linear-gradient(145deg#1A1A2E,#161625);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:17px}
 .stat small{color:var(--muted)}
 .stat h2{font-size:28px;margin:13px 0 3px}
 .stat .symbol{font-size:24px}
@@ -138,6 +138,7 @@ td{color:#d5e4f5}
    <button data-page="settings"><span>⚙</span>Settings</button>
    <button data-page="security"><span>⬡</span>Security & Logs</button>
   </nav>
+  <button class="btn secondary" onclick="window.location.href='dashboard.html'" style="width:100%;margin-top:10px">← Back to Dashboard</button>
   <button class="btn danger" id="logoutBtn" style="width:100%;margin-top:20px">Sign Out</button>
  </aside>
 
@@ -408,7 +409,9 @@ $("navigation").addEventListener("click",e=>{
  if(button.dataset.page==="users")loadUsers();
  if(button.dataset.page==="tasks")loadTasks();
  if(button.dataset.page==="smartlinks")loadSmartlink();
+ if(button.dataset.page==="withdrawals")loadWithdrawals('pending');
 });
+
 
 async function refreshDashboard(){
  if(!currentAdmin)return;
@@ -602,43 +605,32 @@ async function saveSmartlink(forceDisable=false){
 }
 $("smartForm").addEventListener("submit",e=>{e.preventDefault();saveSmartlink(false)});
 $("disableSmart").addEventListener("click",()=>saveSmartlink(true));
-
+async function loadWithdrawals(status='pending'){
+  const list=$("withdrawalList");
+  list.innerHTML='<div class="empty">Loading...</div>';
+  try{
+    let q=collection(db,"withdrawals");
+    if(status!=='all') q=query(q,where("status","==",status));
+    const snap=await getDocs(q);
+    if(snap.empty){list.innerHTML='<div class="empty">No withdrawals found.</div>';return;}
+    list.innerHTML="";
+    snap.forEach(d=>{
+      const w=d.data();
+      const div=document.createElement("div");
+      div.className="slot";
+      div.innerHTML=`<strong>${escapeHTML(w.email||"User")}</strong><div>Amount: ${w.amount||0} - ${escapeHTML(w.method||"")}</div><p><span class="tag">${escapeHTML(w.status||"pending")}</span></p><button class="btn green small">Approve</button> <button class="btn danger small">Reject</button>`;
+      div.querySelector(".btn.green").onclick=async()=>{await updateDoc(doc(db,"withdrawals",d.id),{status:"approved",updatedAt:serverTimestamp()});loadWithdrawals(status);};
+      div.querySelector(".btn.danger").onclick=async()=>{await updateDoc(doc(db,"withdrawals",d.id),{status:"rejected",updatedAt:serverTimestamp()});loadWithdrawals(status);};
+      list.appendChild(div);
+    });
+  }catch(e){list.innerHTML='<div class="empty">'+escapeHTML(e.message)+'</div>';}
+}
+window.loadWithdrawals=loadWithdrawals;
 async function refreshAll(){
  await refreshDashboard();
  await loadTasks();
  await loadSmartlink();
 }
-</script>
- <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBEeIVyP44rJE8QkmumMNWj8CeKlAjr9hg",
-  authDomain: "mh-modern-earning-platform.firebaseapp.com",
-  projectId: "mh-modern-earning-platform",
-  storageBucket: "mh-modern-earning-platform.firebasestorage.app",
-  messagingSenderId: "743565295091",
-  appId: "1:743565295091:web:fdaf5dc868a38e24a6a686",
-  measurementId: "G-WZMYQ9M3W4"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
-  const snap = await getDoc(doc(db, "users", user.uid));
-  // এডমিন না হলে ড্যাশবোর্ডে পাঠায় দিবে
-  if (!snap.exists() || snap.data().role !== "admin") {
-    window.location.href = "dashboard.html";
-  }
-});
  </script>
 </body>
 </html>
