@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Tasks - MH Modern Earning</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#0b0218;color:#fff;padding-bottom:110px}
+.header{background:linear-gradient(135deg,#3b0a6d,#7a1fa2);padding:16px;border-radius:0 0 28px 28px;position:relative}
+.top{display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:42px;height:42px;background:#ffd700;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px}
+.logo b{font-size:17px;line-height:1.1}
+.logo span{font-size:10px;letter-spacing:2px;color:#e9c5ff}
+.balance{position:absolute;top:14px;right:16px;background:#ffd700;color:#000;padding:6px 12px;border-radius:20px;font-weight:800;font-size:13px;box-shadow:0 0 15px #ffd700}
+.icons{display:flex;gap:12px;margin-top:14px;align-items:center}
+.search{flex:1;background:#1e0a3a;border-radius:12px;padding:10px;color:#aaa;font-size:14px}
+.icon{width:38px;height:38px;background:#1e0a3a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px}
+.avatar{width:38px;height:38px;background:#ffd700;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900}
+.title{padding:20px 16px 10px}
+.title h1{font-size:30px;display:flex;align-items:center;gap:8px}
+.title p{color:#b9a5d6;margin-top:4px}
+.cards{display:flex;gap:12px;padding:0 16px}
+.card{flex:1;background:#16052e;border:1px solid #3a1a6b;border-radius:18px;padding:16px}
+.card small{color:#b9a5d6}
+.card h2{font-size:22px;margin:8px 0 4px}
+.card span{color:#3dff8a;font-weight:700;font-size:13px}
+.card .down{color:#ff6b6b}
+.card p{font-size:11px;color:#888}
+.chart-box{margin:16px;background:#16052e;border:1px solid #3a1a6b;border-radius:20px;padding:16px}
+.chart-box h3{font-size:16px}
+.chart-box p{font-size:12px;color:#888;margin-bottom:16px}
+.bars{display:flex;align-items:flex-end;justify-content:space-between;height:150px}
+.bar-wrap{text-align:center}
+.bar{width:42px;border-radius:10px 10px 0 0;background:linear-gradient(#a855f7,#6d28d9);margin:0 auto}
+.bar-wrap b{font-size:11px;display:block;margin-top:6px}
+.bar-wrap small{font-size:11px;color:#aaa}
+.total-box{margin:0 16px;background:linear-gradient(135deg,#3b0a6d,#8b2fc9);border-radius:20px;padding:18px;display:flex;justify-content:space-between;align-items:center}
+.total-box small{color:#e9c5ff}
+.total-box h2{font-size:26px;margin-top:4px}
+.total-box .btn{background:#ffd700;color:#000;padding:10px 16px;border-radius:12px;font-weight:800;border:none}
+.footer{position:fixed;bottom:0;left:0;right:0;background:#16052e;border-top:1px solid #3a1a6b;display:flex;justify-content:space-around;padding:12px 0}
+.footer div{text-align:center;font-size:11px;color:#b9a5d6}
+.footer .active{color:#ffd700}
+.footer span{font-size:20px;display:block}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="top">
+    <div class="logo">
+      <div class="logo-icon">👑</div>
+      <div><b>MH Modern Earning</b><br><span>DIRECT EARNING PLATFORM</span></div>
+    </div>
+  </div>
+  <div class="balance">💰 Balance: ৳ 1,250</div>
+  <div class="icons">
+    <div class="search">🔍 Search here...</div>
+    <div class="icon">🔔</div>
+    <div class="avatar">M</div>
+  </div>
+</div>
+
+<div class="title">
+  <h1>📋 My Tasks</h1>
+  <p>Your work summary</p>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <small>Today's Earning</small>
+    <h2>৳ 1,250</h2>
+    <span>▲ 12.5%</span>
+    <p>vs yesterday</p>
+  </div>
+  <div class="card">
+    <small>Yesterday's Earning</small>
+    <h2>৳ 1,530</h2>
+    <span class="down">▼ 5.6%</span>
+    <p>vs today</p>
+  </div>
+  <div class="card">
+    <small>Total Earnings</small>
+    <h2>৳ 24,575</h2>
+    <span>▲ 4.2%</span>
+    <p>lifetime</p>
+  </div>
+</div>
+
+<div class="chart-box">
+  <h3>Weekly Performance 📊</h3>
+  <p>Your earning progress this week</p>
+  <div class="bars">
+    <div class="bar-wrap"><div class="bar" style="height:90px"></div><b>৳1,250</b><small>Sat</small></div>
+    <div class="bar-wrap"><div class="bar" style="height:110px"></div><b>৳1,530</b><small>Sun</small></div>
+    <div class="bar-wrap"><div class="bar" style="height:70px"></div><b>৳1,020</b><small>Mon</small></div>
+    <div class="bar-wrap"><div class="bar" style="height:135px"></div><b>৳1,875</b><small>Tue</small></div>
+    <div class="bar-wrap"><div class="bar" style="height:100px"></div><b>৳1,480</b><small>Wed</small></div>
+  </div>
+</div>
+
+<div class="total-box">
+  <div><small>Total Earning This Month</small><h2>৳ 12,560</h2></div>
+  <button class="btn">Withdraw</button>
+</div>
+
+<div class="footer">
+  <div class="active"><span>🏠</span>Home</div>
+  <div><span>📋</span>My Tasks</div>
+  <div><span>💰</span>Wallet</div>
+  <div><span>👤</span>Profile</div>
+</div>
+
+</body>
+</html>
